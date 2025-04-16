@@ -1,0 +1,215 @@
+<mvc:View
+    controllerName="com.invoicecreation.invoicecreationaisp.controller.InvoiceCreation"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:f="sap.f"
+    xmlns:vm="sap.ui.fl.variants"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+>
+    <Page
+        showFooter="false"
+        showHeader="false"
+    >
+        <smartFilterBar:SmartFilterBar
+            id="smartFilterBar"
+            entitySet="ZP_AISP_POVIM_HEAD"
+            persistencyKey="SmartFilter_Explored"
+            considerAnalyticalParameters="true"
+            initialized="initialized"
+            showRestoreButton="true"
+        >
+            <smartFilterBar:controlConfiguration>
+                <!-- Approval Type Dropdown -->
+               
+
+                <!-- Basic Search Moved Below -->
+            </smartFilterBar:controlConfiguration>
+        </smartFilterBar:SmartFilterBar>
+        <IconTabBar
+            id="idIconTabBarMulti"
+            expanded="{device>/isNoPhone}"
+            class="customTabBar"
+            select="onIconTabBarSelect"
+        >
+            <items>
+                <IconTabFilter
+                    key="open"
+                    icon="./Images/open.png"
+                    text="OPEN"
+                >
+                    <smartTable:SmartTable
+                        entitySet="ZP_AISP_POVIM_HEAD_Pending"
+                        smartFilterId="smartFilterBar"
+                        enableExport="true"
+                        beforeExport="onBeforeExport"
+                        useVariantManagement="true"
+                        useTablePersonalisation="true"
+                        header="Open GRN"
+                        showRowCount="true"
+                        persistencyKey="SmartTableRefApp_Explored"
+                        enableAutoBinding="true"
+                        tableType="ResponsiveTable"
+                        demandPopin="true"
+                        enableAutoColumnWidth="false"
+                        id="smartTable"
+                    >
+                        <Table
+                            selectionChange="selectionChangeHandlerRregister"
+                            growing="true"
+                            growingThreshold="10"
+                            id="idTableInvoice"
+                        >
+                            <columns>
+                                <Column>
+                                    <customData>
+                                        <core:CustomData
+                                            key="p13nData"
+                                            value='\{"columnKey": "ASNamount","leadingProperty": "ASNamount", "sortProperty": "ASNamount", "filterProperty": "ASNamount", "columnIndex": "2" }'
+                                        />
+                                    </customData>
+                                    <Label
+                                        text="Amount"
+                                        wrapping="true"
+                                    />
+                                </Column>
+                                <Column>
+                                    <customData>
+                                        <core:CustomData
+                                            key="p13nData"
+                                            value='\{"columnKey": "Status","leadingProperty": "Status", "sortProperty": "Status", "filterProperty": "Status", "columnIndex": "5" }'
+                                        />
+                                    </customData>
+                                    <Label
+                                        text="Status"
+                                        wrapping="true"
+                                    />
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem
+                                    vAlign="Middle"
+                                    type="Navigation"
+                                    press="onClickInvoice"
+                                >
+                                    <cells>
+                                        <!-- <ObjectStatus
+                                            text="{path: 'Status', formatter: '.formatter.statusFormattertest'}"
+                                            state="{path: 'Status', formatter: '.formatter.indicationFormat'}"
+                                            inverted="true"
+                                            class="noWrapText"
+                                        /> -->
+                                        <ObjectNumber
+                                            class="sapUiSmallMarginBottom"
+                                            number="{
+						                    parts:[{path:'ASNamount'},{path:'Waers'}],
+						                    type: 'sap.ui.model.type.Currency',
+						                    formatOptions: {showMeasure: false}
+					}"
+                                            unit="{Waers}"
+                                        />
+                                        <ObjectStatus
+                                            text="{Status}"
+                                            state="{path: 'Status', formatter: '.statusStateFormater'}"
+                                            inverted="true"
+                                            class="noWrapText"
+                                        />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </smartTable:SmartTable>
+                </IconTabFilter>
+
+                <IconTabFilter
+                    key="attachments"
+                    icon="/Images/submitted.png"
+                    text="SUBMITTED"
+                >
+                    <smartTable:SmartTable
+                        entitySet="ZP_AISP_POVIM_HEAD_Submitted"
+                        smartFilterId="smartFilterBar"
+                        enableExport="true"
+                        beforeExport="onBeforeExport"
+                        useVariantManagement="true"
+                        useTablePersonalisation="true"
+                        header="Open GRN"
+                        showRowCount="true"
+                        persistencyKey="SmartTableRefApp_Explored"
+                        enableAutoBinding="true"
+                        tableType="ResponsiveTable"
+                        demandPopin="true"
+                        enableAutoColumnWidth="false"
+                        id="smartTableSub"
+                    >
+                        <Table
+                            selectionChange="selectionChangeHandlerRregister"
+                            growing="true"
+                            growingThreshold="10"
+                            id="idTableInvoiceSub"
+                        >
+                            <columns>
+                                <Column>
+                                    <customData>
+                                        <core:CustomData
+                                            key="p13nData"
+                                            value='\{"columnKey": "ASNamount","leadingProperty": "ASNamount", "sortProperty": "ASNamount", "filterProperty": "ASNamount", "columnIndex": "2" }'
+                                        />
+                                    </customData>
+                                    <Label
+                                        text="Amount"
+                                        wrapping="true"
+                                    />
+                                </Column>
+                                <Column>
+                                    <customData>
+                                        <core:CustomData
+                                            key="p13nData"
+                                            value='\{"columnKey": "Status","leadingProperty": "Status", "sortProperty": "Status", "filterProperty": "Status", "columnIndex": "5" }'
+                                        />
+                                    </customData>
+                                    <Label
+                                        text="Status"
+                                        wrapping="true"
+                                    />
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem
+                                    vAlign="Middle"
+                                    type="Navigation"
+                                    press="onClickInvoice"
+                                >
+                                    <cells>
+                                        <!-- <ObjectStatus
+                                            text="{path: 'Status', formatter: '.formatter.statusFormattertest'}"
+                                            state="{path: 'Status', formatter: '.formatter.indicationFormat'}"
+                                            inverted="true"
+                                            class="noWrapText"
+                                        /> -->
+                                        <ObjectNumber
+                                            class="sapUiSmallMarginBottom"
+                                            number="{
+						parts:[{path:'ASNamount'},{path:'Waers'}],
+						type: 'sap.ui.model.type.Currency',
+						formatOptions: {showMeasure: false}
+					}"
+                                            unit="{Waers}"
+                                        />
+                                        <ObjectStatus
+                                            text="{Status}"
+                                            state="{path: 'Status', formatter: '.statusSubStateFormater'}"
+                                            inverted="true"
+                                            class="noWrapText"
+                                        />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </smartTable:SmartTable>
+                </IconTabFilter>
+            </items>
+        </IconTabBar>
+    </Page>
+</mvc:View>

@@ -1,0 +1,19 @@
+.customTabBar .sapMITBFilter.sapMITBSelected {
+    border-bottom: 3px solid #0070f2; /* Your highlight color */
+    border-radius: 0;
+    background: none !important;
+    color: inherit !important;
+}
+
+/* Optional: Adjust spacing */
+.customTabBar .sapMITBFilter {
+    padding-bottom: 6px;
+}
+
+.objClass{
+    font-weight: bolder;
+}
+
+.fileStatus{
+    font-weight: bold;
+}

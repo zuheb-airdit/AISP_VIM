@@ -1,0 +1,33 @@
+<mvc:View controllerName="com.invoicecreation.invoicecreationaisp.controller.App"
+    displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+    xmlns="sap.m">
+    <App id="app">
+     <Page enableScrolling="true">
+            <customHeader>
+                <f:ShellBar
+                    title="Invoice Creation"
+                    homeIcon="./Images/brandLogo.png"
+                    showCopilot="true"
+                    showSearch="true"
+                    showNotifications="true"
+                    showNavButton="{= ${/layout} === 'EndColumnFullScreen'}"
+                    notificationsNumber="2"
+                    navButtonPressed="handleBackButtonPressed"
+                >
+                    <f:menu />
+                    <f:profile>
+                        <Avatar initials="ZA" />
+                    </f:profile>
+                </f:ShellBar>
+            </customHeader>
+            <f:FlexibleColumnLayout
+                id="layout"
+                stateChange="onStateChanged"
+                layout="{appView>/layout}"
+                backgroundDesign="Translucent"
+            />
+        </Page>
+    </App>
+</mvc:View>

@@ -1,0 +1,23 @@
+<mvc:View controllerName="com.invoiceapproval.invoiceapprovalaisp.controller.Invoicepdf"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Page showFooter="false" showHeader="true">
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button icon="sap-icon://nav-back" press="onClosePreview" tooltip="Close" />
+                </contentLeft>
+                <contentMiddle>
+                    <Title text="Invoice Preview" />
+                </contentMiddle>
+            </Bar>
+        </customHeader>
+
+        <VBox class="sapUiTinyMargin">
+            <core:HTML
+                content='&lt;iframe id="pdfFrame" width="100%" height="700px" style="border:none;"&gt;&lt;/iframe&gt;' />
+        </VBox>
+    </Page>
+</mvc:View>

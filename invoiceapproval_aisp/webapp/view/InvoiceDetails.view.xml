@@ -1,0 +1,539 @@
+<mvc:View
+    controllerName="com.invoiceapproval.invoiceapprovalaisp.controller.InvoiceDetails"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:m="sap.m"
+    xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:u="sap.ui.unified"
+    xmlns="sap.uxap"
+>
+    <ObjectPageLayout
+        id="ObjectPageLayout"
+        showTitleInHeaderContent="true"
+        alwaysShowContentHeader="false"
+        preserveHeaderStateOnScroll="false"
+        headerContentPinnable="true"
+        headerContentPinned="false"
+        toggleHeaderOnTitleClick="true"
+        showFooter="true"
+        isChildPage="true"
+        upperCaseAnchorBar="false"
+    >
+        <headerTitle>
+            <ObjectPageDynamicHeaderTitle>
+                <breadcrumbs>
+                    <m:Breadcrumbs
+                        id="breadcrumbsId"
+                        currentLocationText="Approve Invoice"
+                    >
+                        <m:Link
+                            text="Order"
+                            press="handleClose"
+                        />
+                    </m:Breadcrumbs>
+                </breadcrumbs>
+                <expandedHeading>
+                    <m:Title
+                        text="PO NO: {headData>/Ebeln}"
+                        wrapping="true"
+                    />
+                </expandedHeading>
+                <snappedHeading>
+                    <m:HBox
+                        wrap="NoWrap"
+                        alignItems="Center"
+                    >
+                        <m:Avatar
+                            src="./Images/objPageIcon.png"
+                            displaySize="S"
+                            displayShape="Square"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <m:VBox wrap="Wrap">
+                            <m:Title
+                                text="{headData>/Ebeln}"
+                                wrapping="true"
+                            />
+                            <m:Label
+                                text="PO NO:"
+                                wrapping="true"
+                            />
+                        </m:VBox>
+                    </m:HBox>
+                </snappedHeading>
+            </ObjectPageDynamicHeaderTitle>
+        </headerTitle>
+
+        <headerContent>
+            <!-- <m:Breadcrumbs>
+                <m:Link
+                    text="Order"
+                    press="onNavToHome"
+                />
+                <m:Link
+                    text="Create ASN"
+                    press="onNavToProducts"
+                />
+            </m:Breadcrumbs> -->
+            <m:FlexBox
+                wrap="Wrap"
+                fitContainer="true"
+                alignItems="Stretch"
+            >
+                <m:Avatar
+                    src="./Images/objPageIcon.png"
+                    displaySize="L"
+                    displayShape="Square"
+                    class="sapUiMediumMarginEnd"
+                />
+                <m:VBox class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                    <m:HBox class="sapUiTinyMarginBottom">
+                        <m:Label
+                            text="Vendor No:"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <m:Text text="{headData>/Lifnr}" />
+                        <!-- e.g. 456 -->
+                    </m:HBox>
+
+                    <m:HBox class="sapUiTinyMarginBottom">
+                        <m:Label
+                            text="Vendor Name:"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <m:Text text="{headData>/Name1}" />
+                        <!-- e.g. ABC Technical Supplies -->
+                    </m:HBox>
+
+                    <m:HBox class="sapUiTinyMarginBottom">
+                        <m:Label
+                            text="Vendor Address:"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <m:Text
+                            text="{headData>/VendorAddress}"
+                            width="8rem"
+                        />
+                        <!-- e.g. 4/55 Bels Road, ... -->
+                    </m:HBox>
+                </m:VBox>
+
+                <!-- SECOND COLUMN: Bank Details -->
+                <m:VBox class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                    <m:HBox class="sapUiTinyMarginBottom">
+                        <m:Label
+                            text="Bank Key:"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <m:Text text="{headData>/BankKey}" />
+                        <!-- e.g. INB000000086 -->
+                    </m:HBox>
+
+                    <m:HBox class="sapUiTinyMarginBottom">
+                        <m:Label
+                            text="Bank Name:"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <m:Text text="{headData>/BankName}" />
+                        <!-- e.g. Indian Bank -->
+                    </m:HBox>
+
+                    <m:HBox class="sapUiTinyMarginBottom">
+                        <m:Label
+                            text="Bank Account:"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <m:Text text="{headData>/BankAccount}" />
+                        <!-- e.g. Indian Bank -->
+                    </m:HBox>
+                </m:VBox>
+
+                <!-- THIRD COLUMN: Status & Order Date -->
+                <m:VBox class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                    <m:HBox class="sapUiTinyMarginBottom">
+                        <m:Label
+                            text="Status:"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <!-- <m:Text text="In Progress - {headData>/APPROVER_ROLE}" /> -->
+                        <m:ObjectStatus
+                            text="{headData>/Status}"
+                            class="objClass"
+                            state="Indication05"
+                        />
+                        <!-- e.g. Invoice Pending -->
+                    </m:HBox>
+
+                    <m:HBox class="sapUiTinyMarginBottom">
+                        <m:Label
+                            text="Order Date:"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <!-- Format date using a formatter if needed -->
+                        <m:Text
+                            text="{path: 'headData>/Bedat', formatter: '.formatter.formatDate'}"
+                        />
+                        <!-- e.g. 03.04.2025 -->
+                    </m:HBox>
+
+                    <m:HBox class="sapUiTinyMarginBottom">
+                        <m:Label
+                            text="Purchase Org:"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <m:Text text="{headData>/Ekorg}" />
+                        <!-- e.g. Consumable Purch Org -->
+                    </m:HBox>
+
+                    <m:HBox class="sapUiTinyMarginBottom">
+                        <m:Label
+                            text="Amount:"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <m:ObjectNumber
+                            number="{
+                                parts: [
+                                    { path: 'headData>/ASNamount' },
+                                    { path: 'headData>/Waers' }
+                                ],
+                                type: 'sap.ui.model.type.Currency',
+                                formatOptions: { showMeasure: false }
+                            }"
+                            unit="{headData>/Waers}"
+                            state="Success"
+                        />
+                        <!-- e.g. 20,000 inr -->
+                    </m:HBox>
+                </m:VBox>
+
+                <!-- FOURTH COLUMN: Purchase Org & Amount -->
+            </m:FlexBox>
+        </headerContent>
+
+        <sections>
+            <ObjectPageSection title="Invoice Header">
+                <subSections>
+                    <ObjectPageSubSection>
+                        <blocks>
+                            <m:HBox class="sapUiSmallMargin">
+                                <m:VBox class="sapUiMediumMarginEnd">
+                                    <m:Label
+                                        text="Invoice Number:"
+                                        class="sapUiTinyMarginBottom"
+                                    />
+                                    <m:Input
+                                        id="idInvoiceNum"
+                                        width="10rem"
+                                        editable="false"
+                                        value="{headData>/Invoicerefno}"
+                                    />
+                                </m:VBox>
+                                <m:VBox class="sapUiMediumMarginBegin">
+                                    <m:Label
+                                        text="Invoice Date:"
+                                        class="sapUiTinyMarginBottom"
+                                    />
+                                    <m:DatePicker
+                                        id="idInvoiceDate"
+                                        width="10rem"
+                                        editable="false"
+                                        value="{headData>/Invoicedate}"
+                                    />
+                                </m:VBox>
+                            </m:HBox>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+            <ObjectPageSection
+                title="Item Deatils"
+                titleUppercase="false"
+            >
+                <subSections>
+                    <ObjectPageSubSection>
+                        <blocks>
+                            <m:VBox>
+                                <!-- Scrollable Table Container -->
+                                <m:ScrollContainer
+                                    horizontal="true"
+                                    vertical="true"
+                                    width="100%"
+                                >
+                                    <m:Table
+                                        xmlns:m="sap.m"
+                                        id="myTable"
+                                        items="{tableModel>/results}"
+                                        inset="false"
+                                        width="auto"
+                                    >
+                                        <m:headerToolbar>
+                                            <m:Toolbar>
+                                                <m:Title
+                                                    text="Item Details"
+                                                    level="H2"
+                                                />
+                                                <!-- Additional toolbar buttons, if needed -->
+                                            </m:Toolbar>
+                                        </m:headerToolbar>
+
+                                        <!-- Define Columns -->
+                                        <m:columns>
+                                            <m:Column width="7rem">
+                                                <m:Text text="PO Number" />
+                                            </m:Column>
+                                            <m:Column width="8rem">
+                                                <m:Text text="ASN Number" />
+                                            </m:Column>
+                                            <m:Column width="4rem">
+                                                <m:Text text="Item No" />
+                                            </m:Column>
+                                            <m:Column width="12rem">
+                                                <m:Text
+                                                    text="Material Description"
+                                                />
+                                            </m:Column>
+                                            <m:Column width="5rem">
+                                                <m:Text text="UOM" />
+                                            </m:Column>
+                                            <m:Column width="6rem">
+                                                <m:Text text="ASN Qty" />
+                                            </m:Column>
+                                            <m:Column width="7rem">
+                                                <m:Text text="ASN Amt" />
+                                            </m:Column>
+                                            <m:Column width="6rem">
+                                                <m:Text text="GRN Qty" />
+                                            </m:Column>
+                                            <m:Column width="7rem">
+                                                <m:Text text="GRN Amt" />
+                                            </m:Column>
+                                            <m:Column width="5rem">
+                                                <m:Text text="Tax %" />
+                                            </m:Column>
+                                            <m:Column width="6rem">
+                                                <m:Text text="Tax Amt" />
+                                            </m:Column>
+                                            <m:Column width="6rem">
+                                                <m:Text text="Total Amt" />
+                                            </m:Column>
+                                        </m:columns>
+
+                                        <!-- Each Row -->
+                                        <m:items>
+                                            <m:ColumnListItem>
+                                                <m:cells>
+                                                    <!-- PO Number -->
+                                                    <m:Text
+                                                        text="{tableModel>Ebeln}"
+                                                    />
+                                                    <!-- ASN Number -->
+                                                    <m:Text
+                                                        text="{tableModel>Vbeln}"
+                                                    />
+                                                    <!-- Item No -->
+                                                    <m:Text
+                                                        text="{tableModel>Ebelp}"
+                                                    />
+                                                    <!-- Material Description -->
+                                                    <m:Text
+                                                        text="{tableModel>Txz01}"
+                                                    />
+                                                    <!-- UOM -->
+                                                    <m:Text
+                                                        text="{tableModel>Meins}"
+                                                    />
+                                                    <!-- ASN Qty -->
+                                                    <m:ObjectNumber
+                                                        number="{tableModel>AsnQty}"
+                                                        unit="NOS"
+                                                    />
+                                                    <!-- ASN Amt -->
+                                                    <m:ObjectNumber
+                                                        number="{tableModel>ASNitAmount}"
+                                                        unit="INR"
+                                                    />
+                                                    <!-- GRN Qty -->
+                                                    <m:ObjectNumber
+                                                        number="{tableModel>Menge}"
+                                                        unit="NOS"
+                                                    />
+                                                    <!-- GRN Amt -->
+                                                    <m:ObjectNumber
+                                                        number="{tableModel>GRNitAmount}"
+                                                        unit="INR"
+                                                    />
+                                                    <!-- Tax % -->
+                                                    <m:Text
+                                                        text="{tableModel>Taxper}"
+                                                    />
+                                                    <!-- Tax Amt -->
+                                                    <m:ObjectNumber
+                                                        number="{tableModel>Taxval}"
+                                                        unit="INR"
+                                                    />
+                                                    <!-- Total Amt (Per-Row) -->
+                                                    <m:ObjectNumber
+                                                        number="{tableModel>Total}"
+                                                        unit="INR"
+                                                    />
+                                                </m:cells>
+                                            </m:ColumnListItem>
+                                        </m:items>
+                                    </m:Table>
+                                </m:ScrollContainer>
+
+                                <!-- TOTAL at the bottom, aligned right -->
+                                <m:HBox
+                                    justifyContent="End"
+                                    alignItems="Center"
+                                    class="sapUiSmallMarginTop sapUiSmallMarginBottom sapUiSmallMarginEnd"
+                                >
+                                    <m:Label
+                                        text="Total Amount:"
+                                        class="sapUiTinyMarginEnd"
+                                    />
+                                    <!-- Using Text for a simple display; replace with ObjectNumber if needed -->
+                                    <m:ObjectNumber
+                                        number="{headData>/TotalAmount}"
+                                        unit="INR"
+                                    />
+                                </m:HBox>
+                            </m:VBox>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+            <ObjectPageSection title="Attachments">
+                <subSections>
+                    <ObjectPageSubSection>
+                        <blocks>
+                            <m:Panel
+                                xmlns:m="sap.m"
+                                xmlns:u="sap.ui.unified"
+                                xmlns:core="sap.ui.core"
+                                class="sapUiNoContentPadding"
+                            >
+                                <m:VBox
+                                    class="sapUiSmallMargin sapUiSmallMarginTop sapUiSmallMarginBottom"
+                                >
+                                    <!-- Supported Attachment Types and Size Limit -->
+                                    <!-- <m:MessageStrip
+                                        text="Supported Attachment Types: txt, pdf, xlsx, csv. Attachment Size up to 5 MB"
+                                        showIcon="true"
+                                        showCloseButton="false"
+                                        class="sapUiTinyMarginBottom"
+                                    /> -->
+
+                                    <!-- Attachments Header -->
+                                    <m:HBox
+                                        justifyContent="SpaceBetween"
+                                        alignItems="Center"
+                                        class="sapUiTinyMarginBottom"
+                                    >
+                                        <!-- Attachments count title -->
+                                        <m:Title
+                                            text="Attachments"
+                                            level="H3"
+                                            id="attachmentsCountTitle"
+                                        />
+                                        <!-- Direct FileUploader displayed as a button -->
+                                        <!-- <u:FileUploader
+                                            id="fileUploader"
+                                            change="onFileSelected"
+                                            fileType="xlsx,csv"
+                                            buttonOnly="true"
+                                            buttonText="Upload"
+                                            uploadComplete="onFileSelected"
+                                        /> -->
+                                    </m:HBox>
+
+                                    <!-- Attachments List -->
+                                    <m:List
+                                        id="attachmentsList"
+                                        items="{attachmentsModel>/attachments}"
+                                        inset="false"
+                                        noDataText="No attachments uploaded."
+                                        class="sapUiNoMargin"
+                                    >
+                                        <m:CustomListItem>
+                                            <m:HBox
+                                                justifyContent="SpaceBetween"
+                                                alignItems="Center"
+                                                class="sapUiSmallMargin"
+                                            >
+                                                <!-- LEFT SIDE: Icon + Attachment Details -->
+                                                <m:HBox alignItems="Center">
+                                                    <core:Icon
+                                                        src="sap-icon://document-text"
+                                                        size="2rem"
+                                                        class="sapUiSmallMarginEnd"
+                                                    />
+                                                    <m:VBox>
+                                                        <m:Text
+                                                            text="{attachmentsModel>IMAGE_FILE_NAME}"
+                                                            class="sapUiTinyMarginBottom"
+                                                        />
+                                                        <m:Text
+                                                            text="Status: {attachmentsModel>STATUS} · Comment: {attachmentsModel>COMMENT}."
+                                                            class="fileStatus"
+                                                        />
+                                                    </m:VBox>
+                                                </m:HBox>
+
+                                                <!-- RIGHT SIDE: Edit & Delete Buttons -->
+                                                <m:HBox alignItems="Center">
+                                                    <m:Button
+                                                        icon="sap-icon://show"
+                                                        type="Transparent"
+                                                        tooltip="Preview Attachment"
+                                                        press="onPreviewPdf"
+                                                        class="sapUiTinyMarginEnd"
+                                                    >
+                                                        <m:customData>
+                                                            <core:CustomData
+                                                                key="imageUrl"
+                                                                value="{attachmentsModel>IMAGEURL}"
+                                                                writeToDom="false"
+                                                            />
+                                                        </m:customData>
+                                                    </m:Button>
+                                                </m:HBox>
+                                            </m:HBox>
+                                        </m:CustomListItem>
+                                    </m:List>
+                                </m:VBox>
+                            </m:Panel>
+
+                            <!-- File Uploader Dialog -->
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+        </sections>
+        <footer>
+            <m:Toolbar id="otbFooter">
+                <m:ToolbarSpacer />
+                <m:Button
+                    type="Back"
+                    text="Cancel"
+                    press="handleClose"
+                />
+                <m:Button
+                    type="Success"
+                    icon="sap-icon://complete"
+                    text="Approve"
+                    press="onInvoiceApprove"
+                    visible="{path: 'headData>/Status', formatter: '.isPending'}"
+                />
+                <m:Button
+                    type="Reject"
+                    icon="sap-icon://decline"
+                    text="Reject"
+                    press="onInvoiceReject"
+                    visible="{path: 'headData>/Status', formatter: '.isPending'}"
+                />
+            </m:Toolbar>
+        </footer>
+    </ObjectPageLayout>
+</mvc:View>

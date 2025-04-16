@@ -1,0 +1,154 @@
+{
+    "_version": "1.65.0",
+    "sap.app": {
+        "id": "com.invoiceapproval.invoiceapprovalaisp",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:basic",
+            "version": "1.17.1",
+            "toolsId": "f06d6717-ba21-46d2-804b-f59f67f633b5"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "/odata/v2/zp-aisp-povim-head-bndsample/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [
+                        "annotation0"
+                    ],
+                    "localUri": "localService/mainService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            },
+            "annotation0": {
+                "type": "ODataAnnotation",
+                "uri": "annotations/annotation0.xml",
+                "settings": {
+                    "localUri": "annotations/annotation0.xml"
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": false,
+        "dependencies": {
+            "minUI5Version": "1.134.1",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "com.invoiceapproval.invoiceapprovalaisp.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {}
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "controlAggregation": "beginColumnPages",
+                "controlId": "layout",
+                "transition": "slide",
+                "type": "View",
+                "viewType": "XML",
+                "path": "com.invoiceapproval.invoiceapprovalaisp.view",
+                "async": true,
+                "viewPath": "com.invoiceapproval.invoiceapprovalaisp.view"
+            },
+            "routes": [
+                {
+                    "name": "RouteInvoiceApproval",
+                    "pattern": ":?query:",
+                    "target": [
+                        "TargetInvoiceApproval"
+                    ]
+                },
+                {
+                    "name": "InvoiceDetails",
+                    "pattern": "InvoiceDetails/{id}",
+                    "target": [
+                        "InvoiceDetails"
+                    ]
+                },
+                {
+                    "name": "Invoicepdf",
+                    "pattern": "Invoicepdf/{imageUrl}",
+                    "target": [
+                        "InvoiceDetails",
+                        "Invoicepdf"
+                    ]
+                }
+
+            ],
+            "targets": {
+                "TargetInvoiceApproval": {
+                    "viewId": "InvoiceApproval",
+                    "viewName": "InvoiceApproval",
+                    "viewLevel": 1,
+                    "clearControlAggregation": true
+                },
+                "InvoiceDetails": {
+                    "viewId": "InvoiceDetails",
+                    "viewName": "InvoiceDetails",
+                    "viewLevel": 1,
+                    "clearControlAggregation": true
+                },
+                "Invoicepdf": {
+                    "viewId": "Invoicepdf",
+                    "viewName": "Invoicepdf",
+                    "viewLevel": 2,
+                    "clearControlAggregation": true,
+                    "controlAggregation": "midColumnPages"
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "com.invoiceapproval.invoiceapprovalaisp.view.App",
+            "type": "XML",
+            "id": "App",
+            "async": true
+        }
+    }
+}
