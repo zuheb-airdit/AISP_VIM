@@ -49,10 +49,6 @@
                             <PropertyValue Property="Label" String="ASN Number" />
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Invoicerefno" />
-                            <PropertyValue Property="Label" String="Invoice Number" />
-                        </Record>
-                        <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="AsnDate" />
                             <PropertyValue Property="Label" String="Invoice Date" />
                         </Record>
@@ -67,10 +63,9 @@
             <Annotations Target="SAP.VIMPOHead">
                 <Annotation Term="UI.SelectionFields">
                     <Collection>
+                        <PropertyPath>REQUEST_NO</PropertyPath>
                         <PropertyPath>Ebeln</PropertyPath>
                         <PropertyPath>Vbeln</PropertyPath>
-                        <PropertyPath>Status</PropertyPath>
-                        <PropertyPath>AsnDate</PropertyPath>
                     </Collection>
                 </Annotation>
             </Annotations>
@@ -83,12 +78,68 @@
             <Annotation Term="Common.Label" String="ASN Number" />
         </Annotations>
 
-         <Annotations Target="SAP.VIMPOHead/Status">
-            <Annotation Term="Common.Label" String="Status" />
+         <Annotations Target="SAP.VIMPOHead/REQUEST_NO">
+            <Annotation Term="Common.Label" String="Request No." />
         </Annotations>
 
-         <Annotations Target="SAP.VIMPOHead/AsnDate">
-            <Annotation Term="Common.Label" String="ASN Date" />
+        <Annotations Target="SAP.VIMPOHead/REQUEST_NO">
+            <Annotation Term="Common.ValueList">
+                <Record Type="Common.ValueListType">
+                    <PropertyValue Property="CollectionPath" String="VIMPOHead"/>
+                    <PropertyValue Property="SearchSupported" Bool="true"/>
+                    <PropertyValue Property="Parameters">
+                        <Collection>
+                            <Record Type="Common.ValueListParameterInOut">
+                                <PropertyValue Property="LocalDataProperty" PropertyPath="REQUEST_NO"/>
+                                <PropertyValue Property="ValueListProperty" String="REQUEST_NO"/>
+                            </Record>
+                            <Record Type="Common.ValueListParameterDisplayOnly">
+                                <PropertyValue Property="ValueListProperty" String="Ebeln"/>
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
+
+        <Annotations Target="SAP.VIMPOHead/Ebeln">
+            <Annotation Term="Common.ValueList">
+                <Record Type="Common.ValueListType">
+                    <PropertyValue Property="CollectionPath" String="VIMPOHead"/>
+                    <PropertyValue Property="SearchSupported" Bool="true"/>
+                    <PropertyValue Property="Parameters">
+                        <Collection>
+                            <Record Type="Common.ValueListParameterInOut">
+                                <PropertyValue Property="LocalDataProperty" PropertyPath="Ebeln"/>
+                                <PropertyValue Property="ValueListProperty" String="Ebeln"/>
+                            </Record>
+                            <Record Type="Common.ValueListParameterDisplayOnly">
+                                <PropertyValue Property="ValueListProperty" String="Vbeln"/>
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
+
+         <Annotations Target="SAP.VIMPOHead/Vbeln">
+            <Annotation Term="Common.ValueList">
+                <Record Type="Common.ValueListType">
+                    <PropertyValue Property="CollectionPath" String="VIMPOHead"/>
+                    <PropertyValue Property="SearchSupported" Bool="true"/>
+                    <PropertyValue Property="Parameters">
+                        <Collection>
+                            <Record Type="Common.ValueListParameterInOut">
+                                <PropertyValue Property="LocalDataProperty" PropertyPath="Vbeln"/>
+                                <PropertyValue Property="ValueListProperty" String="Vbeln"/>
+                            </Record>
+                            <Record Type="Common.ValueListParameterDisplayOnly">
+                                <PropertyValue Property="ValueListProperty" String="Ebeln"/>
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
         </Annotations>
         </Schema>
     </edmx:DataServices>

@@ -23,6 +23,8 @@ modules:
 - name: cominvoicecreationinvoicecreationaisp
   type: html5
   path: invoicecreation_aisp
+  parameters:
+      sap.cloud.service: vim_application
   build-parameters:
     build-result: dist
     builder: custom
@@ -33,6 +35,8 @@ modules:
 - name: cominvoiceapprovalinvoiceapprovalaisp
   type: html5
   path: invoiceapproval_aisp
+  parameters:
+      sap.cloud.service: vim_application
   build-parameters:
     build-result: dist
     builder: custom
@@ -40,6 +44,36 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
+- name: AISP_VIM-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: AISP_VIM-destination-service
+    parameters:
+      content-target: true
+  - name: AISP_VIM-repo-host
+    parameters:
+      service-key:
+        name: AISP_VIM-repo-host-key
+  - name: uaa_AISP_VIM
+    parameters:
+      service-key:
+        name: uaa_AISP_VIM-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: vim_application_AISP_VIM_repo_host
+          ServiceInstanceName: AISP_VIM-html5-service
+          ServiceKeyName: AISP_VIM-repo-host-key
+          sap.cloud.service: vim_application
+        - Authentication: OAuth2UserTokenExchange
+          Name: vim_application_uaa_AISP_VIM
+          ServiceInstanceName: AISP_VIM-xsuaa-service
+          ServiceKeyName: uaa_AISP_VIM-key
+          sap.cloud.service: vim_application
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
 resources:
 - name: AISP_VIM-repo-host
   type: org.cloudfoundry.managed-service
@@ -51,7 +85,7 @@ resources:
   type: org.cloudfoundry.managed-service
   parameters:
     config:
-      HTML5Runtime_enabled: false
+      HTML5Runtime_enabled: true
       init_data:
         instance:
           destinations:
@@ -65,6 +99,13 @@ resources:
     service: destination
     service-name: AISP_VIM-destination-service
     service-plan: lite
+- name: uaa_AISP_VIM
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: AISP_VIM-xsuaa-service
+    service-plan: application
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true

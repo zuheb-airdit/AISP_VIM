@@ -21,9 +21,13 @@
             showRestoreButton="true"
         >
             <smartFilterBar:controlConfiguration>
-                <!-- Approval Type Dropdown -->
-
-                <!-- Basic Search Moved Below -->
+                <smartFilterBar:ControlConfiguration
+                    key="Invoicedate"
+                    visibleInAdvancedArea="true"
+                    conditionType="{
+								module: 'sap.ui.comp.config.condition.DateRangeType'
+							}"
+                />
             </smartFilterBar:controlConfiguration>
         </smartFilterBar:SmartFilterBar>
         <IconTabBar
@@ -138,7 +142,7 @@
                             id="idTableInvoiceSub"
                         >
                             <columns>
-                              <Column>
+                                <Column>
                                     <customData>
                                         <core:CustomData
                                             key="p13nData"
