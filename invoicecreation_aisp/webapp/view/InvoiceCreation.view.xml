@@ -21,12 +21,10 @@
             showRestoreButton="true"
         >
             <smartFilterBar:controlConfiguration>
-                 <smartFilterBar:ControlConfiguration
+                <smartFilterBar:ControlConfiguration
                     key="asndate"
                     visibleInAdvancedArea="true"
-                    conditionType="{
-								module: 'sap.ui.comp.config.condition.DateRangeType'
-							}"
+                    conditionType="{ module: 'sap.ui.comp.config.condition.DateRangeType'}"
                 />
             </smartFilterBar:controlConfiguration>
         </smartFilterBar:SmartFilterBar>
@@ -81,6 +79,18 @@
                                     <customData>
                                         <core:CustomData
                                             key="p13nData"
+                                            value='\{"columnKey": "asndate","leadingProperty": "asndate", "sortProperty": "asndate", "filterProperty": "asndate", "columnIndex": "3" }'
+                                        />
+                                    </customData>
+                                    <Label
+                                        text="ASN Date"
+                                        wrapping="true"
+                                    />
+                                </Column>
+                                <Column>
+                                    <customData>
+                                        <core:CustomData
+                                            key="p13nData"
                                             value='\{"columnKey": "Status","leadingProperty": "Status", "sortProperty": "Status", "filterProperty": "Status", "columnIndex": "5" }'
                                         />
                                     </customData>
@@ -109,8 +119,12 @@
 						                    parts:[{path:'ASNamount'},{path:'Waers'}],
 						                    type: 'sap.ui.model.type.Currency',
 						                    formatOptions: {showMeasure: false}
-					}"
-                                            unit="{Waers}"
+					                        }"
+                                            unit="INR"
+                                        />
+                                        <!-- unit="{Waers}" -->
+                                        <Text
+                                            text="{path: 'asndate', formatter: '.formatDate'}"
                                         />
                                         <ObjectStatus
                                             text="{Status}"
@@ -131,7 +145,7 @@
                     text="SUBMITTED"
                 >
                     <smartTable:SmartTable
-                        entitySet="ZP_AISP_POVIM_HEAD_Submitted"
+                        entitySet="VIMDATA"
                         smartFilterId="smartFilterBar"
                         enableExport="true"
                         beforeExport="onBeforeExport"
@@ -144,6 +158,8 @@
                         tableType="ResponsiveTable"
                         demandPopin="true"
                         enableAutoColumnWidth="false"
+                        beforeRebindTable="onBeforeRebindTable"
+                        requestAtLeastFields="Invoicedate,STATUS"
                         id="smartTableSub"
                     >
                         <Table
@@ -153,6 +169,18 @@
                             id="idTableInvoiceSub"
                         >
                             <columns>
+                                <Column>
+                                    <customData>
+                                        <core:CustomData
+                                            key="p13nData"
+                                            value='\{"columnKey": "REQUEST_NO","leadingProperty": "REQUEST_NO", "sortProperty": "REQUEST_NO", "filterProperty": "REQUEST_NO", "columnIndex": "0" }'
+                                        />
+                                    </customData>
+                                    <Label
+                                        text="Request No"
+                                        wrapping="true"
+                                    />
+                                </Column>
                                 <Column>
                                     <customData>
                                         <core:CustomData
@@ -169,7 +197,19 @@
                                     <customData>
                                         <core:CustomData
                                             key="p13nData"
-                                            value='\{"columnKey": "Status","leadingProperty": "Status", "sortProperty": "Status", "filterProperty": "Status", "columnIndex": "5" }'
+                                            value='\{"columnKey": "Invoicedate","leadingProperty": "Invoicedate", "sortProperty": "Invoicedate", "filterProperty": "Invoicedate", "columnIndex": "4" }'
+                                        />
+                                    </customData>
+                                    <Label
+                                        text="Invoice Date"
+                                        wrapping="true"
+                                    />
+                                </Column>
+                                <Column>
+                                    <customData>
+                                        <core:CustomData
+                                            key="p13nData"
+                                            value='\{"columnKey": "STATUS","leadingProperty": "STATUS", "sortProperty": "STATUS", "filterProperty": "STATUS", "columnIndex": "5" }'
                                         />
                                     </customData>
                                     <Label
@@ -191,18 +231,22 @@
                                             inverted="true"
                                             class="noWrapText"
                                         /> -->
+                                        <Text text="{REQUEST_NO}" />
                                         <ObjectNumber
                                             class="sapUiSmallMarginBottom"
                                             number="{
-						parts:[{path:'ASNamount'},{path:'Waers'}],
-						type: 'sap.ui.model.type.Currency',
-						formatOptions: {showMeasure: false}
-					}"
-                                            unit="{Waers}"
+                                                parts:[{path:'ASNamount'},{path:'Waers'}],
+                                                type: 'sap.ui.model.type.Currency',
+                                                formatOptions: {showMeasure: false}
+                                            }"
+                                            unit="INR"
+                                        />
+                                        <Text
+                                            text="{path: 'Invoicedate', formatter: '.formatDate'}"
                                         />
                                         <ObjectStatus
-                                            text="{Status}"
-                                            state="{path: 'Status', formatter: '.statusSubStateFormater'}"
+                                            text="{path: 'STATUS', formatter: '.statusSubStateFormaterSubmittedText'}"
+                                            state="{path: 'STATUS', formatter: '.statusSubStateFormaterSubmitted'}"
                                             inverted="true"
                                             class="noWrapText"
                                         />

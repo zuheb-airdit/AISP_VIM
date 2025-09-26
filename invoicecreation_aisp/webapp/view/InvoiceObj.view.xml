@@ -67,7 +67,7 @@
                         icon="sap-icon://edit"
                         press="onPressEdit"
                         type="Emphasized"
-                        visible="{= ${headData>/Status} === 'REJECTED' }"
+                        visible="{= ${headData>/Status} === 3 }"
                     />
                 </actions>
             </ObjectPageDynamicHeaderTitle>
@@ -213,6 +213,19 @@
                 </m:VBox>
 
                 <!-- FOURTH COLUMN: Purchase Org & Amount -->
+                <m:VBox class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                    <m:HBox
+                        class="sapUiTinyMarginBottom"
+                        visible="{= ${headData>/STATUS} === 5}"
+                    >
+                        <m:Label
+                            text="Supplier Invoice Ref No:"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <m:Text text="{headData>/supplierInvoiceRefNo}" />
+                        <!-- e.g. Invoice Pending -->
+                    </m:HBox>
+                </m:VBox>
             </m:FlexBox>
         </headerContent>
 
@@ -496,14 +509,13 @@
                                                         press="onPreviewAttachment"
                                                         class="sapUiTinyMarginEnd"
                                                     >
-                                                      <m:customData>
-                                            <core:CustomData
-                                                key="imageUrl"
-                                                value="{attachmentsModel>IMAGEURL}"
-                                                writeToDom="false"
-                                            />
-
-                                        </m:customData>
+                                                        <m:customData>
+                                                            <core:CustomData
+                                                                key="imageUrl"
+                                                                value="{attachmentsModel>IMAGEURL}"
+                                                                writeToDom="false"
+                                                            />
+                                                        </m:customData>
                                                     </m:Button>
                                                     <m:Button
                                                         icon="sap-icon://delete"

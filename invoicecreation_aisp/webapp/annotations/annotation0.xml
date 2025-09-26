@@ -43,9 +43,24 @@
                             <PropertyValue Property="Value" Path="vbeln" />
                             <PropertyValue Property="Label" String="ASN Number" />
                         </Record>
-                        <Record Type="UI.DataField">
+                        <!-- <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="asndate" />
                             <PropertyValue Property="Label" String="ASN Date" />
+                        </Record> -->
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="SAP.VIMDATA">
+                <Annotation Term="UI.LineItem" >
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Invoicerefno"/>
+                            <PropertyValue Property="Label" String="Invoice Ref No"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Vbeln"/>
+                            <PropertyValue Property="Label" String="ASN Number"/>
                         </Record>
                     </Collection>
                 </Annotation>

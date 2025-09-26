@@ -17,7 +17,7 @@
         },
         "dataSources": {
             "mainService": {
-                "uri": "/odata/v2/zp-aisp-povim-head-bndsample/",
+                "uri": "/odata/v2/povim-customer-side/",
                 "type": "OData",
                 "settings": {
                     "annotations": [
@@ -120,7 +120,6 @@
                         "Invoicepdf"
                     ]
                 }
-
             ],
             "targets": {
                 "TargetInvoiceApproval": {

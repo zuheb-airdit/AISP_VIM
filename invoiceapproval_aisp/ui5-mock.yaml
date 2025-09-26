@@ -9,7 +9,7 @@ server:
     - name: fiori-tools-proxy
       afterMiddleware: compression
       configuration:
-        ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+        ignoreCertError: false
         ui5:
           path:
             - /resources
@@ -35,7 +35,7 @@ server:
       configuration:
         mountPath: /
         services:
-          - urlPath: /odata/v2/zp-aisp-povim-head-bndsample
+          - urlPath: /odata/v2/povim-customer-side
             metadataPath: ./webapp/localService/mainService/metadata.xml
             mockdataPath: ./webapp/localService/mainService/data
             generateMockData: true

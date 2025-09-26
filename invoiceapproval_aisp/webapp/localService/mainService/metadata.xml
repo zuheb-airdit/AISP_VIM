@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
-    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-        <edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
-    </edmx:Reference>
     <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
         <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
     </edmx:Reference>
@@ -10,311 +7,395 @@
         <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
     </edmx:Reference>
     <edmx:DataServices m:DataServiceVersion="2.0">
-        <Schema Namespace="ZP_AISP_POVIM_HEAD_BNDSampleService" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <Schema Namespace="POVIM_CUSTOMER_SIDE" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
             <EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true">
-                <EntitySet Name="VIMPOHead" EntityType="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMPOHead"/>
-                <EntitySet Name="RejectedTab" EntityType="ZP_AISP_POVIM_HEAD_BNDSampleService.RejectedTab"/>
-                <EntitySet Name="VIMDATA" EntityType="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMDATA"/>
-                <EntitySet Name="VIMPOItem" EntityType="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMPOItem"/>
-                <EntitySet Name="VIMAttachment" EntityType="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMAttachment"/>
-                <EntitySet Name="SAP__UnitsOfMeasure" EntityType="ZP_AISP_POVIM_HEAD_BNDSampleService.SAP__UnitsOfMeasure"/>
-                <EntitySet Name="SAP__Currencies" EntityType="ZP_AISP_POVIM_HEAD_BNDSampleService.SAP__Currencies"/>
-                <EntitySet Name="ZP_AISP_POVIM_HEAD_Pending" EntityType="ZP_AISP_POVIM_HEAD_BNDSampleService.ZP_AISP_POVIM_HEAD_Pending" sap:deletable-path="Delete_mc" sap:updatable-path="Update_mc" sap:label="Projection View for PO based Invoice"/>
-                <EntitySet Name="ZP_AISP_POVIM_HEAD_Submitted" EntityType="ZP_AISP_POVIM_HEAD_BNDSampleService.ZP_AISP_POVIM_HEAD_Submitted" sap:deletable-path="Delete_mc" sap:updatable-path="Update_mc" sap:label="Projection View for PO based Invoice"/>
-                <EntitySet Name="ZP_AISP_POVIM_HEAD" EntityType="ZP_AISP_POVIM_HEAD_BNDSampleService.ZP_AISP_POVIM_HEAD" sap:deletable-path="Delete_mc" sap:updatable-path="Update_mc" sap:label="Projection View for PO based Invoice"/>
-                <EntitySet Name="ZP_AISP_POVIM_ITEM" EntityType="ZP_AISP_POVIM_HEAD_BNDSampleService.ZP_AISP_POVIM_ITEM" sap:deletable-path="Delete_mc" sap:updatable-path="Update_mc" sap:label="Projection View for PO based Inv Item"/>
+                <EntitySet Name="VIMPOHead" EntityType="POVIM_CUSTOMER_SIDE.VIMPOHead"/>
+                <EntitySet Name="RejectedTab" EntityType="POVIM_CUSTOMER_SIDE.RejectedTab"/>
+                <EntitySet Name="ApprovedTab" EntityType="POVIM_CUSTOMER_SIDE.ApprovedTab"/>
+                <EntitySet Name="VIMDATA" EntityType="POVIM_CUSTOMER_SIDE.VIMDATA"/>
+                <EntitySet Name="VIMPOItem" EntityType="POVIM_CUSTOMER_SIDE.VIMPOItem"/>
+                <EntitySet Name="VIMAttachment" EntityType="POVIM_CUSTOMER_SIDE.VIMAttachment"/>
+                <EntitySet Name="VIM_APPROVAL_LOGS" EntityType="POVIM_CUSTOMER_SIDE.VIM_APPROVAL_LOGS"/>
                 <FunctionImport Name="PostVimData" ReturnType="Edm.String" m:HttpMethod="POST">
                     <Parameter Name="action" Type="Edm.String" Mode="In" Nullable="true"/>
                     <Parameter Name="REQUEST_NO" Type="Edm.Int32" Mode="In" Nullable="true"/>
-                    <Parameter Name="Vimhead" Type="Collection(ZP_AISP_POVIM_HEAD_BNDSampleService.VIMPOHead)" Nullable="false" Mode="In"/>
-                    <Parameter Name="Vimitem" Type="Collection(ZP_AISP_POVIM_HEAD_BNDSampleService.VIMPOItem)" Nullable="false" Mode="In"/>
-                    <Parameter Name="Attachment" Type="Collection(ZP_AISP_POVIM_HEAD_BNDSampleService.VIMAttachment)" Nullable="false" Mode="In"/>
+                    <Parameter Name="Vimhead" Type="Collection(POVIM_CUSTOMER_SIDE.VIMPOHead)" Nullable="false" Mode="In"/>
+                    <Parameter Name="Vimitem" Type="Collection(POVIM_CUSTOMER_SIDE.VIMPOItem)" Nullable="false" Mode="In"/>
+                    <Parameter Name="Attachment" Type="Collection(POVIM_CUSTOMER_SIDE.VIMAttachment)" Nullable="false" Mode="In"/>
                 </FunctionImport>
-                <AssociationSet Name="VIMPOHead_TO_VIM_ITEMS" Association="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMPOHead_TO_VIM_ITEMS">
+                <AssociationSet Name="VIMPOHead_TO_VIM_ITEMS" Association="POVIM_CUSTOMER_SIDE.VIMPOHead_TO_VIM_ITEMS">
                     <End Role="VIMPOHead" EntitySet="VIMPOHead"/>
                     <End Role="VIMPOItem" EntitySet="VIMPOItem"/>
                 </AssociationSet>
-                <AssociationSet Name="VIMPOHead_TO_VIM_ATTACHMENTS" Association="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMPOHead_TO_VIM_ATTACHMENTS">
+                <AssociationSet Name="VIMPOHead_TO_VIM_ATTACHMENTS" Association="POVIM_CUSTOMER_SIDE.VIMPOHead_TO_VIM_ATTACHMENTS">
                     <End Role="VIMPOHead" EntitySet="VIMPOHead"/>
                     <End Role="VIMAttachment" EntitySet="VIMAttachment"/>
                 </AssociationSet>
-                <AssociationSet Name="RejectedTab_TO_VIM_ITEMS" Association="ZP_AISP_POVIM_HEAD_BNDSampleService.RejectedTab_TO_VIM_ITEMS">
+                <AssociationSet Name="RejectedTab_TO_VIM_ITEMS" Association="POVIM_CUSTOMER_SIDE.RejectedTab_TO_VIM_ITEMS">
                     <End Role="RejectedTab" EntitySet="RejectedTab"/>
                     <End Role="VIMPOItem" EntitySet="VIMPOItem"/>
                 </AssociationSet>
-                <AssociationSet Name="RejectedTab_TO_VIM_ATTACHMENTS" Association="ZP_AISP_POVIM_HEAD_BNDSampleService.RejectedTab_TO_VIM_ATTACHMENTS">
+                <AssociationSet Name="RejectedTab_TO_VIM_ATTACHMENTS" Association="POVIM_CUSTOMER_SIDE.RejectedTab_TO_VIM_ATTACHMENTS">
                     <End Role="RejectedTab" EntitySet="RejectedTab"/>
                     <End Role="VIMAttachment" EntitySet="VIMAttachment"/>
                 </AssociationSet>
-                <AssociationSet Name="VIMDATA_TO_VIM_ITEMS" Association="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMDATA_TO_VIM_ITEMS">
+                <AssociationSet Name="ApprovedTab_TO_VIM_ITEMS" Association="POVIM_CUSTOMER_SIDE.ApprovedTab_TO_VIM_ITEMS">
+                    <End Role="ApprovedTab" EntitySet="ApprovedTab"/>
+                    <End Role="VIMPOItem" EntitySet="VIMPOItem"/>
+                </AssociationSet>
+                <AssociationSet Name="ApprovedTab_TO_VIM_ATTACHMENTS" Association="POVIM_CUSTOMER_SIDE.ApprovedTab_TO_VIM_ATTACHMENTS">
+                    <End Role="ApprovedTab" EntitySet="ApprovedTab"/>
+                    <End Role="VIMAttachment" EntitySet="VIMAttachment"/>
+                </AssociationSet>
+                <AssociationSet Name="VIMDATA_TO_VIM_ITEMS" Association="POVIM_CUSTOMER_SIDE.VIMDATA_TO_VIM_ITEMS">
                     <End Role="VIMDATA" EntitySet="VIMDATA"/>
                     <End Role="VIMPOItem" EntitySet="VIMPOItem"/>
                 </AssociationSet>
-                <AssociationSet Name="VIMDATA_TO_VIM_ATTACHMENTS" Association="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMDATA_TO_VIM_ATTACHMENTS">
+                <AssociationSet Name="VIMDATA_TO_VIM_ATTACHMENTS" Association="POVIM_CUSTOMER_SIDE.VIMDATA_TO_VIM_ATTACHMENTS">
                     <End Role="VIMDATA" EntitySet="VIMDATA"/>
                     <End Role="VIMAttachment" EntitySet="VIMAttachment"/>
                 </AssociationSet>
             </EntityContainer>
             <EntityType Name="VIMPOHead">
                 <Key>
-                    <PropertyRef Name="Ebeln"/>
-                    <PropertyRef Name="Vbeln"/>
+                    <PropertyRef Name="REQUEST_NO"/>
                 </Key>
-                <Property Name="Ebeln" Type="Edm.String" Nullable="false"/>
-                <Property Name="Vbeln" Type="Edm.String" Nullable="false"/>
-                <Property Name="Xblnr" Type="Edm.String"/>
-                <Property Name="Mblnr" Type="Edm.String"/>
-                <Property Name="Bukrs" Type="Edm.String"/>
-                <Property Name="Bedat" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Bstyp" Type="Edm.String"/>
-                <Property Name="Bsart" Type="Edm.String"/>
-                <Property Name="Bsakz" Type="Edm.String"/>
-                <Property Name="Loekz" Type="Edm.String"/>
-                <Property Name="Statu" Type="Edm.String"/>
-                <Property Name="Aedat" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Ernam" Type="Edm.String"/>
-                <Property Name="LastChangeDate" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Pincr" Type="Edm.String"/>
-                <Property Name="Lponr" Type="Edm.String"/>
-                <Property Name="Lifnr" Type="Edm.String"/>
-                <Property Name="ASNamount" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="AsnDate" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Status" Type="Edm.String"/>
-                <Property Name="Name1" Type="Edm.String"/>
-                <Property Name="VendorAddress" Type="Edm.String"/>
-                <Property Name="BankKey" Type="Edm.String"/>
-                <Property Name="BankAccount" Type="Edm.String"/>
-                <Property Name="BankName" Type="Edm.String"/>
-                <Property Name="Zterm" Type="Edm.String"/>
-                <Property Name="Zbd1t" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Zbd2t" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Zbd3t" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Zbd1p" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Zbd2p" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Ekorg" Type="Edm.String"/>
-                <Property Name="Ekgrp" Type="Edm.String"/>
-                <Property Name="Waers" Type="Edm.String"/>
-                <Property Name="Kufix" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Kdatb" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Kdate" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Bwbdt" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Angdt" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Bnddt" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Gwldt" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Ausnr" Type="Edm.String"/>
-                <Property Name="Angnr" Type="Edm.String"/>
-                <Property Name="Ihran" Type="Edm.String"/>
-                <Property Name="Ihrez" Type="Edm.String"/>
-                <Property Name="Verkf" Type="Edm.String"/>
-                <Property Name="Llief" Type="Edm.String"/>
-                <Property Name="Kunnr" Type="Edm.String"/>
-                <Property Name="ActiveId" Type="Edm.String"/>
-                <Property Name="Konnr" Type="Edm.String"/>
-                <Property Name="Abgru" Type="Edm.String"/>
-                <Property Name="Autlf" Type="Edm.String"/>
-                <Property Name="Weakt" Type="Edm.String"/>
-                <Property Name="TotalAmount" Type="Edm.String"/>
-                <Property Name="APPROVED_COMMENT" Type="Edm.String"/>
-                <Property Name="REJECTED_COMMENT" Type="Edm.String"/>
-                <Property Name="CREATED_ON" Type="Edm.DateTimeOffset" Precision="7"/>
-                <Property Name="LAST_UPDATED_ON" Type="Edm.DateTimeOffset" Precision="7"/>
-                <Property Name="PROCESS_LEVEL" Type="Edm.String"/>
-                <Property Name="Invoicerefno" Type="Edm.String"/>
-                <Property Name="Invoicedate" Type="Edm.String"/>
-                <Property Name="APPROVER_ROLE" Type="Edm.String"/>
-                <Property Name="APPROVER_LEVEL" Type="Edm.Int32"/>
-                <Property Name="CURRENT_ASSIGNEE" Type="Edm.String"/>
-                <Property Name="COMPANY_CODE" Type="Edm.String"/>
-                <Property Name="REQUEST_NO" Type="Edm.Int32"/>
-                <NavigationProperty Name="TO_VIM_ITEMS" Relationship="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMPOHead_TO_VIM_ITEMS" FromRole="VIMPOHead" ToRole="VIMPOItem"/>
-                <NavigationProperty Name="TO_VIM_ATTACHMENTS" Relationship="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMPOHead_TO_VIM_ATTACHMENTS" FromRole="VIMPOHead" ToRole="VIMAttachment"/>
+                <Property Name="Ebeln" Type="Edm.String" sap:label="Purchase Order Number" sap:quickinfo="Unique identifier of the Purchase Order linked to this record"/>
+                <Property Name="Vbeln" Type="Edm.String" sap:label="Inbound Delivery" sap:quickinfo="Inbound delivery document number associated with the PO"/>
+                <Property Name="Xblnr" Type="Edm.String" sap:label="Reference Document Number" sap:quickinfo="Cross-reference document number (e.g., invoice/shipment reference)"/>
+                <Property Name="Mblnr" Type="Edm.String" sap:label="Material Document Number" sap:quickinfo="Material document generated for goods movement postings"/>
+                <Property Name="Bukrs" Type="Edm.String" sap:label="Company Code" sap:quickinfo="Legal entity (company code) responsible for the document"/>
+                <Property Name="Bedat" Type="Edm.String" sap:label="Document Date" sap:quickinfo="Date on which the document was created/issued"/>
+                <Property Name="Bstyp" Type="Edm.String" sap:label="Document Type" sap:quickinfo="Type of purchasing document (e.g., Standard, Subcontracting)"/>
+                <Property Name="Bsart" Type="Edm.String" sap:label="Purchase Order Type" sap:quickinfo="Category of purchase order (e.g., NB – Standard PO)"/>
+                <Property Name="Bsakz" Type="Edm.String" sap:label="Document Category" sap:quickinfo="High-level category/classification of the document"/>
+                <Property Name="Loekz" Type="Edm.String" sap:label="Deletion Flag" sap:quickinfo="Indicates whether the document or item is marked for deletion"/>
+                <Property Name="Statu" Type="Edm.String" sap:label="Status" sap:quickinfo="Overall processing status of the document"/>
+                <Property Name="Aedat" Type="Edm.String" sap:label="Last Change Date (Technical)" sap:quickinfo="Technical date of last change to the document"/>
+                <Property Name="Ernam" Type="Edm.String" sap:label="Created By" sap:quickinfo="User ID of the person who created the document"/>
+                <Property Name="LastChangeDate" Type="Edm.String" sap:label="Last Changed Date" sap:quickinfo="Business-readable last changed date (if different from Aedat)"/>
+                <Property Name="Pincr" Type="Edm.String" sap:label="Purchasing Document Increment" sap:quickinfo="Internal increment/counter for the purchasing document"/>
+                <Property Name="Lponr" Type="Edm.String" sap:label="Purchase Order Item" sap:quickinfo="Item number within the purchase order"/>
+                <Property Name="Lifnr" Type="Edm.String" sap:label="Vendor Number" sap:quickinfo="Supplier account number (LIFNR)"/>
+                <Property Name="ASNamount" Type="Edm.Decimal" sap:label="ASN Amount" sap:quickinfo="Total amount associated with the advance shipping notice" sap:variable-scale="true"/>
+                <Property Name="AsnDate" Type="Edm.String" sap:label="ASN Date" sap:quickinfo="Date when the advance shipping notice was created/sent"/>
+                <Property Name="Name1" Type="Edm.String" sap:label="Vendor Name" sap:quickinfo="Name of the supplier"/>
+                <Property Name="VendorAddress" Type="Edm.String" sap:label="Vendor Address" sap:quickinfo="Formatted address of the supplier"/>
+                <Property Name="BankKey" Type="Edm.String" sap:label="Bank Key" sap:quickinfo="Bank identification key (e.g., routing/IFSC)"/>
+                <Property Name="BankAccount" Type="Edm.String" sap:label="Bank Account" sap:quickinfo="Supplier’s bank account number"/>
+                <Property Name="BankName" Type="Edm.String" sap:label="Bank Name" sap:quickinfo="Name of the supplier’s bank"/>
+                <Property Name="Zterm" Type="Edm.String" sap:label="Payment Term" sap:quickinfo="Payment terms (e.g., due days, cash discount)"/>
+                <Property Name="Zbd1t" Type="Edm.Decimal" sap:label="Discount Days 1" sap:quickinfo="Number of days for the first cash discount period" sap:variable-scale="true"/>
+                <Property Name="Zbd2t" Type="Edm.Decimal" sap:label="Discount Days 2" sap:quickinfo="Number of days for the second cash discount period" sap:variable-scale="true"/>
+                <Property Name="Zbd3t" Type="Edm.Decimal" sap:label="Discount Days 3" sap:quickinfo="Number of days for the third cash discount period" sap:variable-scale="true"/>
+                <Property Name="Zbd1p" Type="Edm.Decimal" sap:label="Discount Percent 1" sap:quickinfo="Cash discount percentage for the first period" sap:variable-scale="true"/>
+                <Property Name="Zbd2p" Type="Edm.Decimal" sap:label="Discount Percent 2" sap:quickinfo="Cash discount percentage for the second period" sap:variable-scale="true"/>
+                <Property Name="Ekorg" Type="Edm.String" sap:label="Purchasing Organization" sap:quickinfo="Organization unit responsible for procurement"/>
+                <Property Name="Ekgrp" Type="Edm.String" sap:label="Purchasing Group" sap:quickinfo="Buyer / buying group responsible for this document"/>
+                <Property Name="Waers" Type="Edm.String" sap:label="Currency" sap:quickinfo="Transaction currency code (WAERS)"/>
+                <Property Name="Kufix" Type="Edm.Decimal" sap:label="Fixed Exchange Rate" sap:quickinfo="Indicates a fixed currency/exchange rate is applied" sap:variable-scale="true"/>
+                <Property Name="Kdatb" Type="Edm.String" sap:label="Valid From" sap:quickinfo="Start date of validity (e.g., conditions/contract)"/>
+                <Property Name="Kdate" Type="Edm.String" sap:label="Valid To" sap:quickinfo="End date of validity (e.g., conditions/contract)"/>
+                <Property Name="Bwbdt" Type="Edm.String" sap:label="Planned Delivery Date" sap:quickinfo="Planned date for delivery of goods/services"/>
+                <Property Name="Angdt" Type="Edm.String" sap:label="Delivery Date" sap:quickinfo="Promised/requested date for delivery"/>
+                <Property Name="Bnddt" Type="Edm.String" sap:label="Binding Date" sap:quickinfo="Date until which an offer/commitment remains binding"/>
+                <Property Name="Gwldt" Type="Edm.String" sap:label="Goods Receipt Date" sap:quickinfo="Date on which the goods receipt was posted"/>
+                <Property Name="Ausnr" Type="Edm.String" sap:label="Reference PO Number" sap:quickinfo="Related or preceding purchase order number"/>
+                <Property Name="Angnr" Type="Edm.String" sap:label="Document Number" sap:quickinfo="Generic related document number (context-dependent)"/>
+                <Property Name="Ihran" Type="Edm.String" sap:label="Planned Delivery" sap:quickinfo="Planned delivery reference (quantity/date)"/>
+                <Property Name="Ihrez" Type="Edm.String" sap:label="Deliveries Pending" sap:quickinfo="Outstanding deliveries yet to be received"/>
+                <Property Name="Verkf" Type="Edm.String" sap:label="Sales Organization" sap:quickinfo="Sales organization involved, if applicable"/>
+                <Property Name="Llief" Type="Edm.String" sap:label="Vendor Code (Alt.)" sap:quickinfo="Alternate vendor code used in processes"/>
+                <Property Name="Kunnr" Type="Edm.String" sap:label="Customer Number" sap:quickinfo="Customer account number (if relevant)"/>
+                <Property Name="ActiveId" Type="Edm.String" sap:label="Active ID" sap:quickinfo="Identifier denoting active record/version"/>
+                <Property Name="Konnr" Type="Edm.String" sap:label="Account Number" sap:quickinfo="Account assignment/contract number"/>
+                <Property Name="Abgru" Type="Edm.String" sap:label="Account Group" sap:quickinfo="Grouping used for account classification"/>
+                <Property Name="Autlf" Type="Edm.String" sap:label="Automatic Delivery Flag" sap:quickinfo="Indicates whether automatic delivery is allowed"/>
+                <Property Name="Weakt" Type="Edm.String" sap:label="Active Indicator" sap:quickinfo="Marks whether the record is currently active"/>
+                <Property Name="TotalAmount" Type="Edm.Int32" sap:label="Total Amount" sap:quickinfo="Total value of the document in document currency"/>
+                <Property Name="APPROVED_COMMENT" Type="Edm.String" sap:label="Approval Comment" sap:quickinfo="Remarks recorded by approvers when approving"/>
+                <Property Name="REJECTED_COMMENT" Type="Edm.String" sap:label="Rejection Comment" sap:quickinfo="Reason/remarks provided upon rejection"/>
+                <Property Name="CREATED_ON" Type="Edm.DateTimeOffset" Precision="7" sap:label="Created On" sap:quickinfo="Timestamp when the record was created"/>
+                <Property Name="LAST_UPDATED_ON" Type="Edm.DateTimeOffset" Precision="7" sap:label="Last Updated On" sap:quickinfo="Timestamp of the most recent update"/>
+                <Property Name="PROCESS_LEVEL" Type="Edm.String" sap:label="Process Level" sap:quickinfo="Current level/stage in the business workflow"/>
+                <Property Name="Invoicerefno" Type="Edm.String" sap:label="Invoice Reference Number" sap:quickinfo="External invoice reference linked to this process"/>
+                <Property Name="Invoicedate" Type="Edm.DateTime" sap:label="Invoice Date" sap:quickinfo="Date printed or recorded on the invoice" sap:display-format="Date"/>
+                <Property Name="APPROVER_ROLE" Type="Edm.String" sap:label="Approver Role" sap:quickinfo="Role responsible for the current approval step"/>
+                <Property Name="APPROVER_LEVEL" Type="Edm.Int32" sap:label="Approver Level" sap:quickinfo="Numeric level of the approver in the workflow"/>
+                <Property Name="CURRENT_ASSIGNEE" Type="Edm.String" sap:label="Current Assignee" sap:quickinfo="User currently assigned to act on the item"/>
+                <Property Name="COMPANY_CODE" Type="Edm.String" sap:label="Company Code (Display)" sap:quickinfo="Display copy of the company code for UI/use cases"/>
+                <Property Name="INVOICE_NUMBER" Type="Edm.String" sap:label="Invoice Number" sap:quickinfo="Identifier of the vendor/customer invoice"/>
+                <Property Name="MAX_APPROVER_LEVEL" Type="Edm.Int32" sap:label="Max Approver Level" sap:quickinfo="Highest approver level configured for this workflow"/>
+                <Property Name="REQUEST_NO" Type="Edm.Int32" Nullable="false" sap:label="Request Number" sap:quickinfo="Internal request identifier for this process"/>
+                <Property Name="supplierInvoiceRefNo" Type="Edm.String" sap:label="Invoice ref no" sap:quickinfo="Respponse from s4 invoice ref no"/>
+                <Property Name="STATUS" Type="Edm.Int32" sap:label="STATUS" sap:quickinfo="Status"/>
+                <NavigationProperty Name="TO_VIM_ITEMS" Relationship="POVIM_CUSTOMER_SIDE.VIMPOHead_TO_VIM_ITEMS" FromRole="VIMPOHead" ToRole="VIMPOItem" sap:label="VIM Items" sap:quickinfo="Association to all VIM items belonging to this request"/>
+                <NavigationProperty Name="TO_VIM_ATTACHMENTS" Relationship="POVIM_CUSTOMER_SIDE.VIMPOHead_TO_VIM_ATTACHMENTS" FromRole="VIMPOHead" ToRole="VIMAttachment" sap:label="VIM Attachments" sap:quickinfo="Association to all company profile attachments for this request"/>
             </EntityType>
             <EntityType Name="RejectedTab">
                 <Key>
-                    <PropertyRef Name="Ebeln"/>
-                    <PropertyRef Name="Vbeln"/>
+                    <PropertyRef Name="REQUEST_NO"/>
                 </Key>
-                <Property Name="Ebeln" Type="Edm.String" Nullable="false"/>
-                <Property Name="Vbeln" Type="Edm.String" Nullable="false"/>
-                <Property Name="Xblnr" Type="Edm.String"/>
-                <Property Name="Mblnr" Type="Edm.String"/>
-                <Property Name="Bukrs" Type="Edm.String"/>
-                <Property Name="Bedat" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Bstyp" Type="Edm.String"/>
-                <Property Name="Bsart" Type="Edm.String"/>
-                <Property Name="Bsakz" Type="Edm.String"/>
-                <Property Name="Loekz" Type="Edm.String"/>
-                <Property Name="Statu" Type="Edm.String"/>
-                <Property Name="Aedat" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Ernam" Type="Edm.String"/>
-                <Property Name="LastChangeDate" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Pincr" Type="Edm.String"/>
-                <Property Name="Lponr" Type="Edm.String"/>
-                <Property Name="Lifnr" Type="Edm.String"/>
-                <Property Name="ASNamount" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="AsnDate" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Status" Type="Edm.String"/>
-                <Property Name="Name1" Type="Edm.String"/>
-                <Property Name="VendorAddress" Type="Edm.String"/>
-                <Property Name="BankKey" Type="Edm.String"/>
-                <Property Name="BankAccount" Type="Edm.String"/>
-                <Property Name="BankName" Type="Edm.String"/>
-                <Property Name="Zterm" Type="Edm.String"/>
-                <Property Name="Zbd1t" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Zbd2t" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Zbd3t" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Zbd1p" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Zbd2p" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Ekorg" Type="Edm.String"/>
-                <Property Name="Ekgrp" Type="Edm.String"/>
-                <Property Name="Waers" Type="Edm.String"/>
-                <Property Name="Kufix" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Kdatb" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Kdate" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Bwbdt" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Angdt" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Bnddt" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Gwldt" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Ausnr" Type="Edm.String"/>
-                <Property Name="Angnr" Type="Edm.String"/>
-                <Property Name="Ihran" Type="Edm.String"/>
-                <Property Name="Ihrez" Type="Edm.String"/>
-                <Property Name="Verkf" Type="Edm.String"/>
-                <Property Name="Llief" Type="Edm.String"/>
-                <Property Name="Kunnr" Type="Edm.String"/>
-                <Property Name="ActiveId" Type="Edm.String"/>
-                <Property Name="Konnr" Type="Edm.String"/>
-                <Property Name="Abgru" Type="Edm.String"/>
-                <Property Name="Autlf" Type="Edm.String"/>
-                <Property Name="Weakt" Type="Edm.String"/>
-                <Property Name="TotalAmount" Type="Edm.String"/>
-                <Property Name="APPROVED_COMMENT" Type="Edm.String"/>
-                <Property Name="REJECTED_COMMENT" Type="Edm.String"/>
-                <Property Name="CREATED_ON" Type="Edm.DateTimeOffset" Precision="7"/>
-                <Property Name="LAST_UPDATED_ON" Type="Edm.DateTimeOffset" Precision="7"/>
-                <Property Name="PROCESS_LEVEL" Type="Edm.String"/>
-                <Property Name="Invoicerefno" Type="Edm.String"/>
-                <Property Name="Invoicedate" Type="Edm.String"/>
-                <Property Name="APPROVER_ROLE" Type="Edm.String"/>
-                <Property Name="APPROVER_LEVEL" Type="Edm.Int32"/>
-                <Property Name="CURRENT_ASSIGNEE" Type="Edm.String"/>
-                <Property Name="COMPANY_CODE" Type="Edm.String"/>
-                <Property Name="REQUEST_NO" Type="Edm.Int32"/>
-                <NavigationProperty Name="TO_VIM_ITEMS" Relationship="ZP_AISP_POVIM_HEAD_BNDSampleService.RejectedTab_TO_VIM_ITEMS" FromRole="RejectedTab" ToRole="VIMPOItem"/>
-                <NavigationProperty Name="TO_VIM_ATTACHMENTS" Relationship="ZP_AISP_POVIM_HEAD_BNDSampleService.RejectedTab_TO_VIM_ATTACHMENTS" FromRole="RejectedTab" ToRole="VIMAttachment"/>
+                <Property Name="Ebeln" Type="Edm.String" sap:label="Purchase Order Number" sap:quickinfo="Unique identifier of the Purchase Order linked to this record"/>
+                <Property Name="Vbeln" Type="Edm.String" sap:label="Inbound Delivery" sap:quickinfo="Inbound delivery document number associated with the PO"/>
+                <Property Name="Xblnr" Type="Edm.String" sap:label="Reference Document Number" sap:quickinfo="Cross-reference document number (e.g., invoice/shipment reference)"/>
+                <Property Name="Mblnr" Type="Edm.String" sap:label="Material Document Number" sap:quickinfo="Material document generated for goods movement postings"/>
+                <Property Name="Bukrs" Type="Edm.String" sap:label="Company Code" sap:quickinfo="Legal entity (company code) responsible for the document"/>
+                <Property Name="Bedat" Type="Edm.String" sap:label="Document Date" sap:quickinfo="Date on which the document was created/issued"/>
+                <Property Name="Bstyp" Type="Edm.String" sap:label="Document Type" sap:quickinfo="Type of purchasing document (e.g., Standard, Subcontracting)"/>
+                <Property Name="Bsart" Type="Edm.String" sap:label="Purchase Order Type" sap:quickinfo="Category of purchase order (e.g., NB – Standard PO)"/>
+                <Property Name="Bsakz" Type="Edm.String" sap:label="Document Category" sap:quickinfo="High-level category/classification of the document"/>
+                <Property Name="Loekz" Type="Edm.String" sap:label="Deletion Flag" sap:quickinfo="Indicates whether the document or item is marked for deletion"/>
+                <Property Name="Statu" Type="Edm.String" sap:label="Status" sap:quickinfo="Overall processing status of the document"/>
+                <Property Name="Aedat" Type="Edm.String" sap:label="Last Change Date (Technical)" sap:quickinfo="Technical date of last change to the document"/>
+                <Property Name="Ernam" Type="Edm.String" sap:label="Created By" sap:quickinfo="User ID of the person who created the document"/>
+                <Property Name="LastChangeDate" Type="Edm.String" sap:label="Last Changed Date" sap:quickinfo="Business-readable last changed date (if different from Aedat)"/>
+                <Property Name="Pincr" Type="Edm.String" sap:label="Purchasing Document Increment" sap:quickinfo="Internal increment/counter for the purchasing document"/>
+                <Property Name="Lponr" Type="Edm.String" sap:label="Purchase Order Item" sap:quickinfo="Item number within the purchase order"/>
+                <Property Name="Lifnr" Type="Edm.String" sap:label="Vendor Number" sap:quickinfo="Supplier account number (LIFNR)"/>
+                <Property Name="ASNamount" Type="Edm.Decimal" sap:label="ASN Amount" sap:quickinfo="Total amount associated with the advance shipping notice" sap:variable-scale="true"/>
+                <Property Name="AsnDate" Type="Edm.String" sap:label="ASN Date" sap:quickinfo="Date when the advance shipping notice was created/sent"/>
+                <Property Name="Name1" Type="Edm.String" sap:label="Vendor Name" sap:quickinfo="Name of the supplier"/>
+                <Property Name="VendorAddress" Type="Edm.String" sap:label="Vendor Address" sap:quickinfo="Formatted address of the supplier"/>
+                <Property Name="BankKey" Type="Edm.String" sap:label="Bank Key" sap:quickinfo="Bank identification key (e.g., routing/IFSC)"/>
+                <Property Name="BankAccount" Type="Edm.String" sap:label="Bank Account" sap:quickinfo="Supplier’s bank account number"/>
+                <Property Name="BankName" Type="Edm.String" sap:label="Bank Name" sap:quickinfo="Name of the supplier’s bank"/>
+                <Property Name="Zterm" Type="Edm.String" sap:label="Payment Term" sap:quickinfo="Payment terms (e.g., due days, cash discount)"/>
+                <Property Name="Zbd1t" Type="Edm.Decimal" sap:label="Discount Days 1" sap:quickinfo="Number of days for the first cash discount period" sap:variable-scale="true"/>
+                <Property Name="Zbd2t" Type="Edm.Decimal" sap:label="Discount Days 2" sap:quickinfo="Number of days for the second cash discount period" sap:variable-scale="true"/>
+                <Property Name="Zbd3t" Type="Edm.Decimal" sap:label="Discount Days 3" sap:quickinfo="Number of days for the third cash discount period" sap:variable-scale="true"/>
+                <Property Name="Zbd1p" Type="Edm.Decimal" sap:label="Discount Percent 1" sap:quickinfo="Cash discount percentage for the first period" sap:variable-scale="true"/>
+                <Property Name="Zbd2p" Type="Edm.Decimal" sap:label="Discount Percent 2" sap:quickinfo="Cash discount percentage for the second period" sap:variable-scale="true"/>
+                <Property Name="Ekorg" Type="Edm.String" sap:label="Purchasing Organization" sap:quickinfo="Organization unit responsible for procurement"/>
+                <Property Name="Ekgrp" Type="Edm.String" sap:label="Purchasing Group" sap:quickinfo="Buyer / buying group responsible for this document"/>
+                <Property Name="Waers" Type="Edm.String" sap:label="Currency" sap:quickinfo="Transaction currency code (WAERS)"/>
+                <Property Name="Kufix" Type="Edm.Decimal" sap:label="Fixed Exchange Rate" sap:quickinfo="Indicates a fixed currency/exchange rate is applied" sap:variable-scale="true"/>
+                <Property Name="Kdatb" Type="Edm.String" sap:label="Valid From" sap:quickinfo="Start date of validity (e.g., conditions/contract)"/>
+                <Property Name="Kdate" Type="Edm.String" sap:label="Valid To" sap:quickinfo="End date of validity (e.g., conditions/contract)"/>
+                <Property Name="Bwbdt" Type="Edm.String" sap:label="Planned Delivery Date" sap:quickinfo="Planned date for delivery of goods/services"/>
+                <Property Name="Angdt" Type="Edm.String" sap:label="Delivery Date" sap:quickinfo="Promised/requested date for delivery"/>
+                <Property Name="Bnddt" Type="Edm.String" sap:label="Binding Date" sap:quickinfo="Date until which an offer/commitment remains binding"/>
+                <Property Name="Gwldt" Type="Edm.String" sap:label="Goods Receipt Date" sap:quickinfo="Date on which the goods receipt was posted"/>
+                <Property Name="Ausnr" Type="Edm.String" sap:label="Reference PO Number" sap:quickinfo="Related or preceding purchase order number"/>
+                <Property Name="Angnr" Type="Edm.String" sap:label="Document Number" sap:quickinfo="Generic related document number (context-dependent)"/>
+                <Property Name="Ihran" Type="Edm.String" sap:label="Planned Delivery" sap:quickinfo="Planned delivery reference (quantity/date)"/>
+                <Property Name="Ihrez" Type="Edm.String" sap:label="Deliveries Pending" sap:quickinfo="Outstanding deliveries yet to be received"/>
+                <Property Name="Verkf" Type="Edm.String" sap:label="Sales Organization" sap:quickinfo="Sales organization involved, if applicable"/>
+                <Property Name="Llief" Type="Edm.String" sap:label="Vendor Code (Alt.)" sap:quickinfo="Alternate vendor code used in processes"/>
+                <Property Name="Kunnr" Type="Edm.String" sap:label="Customer Number" sap:quickinfo="Customer account number (if relevant)"/>
+                <Property Name="ActiveId" Type="Edm.String" sap:label="Active ID" sap:quickinfo="Identifier denoting active record/version"/>
+                <Property Name="Konnr" Type="Edm.String" sap:label="Account Number" sap:quickinfo="Account assignment/contract number"/>
+                <Property Name="Abgru" Type="Edm.String" sap:label="Account Group" sap:quickinfo="Grouping used for account classification"/>
+                <Property Name="Autlf" Type="Edm.String" sap:label="Automatic Delivery Flag" sap:quickinfo="Indicates whether automatic delivery is allowed"/>
+                <Property Name="Weakt" Type="Edm.String" sap:label="Active Indicator" sap:quickinfo="Marks whether the record is currently active"/>
+                <Property Name="TotalAmount" Type="Edm.Int32" sap:label="Total Amount" sap:quickinfo="Total value of the document in document currency"/>
+                <Property Name="APPROVED_COMMENT" Type="Edm.String" sap:label="Approval Comment" sap:quickinfo="Remarks recorded by approvers when approving"/>
+                <Property Name="REJECTED_COMMENT" Type="Edm.String" sap:label="Rejection Comment" sap:quickinfo="Reason/remarks provided upon rejection"/>
+                <Property Name="CREATED_ON" Type="Edm.DateTimeOffset" Precision="7" sap:label="Created On" sap:quickinfo="Timestamp when the record was created"/>
+                <Property Name="LAST_UPDATED_ON" Type="Edm.DateTimeOffset" Precision="7" sap:label="Last Updated On" sap:quickinfo="Timestamp of the most recent update"/>
+                <Property Name="PROCESS_LEVEL" Type="Edm.String" sap:label="Process Level" sap:quickinfo="Current level/stage in the business workflow"/>
+                <Property Name="Invoicerefno" Type="Edm.String" sap:label="Invoice Reference Number" sap:quickinfo="External invoice reference linked to this process"/>
+                <Property Name="Invoicedate" Type="Edm.DateTime" sap:label="Invoice Date" sap:quickinfo="Date printed or recorded on the invoice" sap:display-format="Date"/>
+                <Property Name="APPROVER_ROLE" Type="Edm.String" sap:label="Approver Role" sap:quickinfo="Role responsible for the current approval step"/>
+                <Property Name="APPROVER_LEVEL" Type="Edm.Int32" sap:label="Approver Level" sap:quickinfo="Numeric level of the approver in the workflow"/>
+                <Property Name="CURRENT_ASSIGNEE" Type="Edm.String" sap:label="Current Assignee" sap:quickinfo="User currently assigned to act on the item"/>
+                <Property Name="COMPANY_CODE" Type="Edm.String" sap:label="Company Code (Display)" sap:quickinfo="Display copy of the company code for UI/use cases"/>
+                <Property Name="INVOICE_NUMBER" Type="Edm.String" sap:label="Invoice Number" sap:quickinfo="Identifier of the vendor/customer invoice"/>
+                <Property Name="MAX_APPROVER_LEVEL" Type="Edm.Int32" sap:label="Max Approver Level" sap:quickinfo="Highest approver level configured for this workflow"/>
+                <Property Name="REQUEST_NO" Type="Edm.Int32" Nullable="false" sap:label="Request Number" sap:quickinfo="Internal request identifier for this process"/>
+                <Property Name="supplierInvoiceRefNo" Type="Edm.String" sap:label="Invoice ref no" sap:quickinfo="Respponse from s4 invoice ref no"/>
+                <Property Name="STATUS" Type="Edm.Int32" sap:label="STATUS" sap:quickinfo="Status"/>
+                <NavigationProperty Name="TO_VIM_ITEMS" Relationship="POVIM_CUSTOMER_SIDE.RejectedTab_TO_VIM_ITEMS" FromRole="RejectedTab" ToRole="VIMPOItem" sap:label="VIM Items" sap:quickinfo="Association to all VIM items belonging to this request"/>
+                <NavigationProperty Name="TO_VIM_ATTACHMENTS" Relationship="POVIM_CUSTOMER_SIDE.RejectedTab_TO_VIM_ATTACHMENTS" FromRole="RejectedTab" ToRole="VIMAttachment" sap:label="VIM Attachments" sap:quickinfo="Association to all company profile attachments for this request"/>
+            </EntityType>
+            <EntityType Name="ApprovedTab">
+                <Key>
+                    <PropertyRef Name="REQUEST_NO"/>
+                </Key>
+                <Property Name="Ebeln" Type="Edm.String" sap:label="Purchase Order Number" sap:quickinfo="Unique identifier of the Purchase Order linked to this record"/>
+                <Property Name="Vbeln" Type="Edm.String" sap:label="Inbound Delivery" sap:quickinfo="Inbound delivery document number associated with the PO"/>
+                <Property Name="Xblnr" Type="Edm.String" sap:label="Reference Document Number" sap:quickinfo="Cross-reference document number (e.g., invoice/shipment reference)"/>
+                <Property Name="Mblnr" Type="Edm.String" sap:label="Material Document Number" sap:quickinfo="Material document generated for goods movement postings"/>
+                <Property Name="Bukrs" Type="Edm.String" sap:label="Company Code" sap:quickinfo="Legal entity (company code) responsible for the document"/>
+                <Property Name="Bedat" Type="Edm.String" sap:label="Document Date" sap:quickinfo="Date on which the document was created/issued"/>
+                <Property Name="Bstyp" Type="Edm.String" sap:label="Document Type" sap:quickinfo="Type of purchasing document (e.g., Standard, Subcontracting)"/>
+                <Property Name="Bsart" Type="Edm.String" sap:label="Purchase Order Type" sap:quickinfo="Category of purchase order (e.g., NB – Standard PO)"/>
+                <Property Name="Bsakz" Type="Edm.String" sap:label="Document Category" sap:quickinfo="High-level category/classification of the document"/>
+                <Property Name="Loekz" Type="Edm.String" sap:label="Deletion Flag" sap:quickinfo="Indicates whether the document or item is marked for deletion"/>
+                <Property Name="Statu" Type="Edm.String" sap:label="Status" sap:quickinfo="Overall processing status of the document"/>
+                <Property Name="Aedat" Type="Edm.String" sap:label="Last Change Date (Technical)" sap:quickinfo="Technical date of last change to the document"/>
+                <Property Name="Ernam" Type="Edm.String" sap:label="Created By" sap:quickinfo="User ID of the person who created the document"/>
+                <Property Name="LastChangeDate" Type="Edm.String" sap:label="Last Changed Date" sap:quickinfo="Business-readable last changed date (if different from Aedat)"/>
+                <Property Name="Pincr" Type="Edm.String" sap:label="Purchasing Document Increment" sap:quickinfo="Internal increment/counter for the purchasing document"/>
+                <Property Name="Lponr" Type="Edm.String" sap:label="Purchase Order Item" sap:quickinfo="Item number within the purchase order"/>
+                <Property Name="Lifnr" Type="Edm.String" sap:label="Vendor Number" sap:quickinfo="Supplier account number (LIFNR)"/>
+                <Property Name="ASNamount" Type="Edm.Decimal" sap:label="ASN Amount" sap:quickinfo="Total amount associated with the advance shipping notice" sap:variable-scale="true"/>
+                <Property Name="AsnDate" Type="Edm.String" sap:label="ASN Date" sap:quickinfo="Date when the advance shipping notice was created/sent"/>
+                <Property Name="Name1" Type="Edm.String" sap:label="Vendor Name" sap:quickinfo="Name of the supplier"/>
+                <Property Name="VendorAddress" Type="Edm.String" sap:label="Vendor Address" sap:quickinfo="Formatted address of the supplier"/>
+                <Property Name="BankKey" Type="Edm.String" sap:label="Bank Key" sap:quickinfo="Bank identification key (e.g., routing/IFSC)"/>
+                <Property Name="BankAccount" Type="Edm.String" sap:label="Bank Account" sap:quickinfo="Supplier’s bank account number"/>
+                <Property Name="BankName" Type="Edm.String" sap:label="Bank Name" sap:quickinfo="Name of the supplier’s bank"/>
+                <Property Name="Zterm" Type="Edm.String" sap:label="Payment Term" sap:quickinfo="Payment terms (e.g., due days, cash discount)"/>
+                <Property Name="Zbd1t" Type="Edm.Decimal" sap:label="Discount Days 1" sap:quickinfo="Number of days for the first cash discount period" sap:variable-scale="true"/>
+                <Property Name="Zbd2t" Type="Edm.Decimal" sap:label="Discount Days 2" sap:quickinfo="Number of days for the second cash discount period" sap:variable-scale="true"/>
+                <Property Name="Zbd3t" Type="Edm.Decimal" sap:label="Discount Days 3" sap:quickinfo="Number of days for the third cash discount period" sap:variable-scale="true"/>
+                <Property Name="Zbd1p" Type="Edm.Decimal" sap:label="Discount Percent 1" sap:quickinfo="Cash discount percentage for the first period" sap:variable-scale="true"/>
+                <Property Name="Zbd2p" Type="Edm.Decimal" sap:label="Discount Percent 2" sap:quickinfo="Cash discount percentage for the second period" sap:variable-scale="true"/>
+                <Property Name="Ekorg" Type="Edm.String" sap:label="Purchasing Organization" sap:quickinfo="Organization unit responsible for procurement"/>
+                <Property Name="Ekgrp" Type="Edm.String" sap:label="Purchasing Group" sap:quickinfo="Buyer / buying group responsible for this document"/>
+                <Property Name="Waers" Type="Edm.String" sap:label="Currency" sap:quickinfo="Transaction currency code (WAERS)"/>
+                <Property Name="Kufix" Type="Edm.Decimal" sap:label="Fixed Exchange Rate" sap:quickinfo="Indicates a fixed currency/exchange rate is applied" sap:variable-scale="true"/>
+                <Property Name="Kdatb" Type="Edm.String" sap:label="Valid From" sap:quickinfo="Start date of validity (e.g., conditions/contract)"/>
+                <Property Name="Kdate" Type="Edm.String" sap:label="Valid To" sap:quickinfo="End date of validity (e.g., conditions/contract)"/>
+                <Property Name="Bwbdt" Type="Edm.String" sap:label="Planned Delivery Date" sap:quickinfo="Planned date for delivery of goods/services"/>
+                <Property Name="Angdt" Type="Edm.String" sap:label="Delivery Date" sap:quickinfo="Promised/requested date for delivery"/>
+                <Property Name="Bnddt" Type="Edm.String" sap:label="Binding Date" sap:quickinfo="Date until which an offer/commitment remains binding"/>
+                <Property Name="Gwldt" Type="Edm.String" sap:label="Goods Receipt Date" sap:quickinfo="Date on which the goods receipt was posted"/>
+                <Property Name="Ausnr" Type="Edm.String" sap:label="Reference PO Number" sap:quickinfo="Related or preceding purchase order number"/>
+                <Property Name="Angnr" Type="Edm.String" sap:label="Document Number" sap:quickinfo="Generic related document number (context-dependent)"/>
+                <Property Name="Ihran" Type="Edm.String" sap:label="Planned Delivery" sap:quickinfo="Planned delivery reference (quantity/date)"/>
+                <Property Name="Ihrez" Type="Edm.String" sap:label="Deliveries Pending" sap:quickinfo="Outstanding deliveries yet to be received"/>
+                <Property Name="Verkf" Type="Edm.String" sap:label="Sales Organization" sap:quickinfo="Sales organization involved, if applicable"/>
+                <Property Name="Llief" Type="Edm.String" sap:label="Vendor Code (Alt.)" sap:quickinfo="Alternate vendor code used in processes"/>
+                <Property Name="Kunnr" Type="Edm.String" sap:label="Customer Number" sap:quickinfo="Customer account number (if relevant)"/>
+                <Property Name="ActiveId" Type="Edm.String" sap:label="Active ID" sap:quickinfo="Identifier denoting active record/version"/>
+                <Property Name="Konnr" Type="Edm.String" sap:label="Account Number" sap:quickinfo="Account assignment/contract number"/>
+                <Property Name="Abgru" Type="Edm.String" sap:label="Account Group" sap:quickinfo="Grouping used for account classification"/>
+                <Property Name="Autlf" Type="Edm.String" sap:label="Automatic Delivery Flag" sap:quickinfo="Indicates whether automatic delivery is allowed"/>
+                <Property Name="Weakt" Type="Edm.String" sap:label="Active Indicator" sap:quickinfo="Marks whether the record is currently active"/>
+                <Property Name="TotalAmount" Type="Edm.Int32" sap:label="Total Amount" sap:quickinfo="Total value of the document in document currency"/>
+                <Property Name="APPROVED_COMMENT" Type="Edm.String" sap:label="Approval Comment" sap:quickinfo="Remarks recorded by approvers when approving"/>
+                <Property Name="REJECTED_COMMENT" Type="Edm.String" sap:label="Rejection Comment" sap:quickinfo="Reason/remarks provided upon rejection"/>
+                <Property Name="CREATED_ON" Type="Edm.DateTimeOffset" Precision="7" sap:label="Created On" sap:quickinfo="Timestamp when the record was created"/>
+                <Property Name="LAST_UPDATED_ON" Type="Edm.DateTimeOffset" Precision="7" sap:label="Last Updated On" sap:quickinfo="Timestamp of the most recent update"/>
+                <Property Name="PROCESS_LEVEL" Type="Edm.String" sap:label="Process Level" sap:quickinfo="Current level/stage in the business workflow"/>
+                <Property Name="Invoicerefno" Type="Edm.String" sap:label="Invoice Reference Number" sap:quickinfo="External invoice reference linked to this process"/>
+                <Property Name="Invoicedate" Type="Edm.DateTime" sap:label="Invoice Date" sap:quickinfo="Date printed or recorded on the invoice" sap:display-format="Date"/>
+                <Property Name="APPROVER_ROLE" Type="Edm.String" sap:label="Approver Role" sap:quickinfo="Role responsible for the current approval step"/>
+                <Property Name="APPROVER_LEVEL" Type="Edm.Int32" sap:label="Approver Level" sap:quickinfo="Numeric level of the approver in the workflow"/>
+                <Property Name="CURRENT_ASSIGNEE" Type="Edm.String" sap:label="Current Assignee" sap:quickinfo="User currently assigned to act on the item"/>
+                <Property Name="COMPANY_CODE" Type="Edm.String" sap:label="Company Code (Display)" sap:quickinfo="Display copy of the company code for UI/use cases"/>
+                <Property Name="INVOICE_NUMBER" Type="Edm.String" sap:label="Invoice Number" sap:quickinfo="Identifier of the vendor/customer invoice"/>
+                <Property Name="MAX_APPROVER_LEVEL" Type="Edm.Int32" sap:label="Max Approver Level" sap:quickinfo="Highest approver level configured for this workflow"/>
+                <Property Name="REQUEST_NO" Type="Edm.Int32" Nullable="false" sap:label="Request Number" sap:quickinfo="Internal request identifier for this process"/>
+                <Property Name="supplierInvoiceRefNo" Type="Edm.String" sap:label="Invoice ref no" sap:quickinfo="Respponse from s4 invoice ref no"/>
+                <Property Name="STATUS" Type="Edm.Int32" sap:label="STATUS" sap:quickinfo="Status"/>
+                <NavigationProperty Name="TO_VIM_ITEMS" Relationship="POVIM_CUSTOMER_SIDE.ApprovedTab_TO_VIM_ITEMS" FromRole="ApprovedTab" ToRole="VIMPOItem" sap:label="VIM Items" sap:quickinfo="Association to all VIM items belonging to this request"/>
+                <NavigationProperty Name="TO_VIM_ATTACHMENTS" Relationship="POVIM_CUSTOMER_SIDE.ApprovedTab_TO_VIM_ATTACHMENTS" FromRole="ApprovedTab" ToRole="VIMAttachment" sap:label="VIM Attachments" sap:quickinfo="Association to all company profile attachments for this request"/>
             </EntityType>
             <EntityType Name="VIMDATA">
                 <Key>
-                    <PropertyRef Name="Ebeln"/>
-                    <PropertyRef Name="Vbeln"/>
+                    <PropertyRef Name="REQUEST_NO"/>
                 </Key>
-                <Property Name="Ebeln" Type="Edm.String" Nullable="false"/>
-                <Property Name="Vbeln" Type="Edm.String" Nullable="false"/>
-                <Property Name="Xblnr" Type="Edm.String"/>
-                <Property Name="Mblnr" Type="Edm.String"/>
-                <Property Name="Bukrs" Type="Edm.String"/>
-                <Property Name="Bedat" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Bstyp" Type="Edm.String"/>
-                <Property Name="Bsart" Type="Edm.String"/>
-                <Property Name="Bsakz" Type="Edm.String"/>
-                <Property Name="Loekz" Type="Edm.String"/>
-                <Property Name="Statu" Type="Edm.String"/>
-                <Property Name="Aedat" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Ernam" Type="Edm.String"/>
-                <Property Name="LastChangeDate" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Pincr" Type="Edm.String"/>
-                <Property Name="Lponr" Type="Edm.String"/>
-                <Property Name="Lifnr" Type="Edm.String"/>
-                <Property Name="ASNamount" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="AsnDate" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Status" Type="Edm.String"/>
-                <Property Name="Name1" Type="Edm.String"/>
-                <Property Name="VendorAddress" Type="Edm.String"/>
-                <Property Name="BankKey" Type="Edm.String"/>
-                <Property Name="BankAccount" Type="Edm.String"/>
-                <Property Name="BankName" Type="Edm.String"/>
-                <Property Name="Zterm" Type="Edm.String"/>
-                <Property Name="Zbd1t" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Zbd2t" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Zbd3t" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Zbd1p" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Zbd2p" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Ekorg" Type="Edm.String"/>
-                <Property Name="Ekgrp" Type="Edm.String"/>
-                <Property Name="Waers" Type="Edm.String"/>
-                <Property Name="Kufix" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Kdatb" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Kdate" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Bwbdt" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Angdt" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Bnddt" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Gwldt" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Ausnr" Type="Edm.String"/>
-                <Property Name="Angnr" Type="Edm.String"/>
-                <Property Name="Ihran" Type="Edm.String"/>
-                <Property Name="Ihrez" Type="Edm.String"/>
-                <Property Name="Verkf" Type="Edm.String"/>
-                <Property Name="Llief" Type="Edm.String"/>
-                <Property Name="Kunnr" Type="Edm.String"/>
-                <Property Name="ActiveId" Type="Edm.String"/>
-                <Property Name="Konnr" Type="Edm.String"/>
-                <Property Name="Abgru" Type="Edm.String"/>
-                <Property Name="Autlf" Type="Edm.String"/>
-                <Property Name="Weakt" Type="Edm.String"/>
-                <Property Name="TotalAmount" Type="Edm.String"/>
-                <Property Name="APPROVED_COMMENT" Type="Edm.String"/>
-                <Property Name="REJECTED_COMMENT" Type="Edm.String"/>
-                <Property Name="CREATED_ON" Type="Edm.DateTimeOffset" Precision="7"/>
-                <Property Name="LAST_UPDATED_ON" Type="Edm.DateTimeOffset" Precision="7"/>
-                <Property Name="PROCESS_LEVEL" Type="Edm.String"/>
-                <Property Name="Invoicerefno" Type="Edm.String"/>
-                <Property Name="Invoicedate" Type="Edm.String"/>
-                <Property Name="APPROVER_ROLE" Type="Edm.String"/>
-                <Property Name="APPROVER_LEVEL" Type="Edm.Int32"/>
-                <Property Name="CURRENT_ASSIGNEE" Type="Edm.String"/>
-                <Property Name="COMPANY_CODE" Type="Edm.String"/>
-                <Property Name="REQUEST_NO" Type="Edm.Int32"/>
-                <NavigationProperty Name="TO_VIM_ITEMS" Relationship="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMDATA_TO_VIM_ITEMS" FromRole="VIMDATA" ToRole="VIMPOItem"/>
-                <NavigationProperty Name="TO_VIM_ATTACHMENTS" Relationship="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMDATA_TO_VIM_ATTACHMENTS" FromRole="VIMDATA" ToRole="VIMAttachment"/>
+                <Property Name="Ebeln" Type="Edm.String" sap:label="Purchase Order Number" sap:quickinfo="Unique identifier of the Purchase Order linked to this record"/>
+                <Property Name="Vbeln" Type="Edm.String" sap:label="Inbound Delivery" sap:quickinfo="Inbound delivery document number associated with the PO"/>
+                <Property Name="Xblnr" Type="Edm.String" sap:label="Reference Document Number" sap:quickinfo="Cross-reference document number (e.g., invoice/shipment reference)"/>
+                <Property Name="Mblnr" Type="Edm.String" sap:label="Material Document Number" sap:quickinfo="Material document generated for goods movement postings"/>
+                <Property Name="Bukrs" Type="Edm.String" sap:label="Company Code" sap:quickinfo="Legal entity (company code) responsible for the document"/>
+                <Property Name="Bedat" Type="Edm.String" sap:label="Document Date" sap:quickinfo="Date on which the document was created/issued"/>
+                <Property Name="Bstyp" Type="Edm.String" sap:label="Document Type" sap:quickinfo="Type of purchasing document (e.g., Standard, Subcontracting)"/>
+                <Property Name="Bsart" Type="Edm.String" sap:label="Purchase Order Type" sap:quickinfo="Category of purchase order (e.g., NB – Standard PO)"/>
+                <Property Name="Bsakz" Type="Edm.String" sap:label="Document Category" sap:quickinfo="High-level category/classification of the document"/>
+                <Property Name="Loekz" Type="Edm.String" sap:label="Deletion Flag" sap:quickinfo="Indicates whether the document or item is marked for deletion"/>
+                <Property Name="Statu" Type="Edm.String" sap:label="Status" sap:quickinfo="Overall processing status of the document"/>
+                <Property Name="Aedat" Type="Edm.String" sap:label="Last Change Date (Technical)" sap:quickinfo="Technical date of last change to the document"/>
+                <Property Name="Ernam" Type="Edm.String" sap:label="Created By" sap:quickinfo="User ID of the person who created the document"/>
+                <Property Name="LastChangeDate" Type="Edm.String" sap:label="Last Changed Date" sap:quickinfo="Business-readable last changed date (if different from Aedat)"/>
+                <Property Name="Pincr" Type="Edm.String" sap:label="Purchasing Document Increment" sap:quickinfo="Internal increment/counter for the purchasing document"/>
+                <Property Name="Lponr" Type="Edm.String" sap:label="Purchase Order Item" sap:quickinfo="Item number within the purchase order"/>
+                <Property Name="Lifnr" Type="Edm.String" sap:label="Vendor Number" sap:quickinfo="Supplier account number (LIFNR)"/>
+                <Property Name="ASNamount" Type="Edm.Decimal" sap:label="ASN Amount" sap:quickinfo="Total amount associated with the advance shipping notice" sap:variable-scale="true"/>
+                <Property Name="AsnDate" Type="Edm.String" sap:label="ASN Date" sap:quickinfo="Date when the advance shipping notice was created/sent"/>
+                <Property Name="Name1" Type="Edm.String" sap:label="Vendor Name" sap:quickinfo="Name of the supplier"/>
+                <Property Name="VendorAddress" Type="Edm.String" sap:label="Vendor Address" sap:quickinfo="Formatted address of the supplier"/>
+                <Property Name="BankKey" Type="Edm.String" sap:label="Bank Key" sap:quickinfo="Bank identification key (e.g., routing/IFSC)"/>
+                <Property Name="BankAccount" Type="Edm.String" sap:label="Bank Account" sap:quickinfo="Supplier’s bank account number"/>
+                <Property Name="BankName" Type="Edm.String" sap:label="Bank Name" sap:quickinfo="Name of the supplier’s bank"/>
+                <Property Name="Zterm" Type="Edm.String" sap:label="Payment Term" sap:quickinfo="Payment terms (e.g., due days, cash discount)"/>
+                <Property Name="Zbd1t" Type="Edm.Decimal" sap:label="Discount Days 1" sap:quickinfo="Number of days for the first cash discount period" sap:variable-scale="true"/>
+                <Property Name="Zbd2t" Type="Edm.Decimal" sap:label="Discount Days 2" sap:quickinfo="Number of days for the second cash discount period" sap:variable-scale="true"/>
+                <Property Name="Zbd3t" Type="Edm.Decimal" sap:label="Discount Days 3" sap:quickinfo="Number of days for the third cash discount period" sap:variable-scale="true"/>
+                <Property Name="Zbd1p" Type="Edm.Decimal" sap:label="Discount Percent 1" sap:quickinfo="Cash discount percentage for the first period" sap:variable-scale="true"/>
+                <Property Name="Zbd2p" Type="Edm.Decimal" sap:label="Discount Percent 2" sap:quickinfo="Cash discount percentage for the second period" sap:variable-scale="true"/>
+                <Property Name="Ekorg" Type="Edm.String" sap:label="Purchasing Organization" sap:quickinfo="Organization unit responsible for procurement"/>
+                <Property Name="Ekgrp" Type="Edm.String" sap:label="Purchasing Group" sap:quickinfo="Buyer / buying group responsible for this document"/>
+                <Property Name="Waers" Type="Edm.String" sap:label="Currency" sap:quickinfo="Transaction currency code (WAERS)"/>
+                <Property Name="Kufix" Type="Edm.Decimal" sap:label="Fixed Exchange Rate" sap:quickinfo="Indicates a fixed currency/exchange rate is applied" sap:variable-scale="true"/>
+                <Property Name="Kdatb" Type="Edm.String" sap:label="Valid From" sap:quickinfo="Start date of validity (e.g., conditions/contract)"/>
+                <Property Name="Kdate" Type="Edm.String" sap:label="Valid To" sap:quickinfo="End date of validity (e.g., conditions/contract)"/>
+                <Property Name="Bwbdt" Type="Edm.String" sap:label="Planned Delivery Date" sap:quickinfo="Planned date for delivery of goods/services"/>
+                <Property Name="Angdt" Type="Edm.String" sap:label="Delivery Date" sap:quickinfo="Promised/requested date for delivery"/>
+                <Property Name="Bnddt" Type="Edm.String" sap:label="Binding Date" sap:quickinfo="Date until which an offer/commitment remains binding"/>
+                <Property Name="Gwldt" Type="Edm.String" sap:label="Goods Receipt Date" sap:quickinfo="Date on which the goods receipt was posted"/>
+                <Property Name="Ausnr" Type="Edm.String" sap:label="Reference PO Number" sap:quickinfo="Related or preceding purchase order number"/>
+                <Property Name="Angnr" Type="Edm.String" sap:label="Document Number" sap:quickinfo="Generic related document number (context-dependent)"/>
+                <Property Name="Ihran" Type="Edm.String" sap:label="Planned Delivery" sap:quickinfo="Planned delivery reference (quantity/date)"/>
+                <Property Name="Ihrez" Type="Edm.String" sap:label="Deliveries Pending" sap:quickinfo="Outstanding deliveries yet to be received"/>
+                <Property Name="Verkf" Type="Edm.String" sap:label="Sales Organization" sap:quickinfo="Sales organization involved, if applicable"/>
+                <Property Name="Llief" Type="Edm.String" sap:label="Vendor Code (Alt.)" sap:quickinfo="Alternate vendor code used in processes"/>
+                <Property Name="Kunnr" Type="Edm.String" sap:label="Customer Number" sap:quickinfo="Customer account number (if relevant)"/>
+                <Property Name="ActiveId" Type="Edm.String" sap:label="Active ID" sap:quickinfo="Identifier denoting active record/version"/>
+                <Property Name="Konnr" Type="Edm.String" sap:label="Account Number" sap:quickinfo="Account assignment/contract number"/>
+                <Property Name="Abgru" Type="Edm.String" sap:label="Account Group" sap:quickinfo="Grouping used for account classification"/>
+                <Property Name="Autlf" Type="Edm.String" sap:label="Automatic Delivery Flag" sap:quickinfo="Indicates whether automatic delivery is allowed"/>
+                <Property Name="Weakt" Type="Edm.String" sap:label="Active Indicator" sap:quickinfo="Marks whether the record is currently active"/>
+                <Property Name="TotalAmount" Type="Edm.Int32" sap:label="Total Amount" sap:quickinfo="Total value of the document in document currency"/>
+                <Property Name="APPROVED_COMMENT" Type="Edm.String" sap:label="Approval Comment" sap:quickinfo="Remarks recorded by approvers when approving"/>
+                <Property Name="REJECTED_COMMENT" Type="Edm.String" sap:label="Rejection Comment" sap:quickinfo="Reason/remarks provided upon rejection"/>
+                <Property Name="CREATED_ON" Type="Edm.DateTimeOffset" Precision="7" sap:label="Created On" sap:quickinfo="Timestamp when the record was created"/>
+                <Property Name="LAST_UPDATED_ON" Type="Edm.DateTimeOffset" Precision="7" sap:label="Last Updated On" sap:quickinfo="Timestamp of the most recent update"/>
+                <Property Name="PROCESS_LEVEL" Type="Edm.String" sap:label="Process Level" sap:quickinfo="Current level/stage in the business workflow"/>
+                <Property Name="Invoicerefno" Type="Edm.String" sap:label="Invoice Reference Number" sap:quickinfo="External invoice reference linked to this process"/>
+                <Property Name="Invoicedate" Type="Edm.DateTime" sap:label="Invoice Date" sap:quickinfo="Date printed or recorded on the invoice" sap:display-format="Date"/>
+                <Property Name="APPROVER_ROLE" Type="Edm.String" sap:label="Approver Role" sap:quickinfo="Role responsible for the current approval step"/>
+                <Property Name="APPROVER_LEVEL" Type="Edm.Int32" sap:label="Approver Level" sap:quickinfo="Numeric level of the approver in the workflow"/>
+                <Property Name="CURRENT_ASSIGNEE" Type="Edm.String" sap:label="Current Assignee" sap:quickinfo="User currently assigned to act on the item"/>
+                <Property Name="COMPANY_CODE" Type="Edm.String" sap:label="Company Code (Display)" sap:quickinfo="Display copy of the company code for UI/use cases"/>
+                <Property Name="INVOICE_NUMBER" Type="Edm.String" sap:label="Invoice Number" sap:quickinfo="Identifier of the vendor/customer invoice"/>
+                <Property Name="MAX_APPROVER_LEVEL" Type="Edm.Int32" sap:label="Max Approver Level" sap:quickinfo="Highest approver level configured for this workflow"/>
+                <Property Name="REQUEST_NO" Type="Edm.Int32" Nullable="false" sap:label="Request Number" sap:quickinfo="Internal request identifier for this process"/>
+                <Property Name="supplierInvoiceRefNo" Type="Edm.String" sap:label="Invoice ref no" sap:quickinfo="Respponse from s4 invoice ref no"/>
+                <Property Name="STATUS" Type="Edm.Int32" sap:label="STATUS" sap:quickinfo="Status"/>
+                <NavigationProperty Name="TO_VIM_ITEMS" Relationship="POVIM_CUSTOMER_SIDE.VIMDATA_TO_VIM_ITEMS" FromRole="VIMDATA" ToRole="VIMPOItem" sap:label="VIM Items" sap:quickinfo="Association to all VIM items belonging to this request"/>
+                <NavigationProperty Name="TO_VIM_ATTACHMENTS" Relationship="POVIM_CUSTOMER_SIDE.VIMDATA_TO_VIM_ATTACHMENTS" FromRole="VIMDATA" ToRole="VIMAttachment" sap:label="VIM Attachments" sap:quickinfo="Association to all company profile attachments for this request"/>
             </EntityType>
             <EntityType Name="VIMPOItem">
                 <Key>
-                    <PropertyRef Name="Ebeln"/>
-                    <PropertyRef Name="Vbeln"/>
-                    <PropertyRef Name="Ebelp"/>
+                    <PropertyRef Name="REQUEST_NO"/>
                 </Key>
-                <Property Name="Ebeln" Type="Edm.String" Nullable="false"/>
-                <Property Name="Vbeln" Type="Edm.String" Nullable="false"/>
-                <Property Name="Ebelp" Type="Edm.String" Nullable="false"/>
-                <Property Name="Txz01" Type="Edm.String"/>
-                <Property Name="Ebtyp" Type="Edm.String"/>
-                <Property Name="Eindt" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Lpein" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Uzeit" Type="Edm.Time"/>
-                <Property Name="Erdat" Type="Edm.DateTime" sap:display-format="Date"/>
-                <Property Name="Ezeit" Type="Edm.Time"/>
-                <Property Name="Menge" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="AsnQty" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="ASNitAmount" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="GRNitAmount" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Taxper" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Taxval" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Total" Type="Edm.Decimal" sap:variable-scale="true"/>
-                <Property Name="Meins" Type="Edm.String"/>
-                <Property Name="Waers" Type="Edm.String"/>
-                <Property Name="Estkz" Type="Edm.String"/>
-                <Property Name="Loekz" Type="Edm.String"/>
-                <Property Name="Kzdis" Type="Edm.String"/>
-                <Property Name="Xblnr" Type="Edm.String"/>
-                <Property Name="Vbelp" Type="Edm.String"/>
-                <Property Name="Mprof" Type="Edm.String"/>
-                <Property Name="Ematn" Type="Edm.String"/>
-                <Property Name="Mahnz" Type="Edm.String"/>
-                <Property Name="Charg" Type="Edm.String"/>
-                <Property Name="Uecha" Type="Edm.String"/>
-                <Property Name="REQUEST_NO" Type="Edm.Int32"/>
-                <Property Name="Invoicerefno" Type="Edm.String"/>
-                <Property Name="Invoicedate" Type="Edm.String"/>
+                <Property Name="Ebeln" Type="Edm.String" sap:label="Purchase Order Number" sap:quickinfo="Unique identifier of the Purchase Order"/>
+                <Property Name="Vbeln" Type="Edm.String" sap:label="Inbound Delivery" sap:quickinfo="Inbound delivery document number linked to the PO"/>
+                <Property Name="Ebelp" Type="Edm.String" sap:label="Purchase Order Item" sap:quickinfo="Item number within the Purchase Order"/>
+                <Property Name="Txz01" Type="Edm.String" sap:label="Short Text Description" sap:quickinfo="Brief description of the item or material"/>
+                <Property Name="Ebtyp" Type="Edm.String" sap:label="ASN Type" sap:quickinfo="Type/category of the Advance Shipping Notification"/>
+                <Property Name="Eindt" Type="Edm.DateTime" sap:label="Expected Delivery Date" sap:quickinfo="Planned delivery date for the item" sap:display-format="Date"/>
+                <Property Name="Lpein" Type="Edm.Decimal" sap:label="Delivery Quantity" sap:quickinfo="Quantity scheduled for delivery" sap:variable-scale="true"/>
+                <Property Name="Uzeit" Type="Edm.Time" sap:label="Time of Delivery" sap:quickinfo="Planned time of delivery"/>
+                <Property Name="Erdat" Type="Edm.DateTime" sap:label="Document Date" sap:quickinfo="Date when the document was created" sap:display-format="Date"/>
+                <Property Name="Ezeit" Type="Edm.Time" sap:label="Delivery Time" sap:quickinfo="Time when the delivery was recorded"/>
+                <Property Name="Menge" Type="Edm.Decimal" sap:label="Quantity" sap:quickinfo="Actual quantity of the material/item" sap:variable-scale="true"/>
+                <Property Name="AsnQty" Type="Edm.Decimal" sap:label="ASN Quantity" sap:quickinfo="Quantity specified in the ASN" sap:variable-scale="true"/>
+                <Property Name="ASNitAmount" Type="Edm.Decimal" sap:label="ASN Item Amount" sap:quickinfo="Amount for the item in the ASN" sap:variable-scale="true"/>
+                <Property Name="GRNitAmount" Type="Edm.Decimal" sap:label="Goods Receipt ASN Amount" sap:quickinfo="Amount recorded in the goods receipt for the ASN item" sap:variable-scale="true"/>
+                <Property Name="Taxper" Type="Edm.Decimal" sap:label="Tax Percentage" sap:quickinfo="Tax percentage applied to the item" sap:variable-scale="true"/>
+                <Property Name="Taxval" Type="Edm.Decimal" sap:label="Tax Value" sap:quickinfo="Tax value calculated for the item" sap:variable-scale="true"/>
+                <Property Name="Total" Type="Edm.Decimal" sap:label="Total Amount" sap:quickinfo="Total amount including taxes for the item" sap:variable-scale="true"/>
+                <Property Name="Meins" Type="Edm.String" sap:label="Unit of Measure" sap:quickinfo="Measurement unit for the quantity (e.g., EA, KG, L)"/>
+                <Property Name="Waers" Type="Edm.String" sap:label="Currency" sap:quickinfo="Transaction currency (e.g., INR, USD, EUR)"/>
+                <Property Name="Estkz" Type="Edm.String" sap:label="Stock Type" sap:quickinfo="Type of stock (e.g., unrestricted, quality, blocked)"/>
+                <Property Name="Loekz" Type="Edm.String" sap:label="Deletion Flag" sap:quickinfo="Indicates whether the item is flagged for deletion"/>
+                <Property Name="Kzdis" Type="Edm.String" sap:label="Discount Flag" sap:quickinfo="Indicates whether discounts are applied to the item"/>
+                <Property Name="Xblnr" Type="Edm.String" sap:label="Reference Document Number" sap:quickinfo="Reference to another document (e.g., invoice, shipment)"/>
+                <Property Name="Vbelp" Type="Edm.String" sap:label="Inbound Delivery Item" sap:quickinfo="Item number within the inbound delivery"/>
+                <Property Name="Mprof" Type="Edm.String" sap:label="Material Profile" sap:quickinfo="Profile that defines material-specific settings"/>
+                <Property Name="Ematn" Type="Edm.String" sap:label="Material Number" sap:quickinfo="Unique identifier of the material"/>
+                <Property Name="Mahnz" Type="Edm.String" sap:label="Shipping Indicator" sap:quickinfo="Indicator used for shipping/expediting purposes"/>
+                <Property Name="Charg" Type="Edm.String" sap:label="Batch Number" sap:quickinfo="Batch/lot number of the material"/>
+                <Property Name="Uecha" Type="Edm.String" sap:label="Shipment Control" sap:quickinfo="Shipment control indicator"/>
+                <Property Name="REQUEST_NO" Type="Edm.Int32" Nullable="false" sap:label="Request Number" sap:quickinfo="Internal request identifier linked to this item"/>
+                <Property Name="Invoicerefno" Type="Edm.String" sap:label="Invoice Reference Number" sap:quickinfo="Reference number of the linked invoice"/>
+                <Property Name="Invoicedate" Type="Edm.DateTime" sap:label="Invoice Date" sap:quickinfo="Date printed/recorded on the invoice" sap:display-format="Date"/>
             </EntityType>
             <EntityType Name="VIMAttachment">
                 <Key>
@@ -322,349 +403,62 @@
                     <PropertyRef Name="REQUEST_NO"/>
                     <PropertyRef Name="ATTACHMENT_ID"/>
                 </Key>
-                <Property Name="VendorCode" Type="Edm.String" Nullable="false"/>
-                <Property Name="REQUEST_NO" Type="Edm.Int32" Nullable="false"/>
-                <Property Name="DESCRIPTION" Type="Edm.String"/>
-                <Property Name="IMAGEURL" Type="Edm.String"/>
-                <Property Name="IMAGE_FILE_NAME" Type="Edm.String"/>
-                <Property Name="COMMENT" Type="Edm.String"/>
-                <Property Name="STATUS" Type="Edm.String"/>
-                <Property Name="ATTACHMENT_ID" Type="Edm.String" Nullable="false"/>
+                <Property Name="VendorCode" Type="Edm.String" Nullable="false" sap:label="Vendor Code" sap:quickinfo="Unique code assigned to the vendor"/>
+                <Property Name="REQUEST_NO" Type="Edm.Int32" Nullable="false" sap:label="Request Number" sap:quickinfo="Internal request identifier linked to the attachment"/>
+                <Property Name="DESCRIPTION" Type="Edm.String" sap:label="Description" sap:quickinfo="Brief description of the attachment content"/>
+                <Property Name="IMAGEURL" Type="Edm.String" sap:label="Image URL" sap:quickinfo="URL location where the attachment image is stored"/>
+                <Property Name="IMAGE_FILE_NAME" Type="Edm.String" sap:label="Image File Name" sap:quickinfo="Original file name of the uploaded image"/>
+                <Property Name="COMMENT" Type="Edm.String" sap:label="Comment" sap:quickinfo="Additional remarks or notes related to the attachment"/>
+                <Property Name="STATUS" Type="Edm.String" sap:label="Status" sap:quickinfo="Current status of the attachment (e.g., Active, Inactive)"/>
+                <Property Name="ATTACHMENT_ID" Type="Edm.String" Nullable="false" sap:label="Attachment ID" sap:quickinfo="Unique identifier of the attachment record"/>
             </EntityType>
-            <EntityType Name="SAP__UnitsOfMeasure" sap:content-version="1">
+            <EntityType Name="VIM_APPROVAL_LOGS">
                 <Key>
-                    <PropertyRef Name="UnitCode"/>
+                    <PropertyRef Name="REQUEST_NO"/>
                 </Key>
-                <Property Name="UnitCode" Type="Edm.String" MaxLength="3" Nullable="false" sap:label="Internal UoM" sap:semantics="unit-of-measure"/>
-                <Property Name="ISOCode" Type="Edm.String" MaxLength="3" Nullable="false" sap:label="ISO code"/>
-                <Property Name="ExternalCode" Type="Edm.String" MaxLength="3" Nullable="false" sap:label="Commercial"/>
-                <Property Name="Text" Type="Edm.String" MaxLength="30" Nullable="false" sap:label="Measurement Unit Txt"/>
-                <Property Name="DecimalPlaces" Type="Edm.Int32" sap:label="Decimal Places"/>
-            </EntityType>
-            <EntityType Name="SAP__Currencies" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="CurrencyCode"/>
-                </Key>
-                <Property Name="CurrencyCode" Type="Edm.String" MaxLength="5" Nullable="false" sap:label="Currency" sap:semantics="currency-code"/>
-                <Property Name="ISOCode" Type="Edm.String" MaxLength="3" Nullable="false" sap:label="ISO code"/>
-                <Property Name="Text" Type="Edm.String" MaxLength="15" Nullable="false" sap:label="Short text"/>
-                <Property Name="DecimalPlaces" Type="Edm.Byte" Nullable="false" sap:label="Decimals"/>
-            </EntityType>
-            <EntityType Name="ZP_AISP_POVIM_HEAD_Pending" sap:content-version="1" sap:label="Projection View for PO based Invoice">
-                <Key>
-                    <PropertyRef Name="Ebeln"/>
-                    <PropertyRef Name="vbeln"/>
-                </Key>
-                <Property Name="Delete_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Update_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="to_povimitm_oc" Type="Edm.Boolean" sap:label="Dynamic CbA-Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Ebeln" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Purchasing Document" sap:quickinfo="Purchasing Document Number"/>
-                <Property Name="vbeln" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Delivery"/>
-                <Property Name="xblnr" Type="Edm.String" MaxLength="35" sap:display-format="UpperCase" sap:label="Reference" sap:quickinfo="Reference Document Number (for Dependencies see Long Text)"/>
-                <Property Name="mblnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Material Document" sap:quickinfo="Number of Material Document"/>
-                <Property Name="Bukrs" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Company Code"/>
-                <Property Name="Bedat" Type="Edm.String" sap:display-format="Date" sap:label="Document Date" sap:quickinfo="Purchasing Document Date"/>
-                <Property Name="Bstyp" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Purch. Doc. Category" sap:quickinfo="Purchasing Document Category"/>
-                <Property Name="Bsart" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Purchasing Doc. Type" sap:quickinfo="Purchasing Document Type"/>
-                <Property Name="Bsakz" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Control indicator" sap:quickinfo="Control indicator for purchasing document type"/>
-                <Property Name="Loekz" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Deletion Indicator" sap:quickinfo="Deletion Indicator in Purchasing Document"/>
-                <Property Name="Statu" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Status" sap:quickinfo="Status of Purchasing Document"/>
-                <Property Name="Aedat" Type="Edm.String" sap:display-format="Date" sap:label="Created On" sap:quickinfo="Creation Date of Purchasing Document"/>
-                <Property Name="Ernam" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="Created By" sap:quickinfo="User of person who created a purchasing document"/>
-                <Property Name="Pincr" Type="Edm.String" MaxLength="5" sap:display-format="NonNegative" sap:label="Item Number Interval"/>
-                <Property Name="Lponr" Type="Edm.String" MaxLength="5" sap:display-format="NonNegative" sap:label="Last Item" sap:quickinfo="Last Item Number"/>
-                <Property Name="Lifnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Supplier" sap:quickinfo="Vendor's account number"/>
-                <Property Name="ASNamount" Type="Edm.Decimal" Precision="12" Scale="2"/>
-                <Property Name="asndate" Type="Edm.String" sap:display-format="Date" sap:label="Creation Date" sap:quickinfo="Creation Date of Confirmation"/>
-                <Property Name="Status" Type="Edm.String" MaxLength="15"/>
-                <Property Name="name1" Type="Edm.String" MaxLength="35" sap:label="Name" sap:quickinfo="Name 1"/>
-                <Property Name="Vendoraddress" Type="Edm.String" MaxLength="88"/>
-                <Property Name="Bankkey" Type="Edm.String" MaxLength="15" sap:display-format="UpperCase" sap:label="Bank Key" sap:quickinfo="Bank Keys"/>
-                <Property Name="Bankacc" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Bank Account" sap:quickinfo="Bank account number"/>
-                <Property Name="Bankname" Type="Edm.String" MaxLength="60" sap:label="Bank Name" sap:quickinfo="Name of Financial Institution"/>
-                <Property Name="Zterm" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Payment terms" sap:quickinfo="Terms of payment key"/>
-                <Property Name="Zbd1t" Type="Edm.Decimal" Precision="3" Scale="0" sap:label="Payment in" sap:quickinfo="Cash (Prompt Payment) Discount Days"/>
-                <Property Name="Zbd2t" Type="Edm.Decimal" Precision="3" Scale="0" sap:label="Payment in" sap:quickinfo="Cash (Prompt Payment) Discount Days"/>
-                <Property Name="Zbd3t" Type="Edm.Decimal" Precision="3" Scale="0" sap:label="Payment in" sap:quickinfo="Cash (Prompt Payment) Discount Days"/>
-                <Property Name="Zbd1p" Type="Edm.Decimal" Precision="5" Scale="3" sap:label="Disc.percent 1" sap:quickinfo="Cash discount percentage 1"/>
-                <Property Name="Zbd2p" Type="Edm.Decimal" Precision="5" Scale="3" sap:label="Disc.percent 2" sap:quickinfo="Cash Discount Percentage 2"/>
-                <Property Name="Ekorg" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Purch. organization" sap:quickinfo="Purchasing organization"/>
-                <Property Name="Ekgrp" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Purchasing Group"/>
-                <Property Name="Waers" Type="Edm.String" MaxLength="5" sap:label="Currency" sap:quickinfo="Currency Key" sap:semantics="currency-code"/>
-                <Property Name="Kufix" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Fixed Exchange Rate" sap:quickinfo="Indicator for Fixed Exchange Rate"/>
-                <Property Name="Kdatb" Type="Edm.DateTime" sap:display-format="Date" sap:label="Validity Per. Start" sap:quickinfo="Start of Validity Period"/>
-                <Property Name="Kdate" Type="Edm.DateTime" sap:display-format="Date" sap:label="Validity Period End" sap:quickinfo="End of Validity Period"/>
-                <Property Name="Bwbdt" Type="Edm.DateTime" sap:display-format="Date" sap:label="Application Close" sap:quickinfo="Closing Date for Applications"/>
-                <Property Name="Angdt" Type="Edm.DateTime" sap:display-format="Date" sap:label="Quotation Deadline" sap:quickinfo="Deadline for Submission of Bid/Quotation"/>
-                <Property Name="Bnddt" Type="Edm.DateTime" sap:display-format="Date" sap:label="Binding Period" sap:quickinfo="Binding Period for Quotation"/>
-                <Property Name="Gwldt" Type="Edm.DateTime" sap:display-format="Date" sap:label="Warranty" sap:quickinfo="Warranty Date"/>
-                <Property Name="Ausnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Bid invitation" sap:quickinfo="Bid invitation number"/>
-                <Property Name="Angnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Quotation" sap:quickinfo="Quotation Number"/>
-                <Property Name="Ihran" Type="Edm.DateTime" sap:display-format="Date" sap:label="Quotation Date" sap:quickinfo="Quotation Submission Date"/>
-                <Property Name="Ihrez" Type="Edm.String" MaxLength="12" sap:label="Your Reference"/>
-                <Property Name="Verkf" Type="Edm.String" MaxLength="30" sap:label="Salesperson" sap:quickinfo="Responsible Salesperson at Supplier's Office"/>
-                <Property Name="Llief" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Goods Supplier"/>
-                <Property Name="Kunnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer Number"/>
-                <Property Name="ActiveId" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Active Purchase Doc" sap:quickinfo="Active Purchasing Document"/>
-                <Property Name="Konnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Outline agreement" sap:quickinfo="Number of principal purchase agreement"/>
-                <Property Name="Abgru" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Field Not Used" sap:heading=""/>
-                <Property Name="Autlf" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Complete Delivery" sap:quickinfo="Complete Delivery Stipulated for Each Purchase Order"/>
-                <Property Name="Weakt" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="GR Message" sap:quickinfo="Indicator: Goods Receipt Message"/>
-            </EntityType>
-            <EntityType Name="ZP_AISP_POVIM_HEAD_Submitted" sap:content-version="1" sap:label="Projection View for PO based Invoice">
-                <Key>
-                    <PropertyRef Name="Ebeln"/>
-                    <PropertyRef Name="vbeln"/>
-                </Key>
-                <Property Name="Delete_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Update_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="to_povimitm_oc" Type="Edm.Boolean" sap:label="Dynamic CbA-Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Ebeln" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Purchasing Document" sap:quickinfo="Purchasing Document Number"/>
-                <Property Name="vbeln" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Delivery"/>
-                <Property Name="xblnr" Type="Edm.String" MaxLength="35" sap:display-format="UpperCase" sap:label="Reference" sap:quickinfo="Reference Document Number (for Dependencies see Long Text)"/>
-                <Property Name="mblnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Material Document" sap:quickinfo="Number of Material Document"/>
-                <Property Name="Bukrs" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Company Code"/>
-                <Property Name="Bedat" Type="Edm.String" sap:display-format="Date" sap:label="Document Date" sap:quickinfo="Purchasing Document Date"/>
-                <Property Name="Bstyp" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Purch. Doc. Category" sap:quickinfo="Purchasing Document Category"/>
-                <Property Name="Bsart" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Purchasing Doc. Type" sap:quickinfo="Purchasing Document Type"/>
-                <Property Name="Bsakz" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Control indicator" sap:quickinfo="Control indicator for purchasing document type"/>
-                <Property Name="Loekz" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Deletion Indicator" sap:quickinfo="Deletion Indicator in Purchasing Document"/>
-                <Property Name="Statu" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Status" sap:quickinfo="Status of Purchasing Document"/>
-                <Property Name="Aedat" Type="Edm.String" sap:display-format="Date" sap:label="Created On" sap:quickinfo="Creation Date of Purchasing Document"/>
-                <Property Name="Ernam" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="Created By" sap:quickinfo="User of person who created a purchasing document"/>
-                <Property Name="Pincr" Type="Edm.String" MaxLength="5" sap:display-format="NonNegative" sap:label="Item Number Interval"/>
-                <Property Name="Lponr" Type="Edm.String" MaxLength="5" sap:display-format="NonNegative" sap:label="Last Item" sap:quickinfo="Last Item Number"/>
-                <Property Name="Lifnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Supplier" sap:quickinfo="Vendor's account number"/>
-                <Property Name="ASNamount" Type="Edm.Decimal" Precision="12" Scale="2"/>
-                <Property Name="asndate" Type="Edm.String" sap:display-format="Date" sap:label="Creation Date" sap:quickinfo="Creation Date of Confirmation"/>
-                <Property Name="Status" Type="Edm.String" MaxLength="15"/>
-                <Property Name="name1" Type="Edm.String" MaxLength="35" sap:label="Name" sap:quickinfo="Name 1"/>
-                <Property Name="Vendoraddress" Type="Edm.String" MaxLength="88"/>
-                <Property Name="Bankkey" Type="Edm.String" MaxLength="15" sap:display-format="UpperCase" sap:label="Bank Key" sap:quickinfo="Bank Keys"/>
-                <Property Name="Bankacc" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Bank Account" sap:quickinfo="Bank account number"/>
-                <Property Name="Bankname" Type="Edm.String" MaxLength="60" sap:label="Bank Name" sap:quickinfo="Name of Financial Institution"/>
-                <Property Name="Zterm" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Payment terms" sap:quickinfo="Terms of payment key"/>
-                <Property Name="Zbd1t" Type="Edm.Decimal" Precision="3" Scale="0" sap:label="Payment in" sap:quickinfo="Cash (Prompt Payment) Discount Days"/>
-                <Property Name="Zbd2t" Type="Edm.Decimal" Precision="3" Scale="0" sap:label="Payment in" sap:quickinfo="Cash (Prompt Payment) Discount Days"/>
-                <Property Name="Zbd3t" Type="Edm.Decimal" Precision="3" Scale="0" sap:label="Payment in" sap:quickinfo="Cash (Prompt Payment) Discount Days"/>
-                <Property Name="Zbd1p" Type="Edm.Decimal" Precision="5" Scale="3" sap:label="Disc.percent 1" sap:quickinfo="Cash discount percentage 1"/>
-                <Property Name="Zbd2p" Type="Edm.Decimal" Precision="5" Scale="3" sap:label="Disc.percent 2" sap:quickinfo="Cash Discount Percentage 2"/>
-                <Property Name="Ekorg" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Purch. organization" sap:quickinfo="Purchasing organization"/>
-                <Property Name="Ekgrp" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Purchasing Group"/>
-                <Property Name="Waers" Type="Edm.String" MaxLength="5" sap:label="Currency" sap:quickinfo="Currency Key" sap:semantics="currency-code"/>
-                <Property Name="Kufix" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Fixed Exchange Rate" sap:quickinfo="Indicator for Fixed Exchange Rate"/>
-                <Property Name="Kdatb" Type="Edm.DateTime" sap:display-format="Date" sap:label="Validity Per. Start" sap:quickinfo="Start of Validity Period"/>
-                <Property Name="Kdate" Type="Edm.DateTime" sap:display-format="Date" sap:label="Validity Period End" sap:quickinfo="End of Validity Period"/>
-                <Property Name="Bwbdt" Type="Edm.DateTime" sap:display-format="Date" sap:label="Application Close" sap:quickinfo="Closing Date for Applications"/>
-                <Property Name="Angdt" Type="Edm.DateTime" sap:display-format="Date" sap:label="Quotation Deadline" sap:quickinfo="Deadline for Submission of Bid/Quotation"/>
-                <Property Name="Bnddt" Type="Edm.DateTime" sap:display-format="Date" sap:label="Binding Period" sap:quickinfo="Binding Period for Quotation"/>
-                <Property Name="Gwldt" Type="Edm.DateTime" sap:display-format="Date" sap:label="Warranty" sap:quickinfo="Warranty Date"/>
-                <Property Name="Ausnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Bid invitation" sap:quickinfo="Bid invitation number"/>
-                <Property Name="Angnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Quotation" sap:quickinfo="Quotation Number"/>
-                <Property Name="Ihran" Type="Edm.DateTime" sap:display-format="Date" sap:label="Quotation Date" sap:quickinfo="Quotation Submission Date"/>
-                <Property Name="Ihrez" Type="Edm.String" MaxLength="12" sap:label="Your Reference"/>
-                <Property Name="Verkf" Type="Edm.String" MaxLength="30" sap:label="Salesperson" sap:quickinfo="Responsible Salesperson at Supplier's Office"/>
-                <Property Name="Llief" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Goods Supplier"/>
-                <Property Name="Kunnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer Number"/>
-                <Property Name="ActiveId" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Active Purchase Doc" sap:quickinfo="Active Purchasing Document"/>
-                <Property Name="Konnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Outline agreement" sap:quickinfo="Number of principal purchase agreement"/>
-                <Property Name="Abgru" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Field Not Used" sap:heading=""/>
-                <Property Name="Autlf" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Complete Delivery" sap:quickinfo="Complete Delivery Stipulated for Each Purchase Order"/>
-                <Property Name="Weakt" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="GR Message" sap:quickinfo="Indicator: Goods Receipt Message"/>
-            </EntityType>
-            <EntityType Name="ZP_AISP_POVIM_HEAD" sap:content-version="1" sap:label="Projection View for PO based Invoice">
-                <Key>
-                    <PropertyRef Name="Ebeln"/>
-                    <PropertyRef Name="vbeln"/>
-                </Key>
-                <Property Name="Delete_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Update_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="to_povimitm_oc" Type="Edm.Boolean" sap:label="Dynamic CbA-Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Ebeln" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Purchasing Document" sap:quickinfo="Purchasing Document Number"/>
-                <Property Name="vbeln" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Delivery"/>
-                <Property Name="xblnr" Type="Edm.String" MaxLength="35" sap:display-format="UpperCase" sap:label="Reference" sap:quickinfo="Reference Document Number (for Dependencies see Long Text)"/>
-                <Property Name="mblnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Material Document" sap:quickinfo="Number of Material Document"/>
-                <Property Name="Bukrs" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Company Code"/>
-                <Property Name="Bedat" Type="Edm.String" sap:display-format="Date" sap:label="Document Date" sap:quickinfo="Purchasing Document Date"/>
-                <Property Name="Bstyp" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Purch. Doc. Category" sap:quickinfo="Purchasing Document Category"/>
-                <Property Name="Bsart" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Purchasing Doc. Type" sap:quickinfo="Purchasing Document Type"/>
-                <Property Name="Bsakz" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Control indicator" sap:quickinfo="Control indicator for purchasing document type"/>
-                <Property Name="Loekz" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Deletion Indicator" sap:quickinfo="Deletion Indicator in Purchasing Document"/>
-                <Property Name="Statu" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Status" sap:quickinfo="Status of Purchasing Document"/>
-                <Property Name="Aedat" Type="Edm.String" sap:display-format="Date" sap:label="Created On" sap:quickinfo="Creation Date of Purchasing Document"/>
-                <Property Name="Ernam" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="Created By" sap:quickinfo="User of person who created a purchasing document"/>
-                <Property Name="Pincr" Type="Edm.String" MaxLength="5" sap:display-format="NonNegative" sap:label="Item Number Interval"/>
-                <Property Name="Lponr" Type="Edm.String" MaxLength="5" sap:display-format="NonNegative" sap:label="Last Item" sap:quickinfo="Last Item Number"/>
-                <Property Name="Lifnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Supplier" sap:quickinfo="Vendor's account number"/>
-                <Property Name="ASNamount" Type="Edm.Decimal" Precision="12" Scale="2"/>
-                <Property Name="asndate" Type="Edm.String" sap:display-format="Date" sap:label="Creation Date" sap:quickinfo="Creation Date of Confirmation"/>
-                <Property Name="Status" Type="Edm.String" MaxLength="15"/>
-                <Property Name="name1" Type="Edm.String" MaxLength="35" sap:label="Name" sap:quickinfo="Name 1"/>
-                <Property Name="Vendoraddress" Type="Edm.String" MaxLength="88"/>
-                <Property Name="Bankkey" Type="Edm.String" MaxLength="15" sap:display-format="UpperCase" sap:label="Bank Key" sap:quickinfo="Bank Keys"/>
-                <Property Name="Bankacc" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Bank Account" sap:quickinfo="Bank account number"/>
-                <Property Name="Bankname" Type="Edm.String" MaxLength="60" sap:label="Bank Name" sap:quickinfo="Name of Financial Institution"/>
-                <Property Name="Zterm" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Payment terms" sap:quickinfo="Terms of payment key"/>
-                <Property Name="Zbd1t" Type="Edm.Decimal" Precision="3" Scale="0" sap:label="Payment in" sap:quickinfo="Cash (Prompt Payment) Discount Days"/>
-                <Property Name="Zbd2t" Type="Edm.Decimal" Precision="3" Scale="0" sap:label="Payment in" sap:quickinfo="Cash (Prompt Payment) Discount Days"/>
-                <Property Name="Zbd3t" Type="Edm.Decimal" Precision="3" Scale="0" sap:label="Payment in" sap:quickinfo="Cash (Prompt Payment) Discount Days"/>
-                <Property Name="Zbd1p" Type="Edm.Decimal" Precision="5" Scale="3" sap:label="Disc.percent 1" sap:quickinfo="Cash discount percentage 1"/>
-                <Property Name="Zbd2p" Type="Edm.Decimal" Precision="5" Scale="3" sap:label="Disc.percent 2" sap:quickinfo="Cash Discount Percentage 2"/>
-                <Property Name="Ekorg" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Purch. organization" sap:quickinfo="Purchasing organization"/>
-                <Property Name="Ekgrp" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Purchasing Group"/>
-                <Property Name="Waers" Type="Edm.String" MaxLength="5" sap:label="Currency" sap:quickinfo="Currency Key" sap:semantics="currency-code"/>
-                <Property Name="Kufix" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Fixed Exchange Rate" sap:quickinfo="Indicator for Fixed Exchange Rate"/>
-                <Property Name="Kdatb" Type="Edm.DateTime" sap:display-format="Date" sap:label="Validity Per. Start" sap:quickinfo="Start of Validity Period"/>
-                <Property Name="Kdate" Type="Edm.DateTime" sap:display-format="Date" sap:label="Validity Period End" sap:quickinfo="End of Validity Period"/>
-                <Property Name="Bwbdt" Type="Edm.DateTime" sap:display-format="Date" sap:label="Application Close" sap:quickinfo="Closing Date for Applications"/>
-                <Property Name="Angdt" Type="Edm.DateTime" sap:display-format="Date" sap:label="Quotation Deadline" sap:quickinfo="Deadline for Submission of Bid/Quotation"/>
-                <Property Name="Bnddt" Type="Edm.DateTime" sap:display-format="Date" sap:label="Binding Period" sap:quickinfo="Binding Period for Quotation"/>
-                <Property Name="Gwldt" Type="Edm.DateTime" sap:display-format="Date" sap:label="Warranty" sap:quickinfo="Warranty Date"/>
-                <Property Name="Ausnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Bid invitation" sap:quickinfo="Bid invitation number"/>
-                <Property Name="Angnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Quotation" sap:quickinfo="Quotation Number"/>
-                <Property Name="Ihran" Type="Edm.DateTime" sap:display-format="Date" sap:label="Quotation Date" sap:quickinfo="Quotation Submission Date"/>
-                <Property Name="Ihrez" Type="Edm.String" MaxLength="12" sap:label="Your Reference"/>
-                <Property Name="Verkf" Type="Edm.String" MaxLength="30" sap:label="Salesperson" sap:quickinfo="Responsible Salesperson at Supplier's Office"/>
-                <Property Name="Llief" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Goods Supplier"/>
-                <Property Name="Kunnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer Number"/>
-                <Property Name="ActiveId" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Active Purchase Doc" sap:quickinfo="Active Purchasing Document"/>
-                <Property Name="Konnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Outline agreement" sap:quickinfo="Number of principal purchase agreement"/>
-                <Property Name="Abgru" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Field Not Used" sap:heading=""/>
-                <Property Name="Autlf" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Complete Delivery" sap:quickinfo="Complete Delivery Stipulated for Each Purchase Order"/>
-                <Property Name="Weakt" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="GR Message" sap:quickinfo="Indicator: Goods Receipt Message"/>
-            </EntityType>
-            <EntityType Name="ZP_AISP_POVIM_ITEM" sap:content-version="1" sap:label="Projection View for PO based Inv Item">
-                <Key>
-                    <PropertyRef Name="Ebeln"/>
-                    <PropertyRef Name="Vbeln"/>
-                    <PropertyRef Name="Ebelp"/>
-                </Key>
-                <Property Name="Delete_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Update_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Ebeln" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Purchasing Document" sap:quickinfo="Purchasing Document Number" sap:creatable="false" sap:updatable="false"/>
-                <Property Name="Vbeln" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Delivery" sap:creatable="false" sap:updatable="false"/>
-                <Property Name="Ebelp" Type="Edm.String" MaxLength="5" Nullable="false" sap:display-format="NonNegative" sap:label="Item" sap:quickinfo="Item Number of Purchasing Document"/>
-                <Property Name="txz01" Type="Edm.String" MaxLength="40" sap:label="Short Text"/>
-                <Property Name="Ebtyp" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Confirm. Category" sap:quickinfo="Confirmation Category"/>
-                <Property Name="Eindt" Type="Edm.String" sap:display-format="Date" sap:label="Delivery Date" sap:quickinfo="Delivery Date of Supplier Confirmation"/>
-                <Property Name="Lpein" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Deliv. Date Category" sap:quickinfo="Date Category of Delivery Date in Supplier Confirmation"/>
-                <Property Name="Erdat" Type="Edm.String" sap:display-format="Date" sap:label="Creation Date" sap:quickinfo="Creation Date of Confirmation"/>
-                <Property Name="Ezeit" Type="Edm.Time" sap:label="Creation Time" sap:quickinfo="Time at Which Suppluer Confirmation was Created"/>
-                <Property Name="menge" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="meins" sap:label="Quantity"/>
-                <Property Name="Asnqty" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="meins" sap:label="Delivery Quantity" sap:quickinfo="Original Quantity of Delivery Item"/>
-                <Property Name="ASNitamount" Type="Edm.Decimal" Precision="12" Scale="2"/>
-                <Property Name="GRNitamount" Type="Edm.Decimal" Precision="12" Scale="2"/>
-                <Property Name="Taxper" Type="Edm.Decimal" Precision="12" Scale="2"/>
-                <Property Name="Taxval" Type="Edm.Decimal" Precision="15" Scale="3" sap:unit="waers" sap:variable-scale="true" sap:label="Value" sap:quickinfo="Condition Value"/>
-                <Property Name="Total" Type="Edm.Decimal" Precision="12" Scale="2"/>
-                <Property Name="meins" Type="Edm.String" MaxLength="3" sap:label="Base Unit of Measure" sap:semantics="unit-of-measure"/>
-                <Property Name="waers" Type="Edm.String" MaxLength="5" sap:label="Currency" sap:quickinfo="Currency Key" sap:semantics="currency-code"/>
-                <Property Name="Estkz" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Creation indicator" sap:quickinfo="Creation Indicator: Supplier Confirmation"/>
-                <Property Name="Loekz" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Deletion Indicator" sap:quickinfo="Supplier Confirmation Deletion Indicator"/>
-                <Property Name="Kzdis" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="MRP-Relevant" sap:quickinfo="Indicator: Confirmation is Relevant to Materials Planning"/>
-                <Property Name="Xblnr" Type="Edm.String" MaxLength="35" sap:display-format="UpperCase" sap:label="Reference" sap:quickinfo="Reference Document Number (for Dependencies see Long Text)"/>
-                <Property Name="Vbelp" Type="Edm.String" MaxLength="6" sap:display-format="NonNegative" sap:label="Item" sap:quickinfo="Delivery Item"/>
-                <Property Name="Status" Type="Edm.String" MaxLength="15"/>
-                <Property Name="Mprof" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Mfr part profile"/>
-                <Property Name="Ematn" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="MPN material" sap:quickinfo="Material number corresponding to manufacturer part number"/>
-                <Property Name="Mahnz" Type="Edm.Decimal" Precision="3" Scale="0" sap:label="No. Rem./Expediters" sap:quickinfo="Number of Reminders/Expediters"/>
-                <Property Name="Charg" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Batch" sap:quickinfo="Batch Number"/>
-                <Property Name="Uecha" Type="Edm.String" MaxLength="6" sap:display-format="NonNegative" sap:label="HigherLevelItemBatch" sap:quickinfo="Higher-Level Item of Batch Split Item"/>
-                <Property Name="Invoicerefno" Type="Edm.String" MaxLength="25"/>
-                <Property Name="Invoicedate" Type="Edm.DateTime" sap:display-format="Date"/>
+                <Property Name="REQUEST_NO" Type="Edm.Int32" Nullable="false" sap:label="Request Number" sap:quickinfo="Internal request identifier for which the approval log is recorded"/>
+                <Property Name="APPROVAL_LEVEL" Type="Edm.Int32" sap:label="Approval Level" sap:quickinfo="Numeric level of the approval step in the workflow"/>
+                <Property Name="APPROVER_ID" Type="Edm.String" sap:label="Approver ID" sap:quickinfo="Unique identifier of the approver (e.g., user ID or employee ID)"/>
+                <Property Name="APPROVER_ROLE" Type="Edm.String" sap:label="Approver Role" sap:quickinfo="Role of the approver in the approval process"/>
+                <Property Name="ACTION" Type="Edm.String" sap:label="Action" sap:quickinfo="Action taken by the approver (e.g., Approved, Rejected, Forwarded)"/>
+                <Property Name="COMMENT" Type="Edm.String" sap:label="Comment" sap:quickinfo="Remarks or notes provided by the approver"/>
+                <Property Name="TIMESTAMP" Type="Edm.DateTimeOffset" Precision="7" sap:label="Timestamp" sap:quickinfo="Date and time when the action was performed"/>
+                <Property Name="S4Response" Type="Edm.String" sap:label="S/4HANA Response" sap:quickinfo="Response message returned from the S/4HANA system"/>
+                <Property Name="S4ErrorMessage" Type="Edm.String" sap:label="S/4HANA Error Message" sap:quickinfo="Error message from S/4HANA in case of failure"/>
+                <Property Name="UPDATED_ON" Type="Edm.DateTimeOffset" Precision="7" sap:label="Updated On" sap:quickinfo="Timestamp when the approval log was last updated"/>
             </EntityType>
             <Association Name="VIMPOHead_TO_VIM_ITEMS">
-                <End Role="VIMPOHead" Type="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMPOHead" Multiplicity="*"/>
-                <End Role="VIMPOItem" Type="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMPOItem" Multiplicity="*"/>
+                <End Role="VIMPOHead" Type="POVIM_CUSTOMER_SIDE.VIMPOHead" Multiplicity="*"/>
+                <End Role="VIMPOItem" Type="POVIM_CUSTOMER_SIDE.VIMPOItem" Multiplicity="*"/>
             </Association>
             <Association Name="VIMPOHead_TO_VIM_ATTACHMENTS">
-                <End Role="VIMPOHead" Type="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMPOHead" Multiplicity="*"/>
-                <End Role="VIMAttachment" Type="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMAttachment" Multiplicity="*"/>
+                <End Role="VIMPOHead" Type="POVIM_CUSTOMER_SIDE.VIMPOHead" Multiplicity="*"/>
+                <End Role="VIMAttachment" Type="POVIM_CUSTOMER_SIDE.VIMAttachment" Multiplicity="*"/>
             </Association>
             <Association Name="RejectedTab_TO_VIM_ITEMS">
-                <End Role="RejectedTab" Type="ZP_AISP_POVIM_HEAD_BNDSampleService.RejectedTab" Multiplicity="*"/>
-                <End Role="VIMPOItem" Type="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMPOItem" Multiplicity="*"/>
+                <End Role="RejectedTab" Type="POVIM_CUSTOMER_SIDE.RejectedTab" Multiplicity="*"/>
+                <End Role="VIMPOItem" Type="POVIM_CUSTOMER_SIDE.VIMPOItem" Multiplicity="*"/>
             </Association>
             <Association Name="RejectedTab_TO_VIM_ATTACHMENTS">
-                <End Role="RejectedTab" Type="ZP_AISP_POVIM_HEAD_BNDSampleService.RejectedTab" Multiplicity="*"/>
-                <End Role="VIMAttachment" Type="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMAttachment" Multiplicity="*"/>
+                <End Role="RejectedTab" Type="POVIM_CUSTOMER_SIDE.RejectedTab" Multiplicity="*"/>
+                <End Role="VIMAttachment" Type="POVIM_CUSTOMER_SIDE.VIMAttachment" Multiplicity="*"/>
+            </Association>
+            <Association Name="ApprovedTab_TO_VIM_ITEMS">
+                <End Role="ApprovedTab" Type="POVIM_CUSTOMER_SIDE.ApprovedTab" Multiplicity="*"/>
+                <End Role="VIMPOItem" Type="POVIM_CUSTOMER_SIDE.VIMPOItem" Multiplicity="*"/>
+            </Association>
+            <Association Name="ApprovedTab_TO_VIM_ATTACHMENTS">
+                <End Role="ApprovedTab" Type="POVIM_CUSTOMER_SIDE.ApprovedTab" Multiplicity="*"/>
+                <End Role="VIMAttachment" Type="POVIM_CUSTOMER_SIDE.VIMAttachment" Multiplicity="*"/>
             </Association>
             <Association Name="VIMDATA_TO_VIM_ITEMS">
-                <End Role="VIMDATA" Type="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMDATA" Multiplicity="*"/>
-                <End Role="VIMPOItem" Type="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMPOItem" Multiplicity="*"/>
+                <End Role="VIMDATA" Type="POVIM_CUSTOMER_SIDE.VIMDATA" Multiplicity="*"/>
+                <End Role="VIMPOItem" Type="POVIM_CUSTOMER_SIDE.VIMPOItem" Multiplicity="*"/>
             </Association>
             <Association Name="VIMDATA_TO_VIM_ATTACHMENTS">
-                <End Role="VIMDATA" Type="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMDATA" Multiplicity="*"/>
-                <End Role="VIMAttachment" Type="ZP_AISP_POVIM_HEAD_BNDSampleService.VIMAttachment" Multiplicity="*"/>
+                <End Role="VIMDATA" Type="POVIM_CUSTOMER_SIDE.VIMDATA" Multiplicity="*"/>
+                <End Role="VIMAttachment" Type="POVIM_CUSTOMER_SIDE.VIMAttachment" Multiplicity="*"/>
             </Association>
-            <Annotations Target="ZP_AISP_POVIM_HEAD_BNDSampleService.EntityContainer/SAP__UnitsOfMeasure" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="Capabilities.DeleteRestrictions">
-                    <Record Type="Capabilities.DeleteRestrictionsType">
-                        <PropertyValue Property="Deletable" Bool="false"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="Capabilities.InsertRestrictions">
-                    <Record Type="Capabilities.InsertRestrictionsType">
-                        <PropertyValue Property="Insertable" Bool="false"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="Capabilities.UpdateRestrictions">
-                    <Record Type="Capabilities.UpdateRestrictionsType">
-                        <PropertyValue Property="Updatable" Bool="false"/>
-                    </Record>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="ZP_AISP_POVIM_HEAD_BNDSampleService.EntityContainer/SAP__Currencies" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="Capabilities.DeleteRestrictions">
-                    <Record Type="Capabilities.DeleteRestrictionsType">
-                        <PropertyValue Property="Deletable" Bool="false"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="Capabilities.InsertRestrictions">
-                    <Record Type="Capabilities.InsertRestrictionsType">
-                        <PropertyValue Property="Insertable" Bool="false"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="Capabilities.UpdateRestrictions">
-                    <Record Type="Capabilities.UpdateRestrictionsType">
-                        <PropertyValue Property="Updatable" Bool="false"/>
-                    </Record>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="ZP_AISP_POVIM_HEAD_BNDSampleService.EntityContainer/ZP_AISP_POVIM_HEAD_Pending" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="Capabilities.DeleteRestrictions">
-                    <Record Type="Capabilities.DeleteRestrictionsType">
-                        <PropertyValue Property="Deletable" Bool="false"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="Capabilities.InsertRestrictions">
-                    <Record Type="Capabilities.InsertRestrictionsType">
-                        <PropertyValue Property="Insertable" Bool="false"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="Capabilities.UpdateRestrictions">
-                    <Record Type="Capabilities.UpdateRestrictionsType">
-                        <PropertyValue Property="Updatable" Bool="false"/>
-                    </Record>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="ZP_AISP_POVIM_HEAD_BNDSampleService.EntityContainer/ZP_AISP_POVIM_ITEM" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="Capabilities.DeleteRestrictions">
-                    <Record Type="Capabilities.DeleteRestrictionsType">
-                        <PropertyValue Property="Deletable" Bool="false"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="Capabilities.InsertRestrictions">
-                    <Record Type="Capabilities.InsertRestrictionsType">
-                        <PropertyValue Property="Insertable" Bool="false"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="Capabilities.UpdateRestrictions">
-                    <Record Type="Capabilities.UpdateRestrictionsType">
-                        <PropertyValue Property="Updatable" Bool="false"/>
-                    </Record>
-                </Annotation>
-            </Annotations>
         </Schema>
     </edmx:DataServices>
 </edmx:Edmx>

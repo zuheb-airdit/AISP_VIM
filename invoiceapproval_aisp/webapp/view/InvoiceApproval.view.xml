@@ -24,12 +24,11 @@
                 <smartFilterBar:ControlConfiguration
                     key="Invoicedate"
                     visibleInAdvancedArea="true"
-                    conditionType="{
-								module: 'sap.ui.comp.config.condition.DateRangeType'
-							}"
+                    conditionType="{ module: 'sap.ui.comp.config.condition.DateRangeType'}"
                 />
             </smartFilterBar:controlConfiguration>
         </smartFilterBar:SmartFilterBar>
+
         <IconTabBar
             id="idIconTabBarMulti"
             expanded="{device>/isNoPhone}"
@@ -56,6 +55,8 @@
                         tableType="ResponsiveTable"
                         demandPopin="true"
                         enableAutoColumnWidth="false"
+                        beforeRebindTable="onBeforeRebindTable"
+                        requestAtLeastFields="STATUS,APPROVER_ROLE"
                         id="smartTable"
                     >
                         <Table
@@ -89,6 +90,18 @@
                                         wrapping="true"
                                     />
                                 </Column>
+                                <Column>
+                                    <customData>
+                                        <core:CustomData
+                                            key="p13nData"
+                                            value='\{"columnKey": "Status","leadingProperty": "Status", "sortProperty": "Status", "filterProperty": "Status", "columnIndex": "7" }'
+                                        />
+                                    </customData>
+                                    <Label
+                                        text="Status"
+                                        wrapping="true"
+                                    />
+                                </Column>
                             </columns>
                             <items>
                                 <ColumnListItem
@@ -104,8 +117,14 @@
 						                    parts:[{path:'ASNamount'},{path:'Waers'}],
 						                    type: 'sap.ui.model.type.Currency',
 						                    formatOptions: {showMeasure: false}
-					}"
+					                        }"
                                             unit="INR"
+                                        />
+                                        <ObjectStatus
+                                            text="{parts:[{path:'STATUS'},{path:'APPROVER_ROLE'}], formatter: '.statusFormatterPendingText'}"
+                                            state="{path: 'STATUS', formatter: '.statusFormatterState'}"
+                                            inverted="true"
+                                            class="noWrapText"
                                         />
                                     </cells>
                                 </ColumnListItem>
@@ -113,10 +132,9 @@
                         </Table>
                     </smartTable:SmartTable>
                 </IconTabFilter>
-
                 <IconTabFilter
                     key="rejected"
-                    icon="/Images/submitted.png"
+                    icon="/Images/Rejected.png"
                     text="Rejected"
                 >
                     <smartTable:SmartTable
@@ -133,6 +151,8 @@
                         tableType="ResponsiveTable"
                         demandPopin="true"
                         enableAutoColumnWidth="false"
+                        beforeRebindTable="onBeforeRebindTable"
+                        requestAtLeastFields="STATUS"
                         id="smartTableSub"
                     >
                         <Table
@@ -166,6 +186,120 @@
                                         wrapping="true"
                                     />
                                 </Column>
+                                <Column>
+                                    <customData>
+                                        <core:CustomData
+                                            key="p13nData"
+                                            value='\{"columnKey": "Status","leadingProperty": "Status", "sortProperty": "Status", "filterProperty": "Status", "columnIndex": "7" }'
+                                        />
+                                    </customData>
+                                    <Label
+                                        text="Status"
+                                        wrapping="true"
+                                    />
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem
+                                    vAlign="Middle"
+                                    type="Navigation"
+                                    press="onClickInvoice"
+                                >
+                                    <cells>
+                                        <!-- <ObjectStatus
+                                            text="{path: 'Status', formatter: '.formatter.statusFormattertest'}"
+                                            state="{path: 'Status', formatter: '.formatter.indicationFormat'}"
+                                            inverted="true"
+                                            class="noWrapText"
+                                        /> -->
+                                        <Text text="{REQUEST_NO}" />
+                                        <ObjectNumber
+                                            class="sapUiSmallMarginBottom"
+                                            number="{
+                                                parts:[{path:'ASNamount'},{path:'Waers'}],
+                                                type: 'sap.ui.model.type.Currency',
+                                                formatOptions: {showMeasure: false}
+                                            }"
+                                            unit="INR"
+                                        />
+                                        <ObjectStatus
+                                            text="{path: 'STATUS', formatter: '.statusFormatterText'}"
+                                            state="{path: 'STATUS', formatter: '.statusFormatterState'}"
+                                            inverted="true"
+                                            class="noWrapText"
+                                        />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </smartTable:SmartTable>
+                </IconTabFilter>
+                <IconTabFilter
+                    key="approved"
+                    icon="/Images/submitted.png"
+                    text="Approved"
+                >
+                    <smartTable:SmartTable
+                        entitySet="ApprovedTab"
+                        smartFilterId="smartFilterBar"
+                        enableExport="true"
+                        beforeExport="onBeforeExport"
+                        useVariantManagement="true"
+                        useTablePersonalisation="true"
+                        header="Items"
+                        showRowCount="true"
+                        persistencyKey="SmartTableRefApp_Explored"
+                        enableAutoBinding="true"
+                        tableType="ResponsiveTable"
+                        demandPopin="true"
+                        enableAutoColumnWidth="false"
+                        id="smartTableSubApproved"
+                        requestAtLeastFields="STATUS"
+                        beforeRebindTable="onBeforeRebindTable"
+                    >
+                        <Table
+                            selectionChange="selectionChangeHandlerRregister"
+                            growing="true"
+                            growingThreshold="10"
+                            id="idTableInvoiceApproved"
+                        >
+                            <columns>
+                                <Column>
+                                    <customData>
+                                        <core:CustomData
+                                            key="p13nData"
+                                            value='\{"columnKey": "REQUEST_NO","leadingProperty": "REQUEST_NO", "sortProperty": "REQUEST_NO", "filterProperty": "REQUEST_NO", "columnIndex": "0" }'
+                                        />
+                                    </customData>
+                                    <Label
+                                        text="Request No."
+                                        wrapping="true"
+                                    />
+                                </Column>
+                                <Column>
+                                    <customData>
+                                        <core:CustomData
+                                            key="p13nData"
+                                            value='\{"columnKey": "ASNamount","leadingProperty": "ASNamount", "sortProperty": "ASNamount", "filterProperty": "ASNamount", "columnIndex": "2" }'
+                                        />
+                                    </customData>
+                                    <Label
+                                        text="Amount"
+                                        wrapping="true"
+                                    />
+                                </Column>
+                                <Column>
+                                    <customData>
+                                        <core:CustomData
+                                            key="p13nData"
+                                            value='\{"columnKey": "Status","leadingProperty": "Status", "sortProperty": "Status", "filterProperty": "Status", "columnIndex": "7" }'
+                                        />
+                                    </customData>
+                                    <Label
+                                        text="Status"
+                                        wrapping="true"
+                                    />
+                                </Column>
                             </columns>
                             <items>
                                 <ColumnListItem
@@ -189,6 +323,12 @@
 						formatOptions: {showMeasure: false}
 					}"
                                             unit="INR"
+                                        />
+                                        <ObjectStatus
+                                            text="{path: 'STATUS', formatter: '.statusFormatterText'}"
+                                            state="{path: 'STATUS', formatter: '.statusFormatterState'}"
+                                            inverted="true"
+                                            class="noWrapText"
                                         />
                                     </cells>
                                 </ColumnListItem>

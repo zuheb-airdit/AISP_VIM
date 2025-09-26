@@ -158,7 +158,7 @@
                         />
                         <!-- <m:Text text="In Progress - {headData>/APPROVER_ROLE}" /> -->
                         <m:ObjectStatus
-                            text="{headData>/Status}"
+                            text="{headData>/STATUS}"
                             class="objClass"
                             state="Indication05"
                         />
@@ -513,6 +513,7 @@
         </sections>
         <footer>
             <m:Toolbar id="otbFooter">
+             <m:Image src="./Images/chat-bot.png" width='30px' height='30px' press="openChatbot" tooltip="Chat with AI" class="sapUiTinyMarginEnd"/>
                 <m:ToolbarSpacer />
                 <m:Button
                     type="Back"
@@ -524,14 +525,14 @@
                     icon="sap-icon://complete"
                     text="Approve"
                     press="onInvoiceApprove"
-                    visible="{path: 'headData>/Status', formatter: '.isPending'}"
+                    visible="{= ${headData>/STATUS} === 4}"
                 />
                 <m:Button
                     type="Reject"
                     icon="sap-icon://decline"
                     text="Reject"
                     press="onInvoiceReject"
-                    visible="{path: 'headData>/Status', formatter: '.isPending'}"
+                    visible="{= ${headData>/STATUS} === 4}"
                 />
             </m:Toolbar>
         </footer>

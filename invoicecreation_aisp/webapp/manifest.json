@@ -1,138 +1,136 @@
 {
-    "_version": "1.65.0",
-    "sap.app": {
-        "id": "com.invoicecreation.invoicecreationaisp",
-        "type": "application",
-        "i18n": "i18n/i18n.properties",
-        "applicationVersion": {
-            "version": "0.0.1"
-        },
-        "title": "{{appTitle}}",
-        "description": "{{appDescription}}",
-        "resources": "resources.json",
-        "sourceTemplate": {
-            "id": "@sap/generator-fiori:basic",
-            "version": "1.17.1",
-            "toolsId": "f46ba26b-af94-4632-9f6c-504370d4f7a6"
-        },
-        "dataSources": {
-            "mainService": {
-                "uri": "odata/v2/zp-aisp-povim-head-bndsample/",
-                "type": "OData",
-                "settings": {
-                    "annotations": [
-                        "annotation0"
-                    ],
-                    "localUri": "localService/mainService/metadata.xml",
-                    "odataVersion": "2.0"
-                }
-            },
-            "annotation0": {
-                "type": "ODataAnnotation",
-                "uri": "annotations/annotation0.xml",
-                "settings": {
-                    "localUri": "annotations/annotation0.xml"
-                }
-            }
-        }
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "com.invoicecreation.invoicecreationaisp",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
     },
-    "sap.ui": {
-        "technology": "UI5",
-        "icons": {
-            "icon": "",
-            "favIcon": "",
-            "phone": "",
-            "phone@2": "",
-            "tablet": "",
-            "tablet@2": ""
-        },
-        "deviceTypes": {
-            "desktop": true,
-            "tablet": true,
-            "phone": true
-        }
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.17.1",
+      "toolsId": "f46ba26b-af94-4632-9f6c-504370d4f7a6"
     },
-    "sap.ui5": {
-        "flexEnabled": false,
-        "dependencies": {
-            "minUI5Version": "1.134.1",
-            "libs": {
-                "sap.m": {},
-                "sap.ui.core": {}
-            }
-        },
-        "contentDensities": {
-            "compact": true,
-            "cozy": true
-        },
-        "models": {
-            "i18n": {
-                "type": "sap.ui.model.resource.ResourceModel",
-                "settings": {
-                    "bundleName": "com.invoicecreation.invoicecreationaisp.i18n.i18n"
-                }
-            },
-            "": {
-                "dataSource": "mainService",
-                "preload": true,
-                "settings": {}
-            }
-        },
-        "resources": {
-            "css": [
-                {
-                    "uri": "css/style.css"
-                }
-            ]
-        },
-        "routing": {
-            "config": {
-                "routerClass": "sap.m.routing.Router",
-                "controlAggregation": "beginColumnPages",
-                "controlId": "layout",
-                "viewType": "XML",
-                "async": true,
-                "clearControlAggregation": false,
-                "viewPath": "com.invoicecreation.invoicecreationaisp.view"
-            },
-            "routes": [
-                {
-                    "name": "RouteInvoiceCreation",
-                    "pattern": ":?query:",
-                    "target": [
-                        "TargetInvoiceCreation"
-                    ]
-                },
-                {
-                    "name": "RouteInvoiceObj",
-                    "pattern": "RouteInvoiceObj/{poId}/{vbId}/{status}",
-                    "target": [
-                        "TargetInvoiceCreation",
-                        "TargetInvoiceObj"
-                    ]
-                }
-            ],
-            "targets": {
-                "TargetInvoiceCreation": {
-                    "viewId": "InvoiceCreation",
-                    "viewName": "InvoiceCreation",
-                    "viewLevel": 1,
-                    "clearControlAggregation": true
-                },
-                "TargetInvoiceObj": {
-                    "viewId": "InvoiceObj",
-                    "viewName": "InvoiceObj",
-                    "viewLevel": 2,
-                    "clearControlAggregation": true,
-                    "controlAggregation": "midColumnPages"
-                }
-            }
-        },
-        "rootView": {
-            "viewName": "com.invoicecreation.invoicecreationaisp.view.App",
-            "type": "XML",
-            "id": "App",
-            "async": true
+    "dataSources": {
+      "annotation0": {
+        "type": "ODataAnnotation",
+        "uri": "annotations/annotation0.xml",
+        "settings": {
+          "localUri": "annotations/annotation0.xml"
         }
+      },
+      "mainService": {
+        "uri": "odata/v2/zp-aisp-povim-head-bndsample/",
+        "type": "OData",
+        "settings": {
+          "annotations": ["annotation0"],
+          "localUri": "localService/mainService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      }
     }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.134.1",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "com.invoicecreation.invoicecreationaisp.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {}
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "beginColumnPages",
+        "controlId": "layout",
+        "viewType": "XML",
+        "async": true,
+        "clearControlAggregation": false,
+        "viewPath": "com.invoicecreation.invoicecreationaisp.view"
+      },
+      "routes": [
+        {
+          "name": "RouteInvoiceCreation",
+          "pattern": ":?query:",
+          "target": ["TargetInvoiceCreation"]
+        },
+        {
+          "name": "RouteInvoiceObj",
+          "pattern": "RouteInvoiceObj/{poId}/{vbId}/{status}",
+          "target": ["TargetInvoiceCreation", "TargetInvoiceObj"]
+        },
+        {
+          "name": "RouteSubmittedInvoiceObj",
+          "pattern": "RouteSubmittedInvoiceObj/{reqno}",
+          "target": ["TargetInvoiceCreation", "TargetInvoiceObj"]
+        }
+      ],
+      "targets": {
+        "TargetInvoiceCreation": {
+          "viewId": "InvoiceCreation",
+          "viewName": "InvoiceCreation",
+          "viewLevel": 1,
+          "clearControlAggregation": true
+        },
+        "TargetInvoiceObj": {
+          "viewId": "InvoiceObj",
+          "viewName": "InvoiceObj",
+          "viewLevel": 2,
+          "clearControlAggregation": true,
+          "controlAggregation": "midColumnPages"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "com.invoicecreation.invoicecreationaisp.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
 }
