@@ -157,11 +157,24 @@
                             class="sapUiTinyMarginEnd"
                         />
                         <!-- <m:Text text="In Progress - {headData>/APPROVER_ROLE}" /> -->
-                        <m:ObjectStatus
+                        <!-- <m:ObjectStatus
                             text="{headData>/STATUS}"
                             class="objClass"
                             state="Indication05"
-                        />
+                        /> -->
+                         <m:ObjectStatus
+        text="{
+            parts: [
+                {path: 'headData>/STATUS'},
+                {path: 'headData>/APPROVER_ROLE'}
+            ],
+            formatter: '.formatStatusText'
+        }"
+        state="{
+            path: 'headData>/STATUS',
+            formatter: '.formatStatusState'
+        }"
+        class="objClass"/>
                         <!-- e.g. Invoice Pending -->
                     </m:HBox>
 

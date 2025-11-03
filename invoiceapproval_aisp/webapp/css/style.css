@@ -17,3 +17,9 @@
 .fileStatus{
     font-weight: bold;
 }
+
+.noWrapText {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -10,7 +10,8 @@
 >
     <Page
         showFooter="false"
-        showHeader="false"
+        showHeader="true"
+        title="Invoice Approval"
     >
         <smartFilterBar:SmartFilterBar
             id="smartFilterBar"
@@ -124,6 +125,7 @@
                                             text="{parts:[{path:'STATUS'},{path:'APPROVER_ROLE'}], formatter: '.statusFormatterPendingText'}"
                                             state="{path: 'STATUS', formatter: '.statusFormatterState'}"
                                             inverted="true"
+
                                             class="noWrapText"
                                         />
                                     </cells>

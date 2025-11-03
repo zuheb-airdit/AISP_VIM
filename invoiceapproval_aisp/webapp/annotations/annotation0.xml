@@ -58,10 +58,10 @@
                             <PropertyValue Property="Value" Path="AsnDate" />
                             <PropertyValue Property="Label" String="Invoice Date" />
                         </Record>
-                         <!-- <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="REJECTED_COMMENT" />
-                            <PropertyValue Property="Label" String="Comment" />
-                        </Record> -->
+                         <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="supplierInvoiceRefNo"/>
+                            <PropertyValue Property="Label" String="Invoice Ref No." />
+                        </Record>
                     </Collection>
                 </Annotation>
             </Annotations>

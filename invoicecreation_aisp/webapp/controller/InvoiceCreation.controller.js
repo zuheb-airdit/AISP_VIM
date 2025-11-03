@@ -24,35 +24,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 this.byId("smartTableSub").rebindTable();
             },
 
-            // onClickInvoice: function (oEvent) {
-            //     this.byId("smartFilterBar").setVisible(false);
-            //     const bindingPath = oEvent.getSource().getBindingContextPath(); // '/VIMDATA(1000000995)'
-            //     const entityName = bindingPath.split('(')[0].substring(1);
-
-            //     if (entityName === VIMDATA) {
-            //         let reqno = oEvent.getSource().getBindingContext().getObject().Ebeln;
-
-            //         this.getOwnerComponent()
-            //             .getModel("appView")
-            //             .setProperty("/layout", "TwoColumnsMidExpanded");
-            //         this.getOwnerComponent().getRouter().navTo("RouteInvoiceObj", {
-            //             reqno: reqno
-            //         });
-            //     } else if (entityName === ZP_AISP_POVIM_HEAD) {
-            //         let poNum = oEvent.getSource().getBindingContext().getObject().Ebeln;
-            //         let voNum = oEvent.getSource().getBindingContext().getObject().vbeln;
-            //         let status = oEvent.getSource().getBindingContext().getObject().Status;
-            //         this.getOwnerComponent()
-            //             .getModel("appView")
-            //             .setProperty("/layout", "TwoColumnsMidExpanded");
-            //         this.getOwnerComponent().getRouter().navTo("RouteInvoiceObj", {
-            //             poId: poNum,
-            //             vbId: voNum,
-            //             status: status,
-            //         });
-            //     }
-            // },
-
             onClickInvoice: function (oEvent) {
                 this.byId("smartFilterBar").setVisible(false);
                 const oBindingContext = oEvent.getSource().getBindingContext();

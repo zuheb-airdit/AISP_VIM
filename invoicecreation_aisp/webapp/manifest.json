@@ -107,7 +107,7 @@
         {
           "name": "RouteSubmittedInvoiceObj",
           "pattern": "RouteSubmittedInvoiceObj/{reqno}",
-          "target": ["TargetInvoiceCreation", "TargetInvoiceObj"]
+          "target": ["TargetInvoiceCreation", "TargetSubmittedObj"]
         }
       ],
       "targets": {
@@ -120,6 +120,13 @@
         "TargetInvoiceObj": {
           "viewId": "InvoiceObj",
           "viewName": "InvoiceObj",
+          "viewLevel": 2,
+          "clearControlAggregation": true,
+          "controlAggregation": "midColumnPages"
+        },
+        "TargetSubmittedObj": {
+          "viewId": "SubmittedInvoiceObj",
+          "viewName": "SubmittedInvoiceObj",
           "viewLevel": 2,
           "clearControlAggregation": true,
           "controlAggregation": "midColumnPages"

@@ -1,5 +1,5 @@
 <mvc:View 
-    controllerName="com.invoicecreation.invoicecreationaisp.controller.InvoiceObj"
+    controllerName="com.invoicecreation.invoicecreationaisp.controller.SubmittedInvoiceObj"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
     xmlns:m="sap.m"
@@ -8,7 +8,7 @@
     xmlns:u="sap.ui.unified"
     xmlns="sap.uxap">
     
-    <ObjectPageLayout id="ObjectPageLayout" 
+    <ObjectPageLayout id="SubmittedObjectPageLayout" 
         showTitleInHeaderContent="true" 
         alwaysShowContentHeader="false" 
         preserveHeaderStateOnScroll="false" 
@@ -22,25 +22,24 @@
         <headerTitle>
             <ObjectPageDynamicHeaderTitle>
                 <breadcrumbs>
-                    <m:Breadcrumbs id="breadcrumbsId" currentLocationText="Create Invoice">
+                    <m:Breadcrumbs id="SubmittedbreadcrumbsId" currentLocationText="Submitted Invoice">
                         <m:Link text="Order" press="handleClose" />
                     </m:Breadcrumbs>
                 </breadcrumbs>
                 <expandedHeading>
-                    <m:Title text="PO NO: {headData>/Ebeln}" wrapping="true" />
+                    <m:Title text="Request No: {headData>/REQUEST_NO}" wrapping="true" />
                 </expandedHeading>
                 <snappedHeading>
                     <m:HBox wrap="NoWrap" alignItems="Center">
                         <m:Avatar src="./Images/objPageIcon.png" displaySize="S" displayShape="Square" class="sapUiTinyMarginEnd" />
                         <m:VBox wrap="Wrap">
-                            <m:Title text="{headData>/Ebeln}" wrapping="true" />
-                            <m:Label text="PO NO:" wrapping="true" />
+                            <m:Title text="{headData>/REQUEST_NO}" wrapping="true" />
+                            <m:Label text="Request No:" wrapping="true" />
                         </m:VBox>
                     </m:HBox>
                 </snappedHeading>
                 <actions>
-                    <m:Button icon="sap-icon://edit" press="onPressEdit" type="Emphasized" 
-                        visible="{= ${headData>/Status} === 'Invoice Rejected' }" />
+                    <m:Button icon="sap-icon://edit" press="onPressEdit" type="Emphasized" visible="{= ${headData>/STATUS} === 3 }" />
                 </actions>
             </ObjectPageDynamicHeaderTitle>
         </headerTitle>
@@ -55,33 +54,35 @@
                     </m:HBox>
                     <m:HBox class="sapUiTinyMarginBottom">
                         <m:Label text="Vendor Name:" class="sapUiTinyMarginEnd" />
-                        <m:Text text="{headData>/name1}" />
+                        <m:Text text="{headData>/Name1}" />
                     </m:HBox>
                     <m:HBox class="sapUiTinyMarginBottom">
                         <m:Label text="Vendor Address:" class="sapUiTinyMarginEnd" />
-                        <m:Text text="{headData>/Vendoraddress}" width="8rem" />
+                        <m:Text text="{headData>/VendorAddress}" width="8rem" />
                     </m:HBox>
                 </m:VBox>
 
                 <m:VBox class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
                     <m:HBox class="sapUiTinyMarginBottom">
                         <m:Label text="Bank Key:" class="sapUiTinyMarginEnd" />
-                        <m:Text text="{headData>/Bankkey}" />
+                        <m:Text text="{headData>/BankKey}" />
                     </m:HBox>
                     <m:HBox class="sapUiTinyMarginBottom">
                         <m:Label text="Bank Name:" class="sapUiTinyMarginEnd" />
-                        <m:Text text="{headData>/Bankname}" />
+                        <m:Text text="{headData>/BankName}" />
                     </m:HBox>
                     <m:HBox class="sapUiTinyMarginBottom">
                         <m:Label text="Bank Account:" class="sapUiTinyMarginEnd" />
-                        <m:Text text="{headData>/Bankacc}" />
+                        <m:Text text="{headData>/BankAccount}" />
                     </m:HBox>
                 </m:VBox>
 
                 <m:VBox class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
                     <m:HBox class="sapUiTinyMarginBottom">
                         <m:Label text="Status:" class="sapUiTinyMarginEnd" />
-                        <m:Text text="{headData>/Status}" />
+                        <m:ObjectStatus 
+                            text="{path: 'headData>/STATUS', formatter: '.formatStatusText'}"
+                            state="{path: 'headData>/STATUS', formatter: '.formatStatusState'}" />
                     </m:HBox>
                     <m:HBox class="sapUiTinyMarginBottom">
                         <m:Label text="Order Date:" class="sapUiTinyMarginEnd" />
@@ -102,24 +103,29 @@
                             unit="{headData>/Waers}" 
                             state="Success" />
                     </m:HBox>
-                </m:VBox>
-            </m:FlexBox>
+                     <m:HBox class="sapUiTinyMarginBottom" visible="{= ${headData>/STATUS} === 5}">
+                        <m:Label text="Supplier Invoice Ref No:" class="sapUiTinyMarginEnd" />
+                        <m:Text text="{headData>/supplierInvoiceRefNo}" />
+                    </m:HBox> 
+                </m:VBox> 
+             </m:FlexBox>
         </headerContent>
 
         <sections>
-            <ObjectPageSection title="Invoice Header">
+        <ObjectPageSection title="Invoice Header">
                 <subSections>
                     <ObjectPageSubSection>
                         <blocks>
                             <m:HBox class="sapUiSmallMargin">
                                 <m:VBox class="sapUiMediumMarginEnd">
                                     <m:Label text="Invoice Number:" class="sapUiTinyMarginBottom" />
-                                    <m:Input id="idInvoiceNum" width="10rem" 
+                                    <m:Input id="idSubInvoiceNum" width="10rem" editable="{headData>/editable}"
                                         value="{headData>/Invoicerefno}" />
                                 </m:VBox>
                                 <m:VBox class="sapUiMediumMarginBegin">
                                     <m:Label text="Invoice Date:" class="sapUiTinyMarginBottom" />
-                                    <m:DatePicker id="idInvoiceDate" width="10rem" 
+                                    <m:DatePicker id="idSubInvoiceDate" width="10rem" 
+                                    editable="{headData>/editable}"
                                         value="{headData>/Invoicedate}" 
                                         displayFormat="yyyy-MM-dd" />
                                 </m:VBox>
@@ -135,7 +141,7 @@
                         <blocks>
                             <m:VBox>
                                 <m:ScrollContainer horizontal="true" vertical="true" width="100%">
-                                    <m:Table id="myTable" items="{tableModel>/results}" inset="false" width="auto">
+                                    <m:Table id="mySubmittedTable" items="{tableModel>/results}" inset="false" width="auto">
                                         <m:headerToolbar>
                                             <m:Toolbar>
                                                 <m:Title text="Item Details" level="H2" />
@@ -163,12 +169,12 @@
                                                     <m:Text text="{tableModel>Ebeln}" />
                                                     <m:Text text="{tableModel>Vbeln}" />
                                                     <m:Text text="{tableModel>Ebelp}" />
-                                                    <m:Text text="{tableModel>txz01}" />
-                                                    <m:Text text="{tableModel>meins}" />
-                                                    <m:ObjectNumber number="{tableModel>Asnqty}" unit="NOS" />
-                                                    <m:ObjectNumber number="{tableModel>ASNitamount}" unit="INR" />
-                                                    <m:ObjectNumber number="{tableModel>menge}" unit="NOS" />
-                                                    <m:ObjectNumber number="{tableModel>GRNitamount}" unit="INR" />
+                                                    <m:Text text="{tableModel>Txz01}" />
+                                                    <m:Text text="{tableModel>Meins}" />
+                                                    <m:ObjectNumber number="{tableModel>AsnQty}" unit="NOS" />
+                                                    <m:ObjectNumber number="{tableModel>ASNitAmount}" unit="INR" />
+                                                    <m:ObjectNumber number="{tableModel>Menge}" unit="NOS" />
+                                                    <m:ObjectNumber number="{tableModel>GRNitAmount}" unit="INR" />
                                                     <m:Text text="{tableModel>Taxper}" />
                                                     <m:ObjectNumber number="{tableModel>Taxval}" unit="INR" />
                                                     <m:ObjectNumber number="{tableModel>Total}" unit="INR" />
@@ -181,7 +187,7 @@
                                 <m:HBox justifyContent="End" alignItems="Center" 
                                     class="sapUiSmallMarginTop sapUiSmallMarginBottom sapUiSmallMarginEnd">
                                     <m:Label text="Total Amount:" class="sapUiTinyMarginEnd" />
-                                    <m:ObjectNumber number="{attachmentsModel>/total}" unit="INR" />
+                                    <m:ObjectNumber number="{headData>/TotalAmount}" unit="INR" />
                                 </m:HBox>
                             </m:VBox>
                         </blocks>
@@ -193,50 +199,47 @@
                 <subSections>
                     <ObjectPageSubSection>
                         <blocks>
-                            <m:Panel xmlns:m="sap.m"
-                                xmlns:u="sap.ui.unified"
-                                xmlns:core="sap.ui.core" class="sapUiNoContentPadding">
+                            <m:Panel class="sapUiNoContentPadding">
                                 <m:VBox class="sapUiSmallMargin sapUiSmallMarginTop sapUiSmallMarginBottom">
                                     <!-- Supported Attachment Types and Size Limit -->
-                                    <m:MessageStrip text="Supported Attachment Types: txt, pdf, xlsx, csv. Attachment Size up to 5 MB" showIcon="true" showCloseButton="false" class="sapUiTinyMarginBottom" />
+                                    <m:MessageStrip text="Supported Attachment Types: txt, pdf, xlsx, csv. Attachment Size up to 5 MB" showIcon="true" showCloseButton="false" class="sapUiTinyMarginBottom" visible="{headData>/editable}"/>
 
-                                    <!-- Attachments Header -->
                                     <m:HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
-                                        <!-- Attachments count title -->
-                                        <m:Title text="Attachments" level="H3" id="attachmentsCountTitle" />
-                                        <!-- Direct FileUploader displayed as a button -->
-                                        <u:FileUploader id="fileUploader" change="onFileSelected" fileType="xlsx,csv,pdf" buttonOnly="true" buttonText="Upload" uploadComplete="onFileSelected" />
+                                        <m:Title level="H3" id="submittedAttachmentsCountTitle"
+                                            text="Attachments ({= ${attachmentsModel>/attachments}.length })" />
+
+                                        <u:FileUploader id="subfileUploader" change="onFileSelected" fileType="xlsx,csv,pdf" buttonOnly="true" buttonText="Upload" uploadComplete="onFileSelected"                     
+                                        visible="{= ${headData>/editable} &amp;&amp; ${attachmentsModel>/attachments}.length === 0}"  />
                                     </m:HBox>
 
-                                    <!-- Attachments List -->
-                                    <m:List id="attachmentsList" items="{attachmentsModel>/attachments}" inset="false" noDataText="No attachments uploaded." class="sapUiNoMargin">
+
+                                    <m:List id="submittedattachmentsList" 
+                                        items="{attachmentsModel>/attachments}" 
+                                        inset="false" 
+                                        noDataText="No attachments found." 
+                                        class="sapUiNoMargin">
                                         <m:CustomListItem>
                                             <m:HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMargin">
-                                                <!-- LEFT SIDE: Icon + Attachment Details -->
                                                 <m:HBox alignItems="Center">
                                                     <core:Icon src="sap-icon://document-text" size="2rem" class="sapUiSmallMarginEnd" />
                                                     <m:VBox>
                                                         <m:Text text="{attachmentsModel>IMAGE_FILE_NAME}" class="sapUiTinyMarginBottom" />
-                                                        <m:Text text="Status: {attachmentsModel>STATUS} · Comment: {attachmentsModel>COMMENT} ·" />
+                                                        <m:Text text="Status: {attachmentsModel>STATUS} · Comment: {attachmentsModel>COMMENT}" />
                                                     </m:VBox>
                                                 </m:HBox>
-
-                                                <!-- RIGHT SIDE: Edit & Delete Buttons -->
-                                                <m:HBox alignItems="Center">
-                                                    <m:Button icon="sap-icon://show" type="Transparent" tooltip="Preview Attachment" press="onPreviewAttachment" class="sapUiTinyMarginEnd">
-                                                        <m:customData>
-                                                            <core:CustomData key="imageUrl" value="{attachmentsModel>IMAGEURL}" writeToDom="false" />
-                                                        </m:customData>
-                                                    </m:Button>
-                                                    <m:Button icon="sap-icon://delete" type="Transparent" tooltip="Delete Attachment" press="onDeleteAttachmentPress" />
-                                                </m:HBox>
+                                                <m:Button icon="sap-icon://show" type="Transparent" 
+                                                    tooltip="Preview Attachment" 
+                                                    press="onPreviewAttachment" 
+                                                    class="sapUiTinyMarginEnd">
+                                                    <m:customData>
+                                                        <core:CustomData key="imageUrl" value="{attachmentsModel>IMAGEURL}" writeToDom="false" />
+                                                    </m:customData>
+                                                </m:Button>
                                             </m:HBox>
                                         </m:CustomListItem>
                                     </m:List>
                                 </m:VBox>
                             </m:Panel>
-
-                            <!-- File Uploader Dialog -->
                         </blocks>
                     </ObjectPageSubSection>
                 </subSections>
@@ -244,11 +247,11 @@
         </sections>
 
         <footer>
-            <m:Toolbar id="otbFooter">
+            <m:Toolbar id="otbSubmittedFooter">
                 <m:ToolbarSpacer />
-                <m:Button type="Back" text="Cancel" press="handleClose" />
-                <m:Button id="idCreateBtn" type="Success" icon="sap-icon://complete" 
-                    text="Create" press="onInvoiceCreation" />
+                <m:Button type="Back" text="Back" press="handleClose" />
+                <!-- Submit Button: Visible only when editable is false -->
+                <m:Button id="idSubBtn" type="Success" icon="sap-icon://complete" text="Submit" press="onInvoiceSubmit" visible="{= !${headData>/editable} &amp;&amp; ${headData>/STATUS} === 3}" /> 
             </m:Toolbar>
         </footer>
     </ObjectPageLayout>

@@ -443,6 +443,25 @@ sap.ui.define(
           aMessages.push({ text: formattedText, isUserMessage: false });
           oChatModel.setProperty("/messages", aMessages);
         },
+
+        formatStatusText: function (sStatus, sApproverRole) {
+          if (!sStatus) return "";
+          switch (sStatus) {
+            case 4: return "InApproval" + (sApproverRole ? " - " + sApproverRole : "");
+            case 3: return "Rejected";
+            case 5: return "Approved";
+            default: return sStatus;
+          }
+        },
+
+        formatStatusState: function (sStatus) {
+          switch (sStatus) {
+            case 4: return "Warning";
+            case 3: return "Error";
+            case 5: return "Success";
+            default: return "None";
+          }
+        }
       }
     );
   }
