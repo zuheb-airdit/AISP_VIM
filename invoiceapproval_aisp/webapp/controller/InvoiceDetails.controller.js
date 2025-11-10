@@ -17,7 +17,9 @@ sap.ui.define(
           oRouter
             .getRoute("InvoiceDetails")
             .attachPatternMatched(this._onObjectMatched, this);
+
           let oModel = this.getOwnerComponent().getModel();
+
           this.getView().setModel(oModel);
         },
 
@@ -50,11 +52,12 @@ sap.ui.define(
               this.getView().setModel(oHeadModel, "headData");
 
               // Items Data
-              let items =
-                (headData.TO_VIM_ITEMS && headData.TO_VIM_ITEMS.results) || [];
+              let items = (headData.TO_VIM_ITEMS && headData.TO_VIM_ITEMS.results) || [];
+
               let oItemsModel = new sap.ui.model.json.JSONModel({
                 results: items,
               });
+              
               this.getView().setModel(oItemsModel, "tableModel");
 
               // Attachments Data
@@ -221,9 +224,24 @@ sap.ui.define(
               const oItemModel = oView.getModel("tableModel").getData();
               const aItems = oItemModel?.results || [];
 
-              const oAttachmentsModel = oView
-                .getModel("attachmentsModel")
-                .getData();
+              const aUpdatedItems = aItems.map(item => {
+                const newItem = { ...item };
+
+                // Convert Mahnz from { $numberDecimal: "0" } → "0"
+                if (newItem.Mahnz && typeof newItem.Mahnz === "object" && newItem.Mahnz.$numberDecimal !== undefined) {
+                  newItem.Mahnz = newItem.Mahnz.$numberDecimal;
+                } else {
+                  newItem.Mahnz = String(newItem.Mahnz ?? "");
+                }
+
+                // Optionally remove __metadata (to avoid backend payload issues)
+                delete newItem.__metadata;
+                delete newItem.Mahnz;
+
+                return newItem;
+              });
+
+              const oAttachmentsModel = oView.getModel("attachmentsModel").getData();
               const aAttachments = oAttachmentsModel?.attachments || [];
 
               const oHeadData = oView.getModel("headData").getData();
@@ -235,10 +253,10 @@ sap.ui.define(
                   {
                     ...oHeadData,
                     APPROVED_COMMENT: sComment,
-                    SOURCE_TYPE: '02-Portal'
+                    SOURCE_TYPE: "02-Portal",
                   },
                 ],
-                Vimitem: aItems,
+                Vimitem: aUpdatedItems,
                 Attachment: aAttachments,
               };
 
@@ -247,27 +265,40 @@ sap.ui.define(
               oModel.create("/PostVimData", payload, {
                 success: function (oData) {
                   oView.setBusy(false);
-                  let successMsg =
-                    oData.PostVimData || "Invoice approved successfully!";
+                  let successMsg = oData.PostVimData || "Invoice approved successfully!";
                   sap.m.MessageBox.success(successMsg, {
                     title: "Success",
                     onClose: function () {
-                      // Optional: navigate or refresh
                       this.getOwnerComponent()
                         .getRouter()
                         .navTo("RouteInvoiceApproval");
                     }.bind(this),
                   });
                 }.bind(this),
+
                 error: function (oError) {
                   oView.setBusy(false);
-                  let errorMsg =
-                    oData.PostVimData.error ||
-                    "Approval failed. Please try again.";
-                  sap.m.MessageBox.error(errorMsg, {
-                    title: "Error",
-                  });
-                  console.error("Approval Error:", oError);
+                  let sErrorMessage = "Approval failed. Please try again.";
+
+                  try {
+                    if (oError.responseText) {
+                      const oResponse = JSON.parse(oError.responseText);
+                      const oErrorDetails = oResponse.error;
+
+                      if (oErrorDetails?.message?.value) {
+                        sErrorMessage = oErrorDetails.message.value;
+                      } else if (oErrorDetails?.innererror?.errordetails?.[0]?.message?.value) {
+                        sErrorMessage = oErrorDetails.innererror.errordetails[0].message.value;
+                      }
+                    } else if (oError.message) {
+                      sErrorMessage = oError.message;
+                    }
+                  } catch (e) {
+                    console.warn("Failed to parse error response:", e);
+                  }
+
+                  sap.m.MessageBox.error(sErrorMessage, { title: "Error" });
+                  console.error("Full Approval Error:", oError);
                 },
               });
             } catch (e) {
@@ -371,13 +402,16 @@ sap.ui.define(
             this._oPopOverChatbot.openBy(oEvent.getSource());
           });
         },
+
         handleClosePopOver: function (oEvent) {
           this._oPopOverChatbot.close();
         },
+
         handleOnAfterPopOverClose: function (oEvent) {
           this._oPopOverChatbot.destroy();
           this._oPopOverChatbot = null;
         },
+
         onSendMessage: async function () {
           var oView = this.getView();
           let oBusyBox = oView.byId("BusyBox");

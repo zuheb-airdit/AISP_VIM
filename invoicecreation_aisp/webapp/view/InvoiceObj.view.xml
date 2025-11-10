@@ -189,7 +189,7 @@
                 </subSections>
             </ObjectPageSection>
 
-            <ObjectPageSection title="Attachments">
+            <ObjectPageSection title="Attachments" titleUppercase="false">
                 <subSections>
                     <ObjectPageSubSection>
                         <blocks>

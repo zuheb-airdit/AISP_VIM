@@ -8,14 +8,15 @@ sap.ui.define([
     "use strict";
 
     return Controller.extend("com.invoicecreation.invoicecreationaisp.controller.InvoiceObj", {
-        
+
         onInit() {
             let oRouter = this.getOwnerComponent().getRouter();
-            
+
             var oAttachmentsModel = new JSONModel({
                 attachments: [],
                 total: 0
             });
+
             this.getView().setModel(oAttachmentsModel, "attachmentsModel");
 
             oRouter.getRoute("RouteInvoiceObj").attachPatternMatched(function (oEvent) {
@@ -35,7 +36,7 @@ sap.ui.define([
                 new Filter("Ebeln", FilterOperator.EQ, poNum),
                 new Filter("Vbeln", FilterOperator.EQ, vbNum)
             ];
-            
+
             let oHeadFilters = [
                 new Filter("Ebeln", FilterOperator.EQ, poNum),
                 new Filter("vbeln", FilterOperator.EQ, vbNum)
@@ -48,38 +49,38 @@ sap.ui.define([
                     let jsonItemModel = new JSONModel({ results: res.results });
                     this.getView().setModel(jsonItemModel, "tableModel");
                     this.calculateTotal(res.results);
-                    
+
                     // Fetch header data
                     oModel.read("/ZP_AISP_POVIM_HEAD", {
                         filters: oHeadFilters,
                         success: function (res) {
                             let headData = res.results[0];
                             this.Lifnr = headData.Lifnr;
-                            
+
                             let jsonHeadModel = new JSONModel(headData);
 
                             this.getView().setModel(jsonHeadModel, "headData");
                             this.getView().setBusy(false);
-                            
+
                         }.bind(this),
                         error: function (err) {
                             console.error("Error fetching header data:", err);
                             this.getView().setBusy(false);
                         }.bind(this)
                     });
-                    
+
                 }.bind(this),
                 error: function (err) {
                     console.error("Error fetching item data:", err);
                     this.getView().setBusy(false);
                 }
             });
-        }, 
-        
+        },
+
         // Live change handler for Invoice Number
-        onInvoiceNumberLiveChange: function(oEvent) {
+        onInvoiceNumberLiveChange: function (oEvent) {
             const sValue = oEvent.getSource().getValue();
-            
+
             // Clear error state when user starts typing
             if (sValue && sValue.trim() !== "") {
                 this.byId("idInvoiceNum").setValueState("None");
@@ -88,9 +89,9 @@ sap.ui.define([
         },
 
         // Change handler for Invoice Date
-        onInvoiceDateChange: function(oEvent) {
+        onInvoiceDateChange: function (oEvent) {
             const oDate = oEvent.getSource().getDateValue();
-            
+
             // Clear error state when user selects a date
             if (oDate) {
                 this.byId("idInvoiceDate").setValueState("None");
@@ -99,7 +100,7 @@ sap.ui.define([
         },
 
         // Validation function for user inputs only
-        validateForm: function() {
+        validateForm: function () {
             let aErrors = [];
             let bIsValid = true;
 
@@ -134,19 +135,7 @@ sap.ui.define([
                 this.byId("idInvoiceDate").setValueState("Error");
                 this.byId("idInvoiceDate").setValueStateText("Invoice Date is required");
                 bIsValid = false;
-            } 
-            // else {
-            //     const oToday = new Date();
-            //     oToday.setHours(0, 0, 0, 0);
-                
-            //     // Check if date is in the future
-            //     if (oInvoiceDate > oToday) {
-            //         aErrors.push("• Invoice Date cannot be in the future");
-            //         this.byId("idInvoiceDate").setValueState("Error");
-            //         this.byId("idInvoiceDate").setValueStateText("Cannot be in the future");
-            //         bIsValid = false;
-            //     }
-            // }
+            }
 
             // Validate Attachments
             if (aAttachments.length === 0) {
@@ -158,16 +147,16 @@ sap.ui.define([
             aAttachments.forEach((attachment, index) => {
                 const sFileName = attachment.IMAGE_FILE_NAME;
                 const iFileSize = attachment.FILE_SIZE;
-                
+
                 // Check file type
                 const aAllowedExtensions = ['.pdf', '.xlsx', '.csv', '.txt'];
                 const sFileExtension = sFileName.substring(sFileName.lastIndexOf('.')).toLowerCase();
-                
+
                 if (!aAllowedExtensions.includes(sFileExtension)) {
                     aErrors.push(`• Attachment "${sFileName}" has invalid file type. Allowed types: PDF, XLSX, CSV, TXT`);
                     bIsValid = false;
                 }
-                
+
                 // Check file size (5MB limit)
                 const iMaxSize = 5 * 1024 * 1024; // 5MB in bytes
                 if (iFileSize > iMaxSize) {
@@ -187,7 +176,7 @@ sap.ui.define([
             results.forEach((item) => {
                 total += parseFloat(item.Total) || 0;
             });
-            
+
             let attachmentModel = this.getView().getModel("attachmentsModel");
             attachmentModel.setProperty("/total", total);
         },
@@ -264,7 +253,7 @@ sap.ui.define([
 
             var oFile = aFiles[0];
             var oReader = new FileReader();
-            
+
             oReader.onload = function (e) {
                 var sBase64DataUrl = e.target.result.split(",")[1];
 
@@ -311,11 +300,20 @@ sap.ui.define([
             this.byId("attachmentsCountTitle").setText("Attachments (" + aAttachments.length + ")");
         },
 
+        formatDate: function (sDate) {
+            if (!sDate) return "";
+            const oDate = new Date(sDate);
+            const year = oDate.getFullYear();
+            const month = String(oDate.getMonth() + 1).padStart(2, "0");
+            const day = String(oDate.getDate()).padStart(2, "0");
+            return `${year}-${month}-${day}`;
+        },
+
         onInvoiceCreation: function () {
             var that = this;
 
             const oValidation = this.validateForm();
-            
+
             if (!oValidation.isValid) {
                 // Show all validation errors in a message box
                 const sErrorMessages = oValidation.errors.join("\n");
@@ -325,22 +323,136 @@ sap.ui.define([
                 });
                 return;
             }
-            
-            function formatDateToYYYYMMDD(oDate) {
-                if (!oDate) return "";
-                const year = oDate.getFullYear();
-                const month = String(oDate.getMonth() + 1).padStart(2, "0");
-                const day = String(oDate.getDate()).padStart(2, "0");
-                return `${year}-${month}-${day}`;
-            }
 
-            function formatDate(sDate) {
-                if (!sDate) return "";
-                const oDate = new Date(sDate);
-                const year = oDate.getFullYear();
-                const month = String(oDate.getMonth() + 1).padStart(2, "0");
-                const day = String(oDate.getDate()).padStart(2, "0");
-                return `${year}-${month}-${day}`;
+            MessageBox.confirm("Are you sure you want to Submit?", {
+                title: "Confirm Submission",
+                actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                onClose: function (oAction) {
+                    if (oAction === MessageBox.Action.OK) {
+                        that.getView().setBusy(true);
+
+                        // Prepare payload using separate function
+                        const oPayload = that.prepareInvoicePayload.call(that);
+
+                        console.log("Invoice Creation Payload:", oPayload);
+
+                        var oModel = that.getView().getModel();
+                        oModel.create("/PostVimData", oPayload, {
+                            success: function (oData, response) {
+                                that.getView().setBusy(false);
+                                let successMsg = oData?.PostVimData || "Invoice creation successful!"
+                                MessageBox.success(successMsg, {
+                                    onClose: function (sAction) {
+                                        if (sAction === MessageBox.Action.OK) {
+                                            that.getOwnerComponent().getRouter().navTo("RouteInvoiceCreation");
+                                        }
+                                    }
+                                });
+                            },
+                            error: function (oError) {
+                                that.getView().setBusy(false);
+
+                                // Extract the real error message f
+            // try {
+            //   const oItemModel = oView.getModel("tableModel").getData();
+            //   const aItems = oItemModel?.results || [];
+
+            //   // Convert Mahnz to string in each item
+            //   const aUpdatedItems = aItems.map(item => ({
+            //     ...item,
+            //     Mahnz: item.Mahnz?.$numberDecimal ?? item.Mahnz ?? ""
+            //   }));
+
+            //   const oAttachmentsModel = oView
+            //     .getModel("attachmentsModel")
+            //     .getData();
+
+            //   const aAttachments = oAttachmentsModel?.attachments || [];
+
+            //   const oHeadData = oView.getModel("headData").getData();
+
+            //   const payload = {
+            //     action: "APPROVE",
+            //     REQUEST_NO: oHeadData.REQUEST_NO,
+            //     Vimhead: [
+            //       {
+            //         ...oHeadData,
+            //         APPROVED_COMMENT: sComment,
+            //         SOURCE_TYPE: '02-Portal'
+            //       },
+            //     ],
+            //     Vimitem: aUpdatedItems,
+            //     Attachment: aAttachments,
+            //   };
+
+            //   const oModel = oView.getModel(); // OData model
+
+            //   oModel.create("/PostVimData", payload, {
+            //     success: function (oData) {
+            //       oView.setBusy(false);
+            //       let successMsg =
+            //         oData.PostVimData || "Invoice approved successfully!";
+            //       sap.m.MessageBox.success(successMsg, {
+            //         title: "Success",
+            //         onClose: function () {
+            //           // Optional: navigate or refresh
+            //           this.getOwnerComponent()
+            //             .getRouter()
+            //             .navTo("RouteInvoiceApproval");
+            //         }.bind(this),
+            //       });
+            //     }.bind(this),
+            //     error: function (oError) {
+            //       oView.setBusy(false);
+
+            //       let sErrorMessage = "Approval failed. Please try again.";
+
+            //       try {
+            //         // Check if responseText exists and is valid JSON
+            //         if (oError.responseText) {
+            //           const oResponse = JSON.parse(oError.responseText);
+            //           const oErrorDetails = oResponse.error;
+
+            //           if (oErrorDetails?.message?.value) {
+            //             sErrorMessage = oErrorDetails.message.value;
+            //           } else if (oErrorDetails?.innererror?.errordetails?.[0]?.message?.value) {
+            //             sErrorMessage = oErrorDetails.innererror.errordetails[0].message.value;
+            //           }
+            //         } else if (oError.message) {
+            //           sErrorMessage = oError.message;
+            //         }
+            //       } catch (e) {
+            //         console.warn("Failed to parse error response:", e);
+            //       }
+
+            //       // Show clean error message
+            //       sap.m.MessageBox.error(sErrorMessage, {
+            //         title: "Error"
+            //       });
+
+            //       console.error("Full Approval Error:", oError);
+            //     }
+            //   });
+            // } catch (e) {
+            //   oView.setBusy(false);
+            //   sap.m.MessageBox.error("Unexpected error occurred.");
+            //   console.error("Unexpected Error:", e);
+            // }
+
+
+onInvoiceCreation: function () {
+            var that = this;
+
+            const oValidation = this.validateForm();
+
+            if (!oValidation.isValid) {
+                // Show all validation errors in a message box
+                const sErrorMessages = oValidation.errors.join("\n");
+                MessageBox.error("Please fix the following errors:\n\n" + sErrorMessages, {
+                    title: "Validation Errors",
+                    width: "600px"
+                });
+                return;
             }
 
             MessageBox.confirm("Are you sure you want to Submit?", {
@@ -354,7 +466,7 @@ sap.ui.define([
                         var oItemModel = that.getView().getModel("tableModel");
                         var invoiveNum = that.byId("idInvoiceNum").getValue();
                         var invoiceDateObj = that.byId("idInvoiceDate").getDateValue();
-                        const formattedInvoiceDate = formatDateToYYYYMMDD(invoiceDateObj);
+                        const formattedInvoiceDate = this.formatDate(invoiceDateObj);
 
                         var oHeadData = oHeadModel.getData();
                         var oItemData = oItemModel.getData();
@@ -371,12 +483,12 @@ sap.ui.define([
                                 Xblnr: oHeadData.xblnr,
                                 Mblnr: oHeadData.mblnr,
                                 Bukrs: oHeadData.Bukrs,
-                                Bedat: formatDate(oHeadData.Bedat),
-                                Aedat: formatDate(oHeadData.Aedat),
+                                Bedat: this.formatDate(oHeadData.Bedat),
+                                Aedat: this.formatDate(oHeadData.Aedat),
                                 Ernam: oHeadData.Ernam,
                                 Lifnr: oHeadData.Lifnr,
                                 ASNamount: parseFloat(oHeadData.ASNamount),
-                                AsnDate: formatDate(oHeadData.asndate || oHeadData.Bedat),
+                                AsnDate: this.formatDate(oHeadData.asndate || oHeadData.Bedat),
                                 Name1: oHeadData.name1,
                                 VendorAddress: oHeadData.Vendoraddress,
                                 BankKey: oHeadData.Bankkey,
@@ -399,10 +511,10 @@ sap.ui.define([
                                 Ebelp: item.Ebelp,
                                 Txz01: item.txz01,
                                 Ebtyp: item.Ebtyp,
-                                Eindt: formatDate(item.Eindt),
+                                Eindt: this.formatDate(item.Eindt),
                                 Lpein: item.Lpein,
                                 Uzeit: item.Uzeit,
-                                Erdat: formatDate(item.Erdat),
+                                Erdat: this.formatDate(item.Erdat),
                                 Ezeit: item.Ezeit,
                                 Menge: item.menge,
                                 AsnQty: parseFloat(item.Asnqty),
@@ -450,8 +562,50 @@ sap.ui.define([
                             },
                             error: function (oError) {
                                 that.getView().setBusy(false);
-                                MessageBox.error("Invoice creation failed.");
-                                console.error("Error in onInvoiceCreation:", oError);
+
+                                // Extract the real error message from OData response
+                                let sErrorMessage = "Invoice creation failed.";
+
+                                try {
+                                    if (oError.responseText) {
+                                        const oResponse = JSON.parse(oError.responseText);
+                                        sErrorMessage = oResponse.error?.message?.value
+                                            || oResponse.error?.innererror?.errordetails?.[0]?.message?.value
+                                            || sErrorMessage;
+                                    }
+                                } catch (e) {
+                                }
+                                MessageBox.error(sErrorMessage, {
+                                    title: "Submission Failed"
+                                });
+
+                                console.error("Full Error:", oError);
+                            }
+                        });
+
+                    } else {
+                        that.getView().setBusy(false);
+                    }
+                }.bind(that)
+            });
+        },rom OData response
+                                let sErrorMessage = "Invoice creation failed.";
+
+                                try {
+                                    if (oError.responseText) {
+                                        const oResponse = JSON.parse(oError.responseText);
+                                        sErrorMessage = oResponse.error?.message?.value
+                                            || oResponse.error?.innererror?.errordetails?.[0]?.message?.value
+                                            || sErrorMessage;
+                                    }
+                                } catch (e) {
+                                    // Keep default error message
+                                    MessageBox.error(sErrorMessage, {
+                                        title: "Submission Failed"
+                                    });
+
+                                    console.error("Full Error:", oError);
+                                }
                             }
                         });
 
@@ -461,18 +615,101 @@ sap.ui.define([
                 }.bind(that)
             });
         },
-      
+
+        // Separate function for payload preparation
+        prepareInvoicePayload: function () {
+            var that = this;
+            var oHeadModel = this.getView().getModel("headData");
+            var oItemModel = this.getView().getModel("tableModel");
+            var invoiveNum = this.byId("idInvoiceNum").getValue();
+            var invoiceDateObj = this.byId("idInvoiceDate").getDateValue();
+            const formattedInvoiceDate = this.formatDate(invoiceDateObj);
+
+            var oHeadData = oHeadModel.getData();
+            var oItemData = oItemModel.getData();
+            const oAttachmentsModel = this.getView().getModel("attachmentsModel");
+            var aAttachments = (oAttachmentsModel && oAttachmentsModel.getData().attachments) || [];
+
+            var oPayload = {
+                action: "CREATE",
+                Vimhead: [{
+                    COMPANY_CODE: oHeadData.Bukrs,
+                    TotalAmount: parseFloat(oAttachmentsModel.getProperty('/total')),
+                    Ebeln: oHeadData.Ebeln,
+                    Vbeln: oHeadData.vbeln,
+                    Xblnr: oHeadData.xblnr,
+                    Mblnr: oHeadData.mblnr,
+                    Bukrs: oHeadData.Bukrs,
+                    Bedat: this.formatDate(oHeadData.Bedat),
+                    Aedat: this.formatDate(oHeadData.Aedat),
+                    Ernam: oHeadData.Ernam,
+                    Lifnr: oHeadData.Lifnr,
+                    ASNamount: parseFloat(oHeadData.ASNamount),
+                    AsnDate: this.formatDate(oHeadData.asndate || oHeadData.Bedat),
+                    Name1: oHeadData.name1,
+                    VendorAddress: oHeadData.Vendoraddress,
+                    BankKey: oHeadData.Bankkey,
+                    BankAccount: oHeadData.Bankacc,
+                    BankName: oHeadData.Bankname,
+                    Ekorg: oHeadData.Ekorg,
+                    Invoicerefno: invoiveNum,
+                    Invoicedate: formattedInvoiceDate,
+                    Weakt: (oHeadData.Weakt || oHeadData.Weakt === true) ? "Y" : "N",
+                    // SOURCE_TYPE: '02-Portal'
+                }],
+                Vimitem: [],
+                Attachment: []
+            };
+
+            // Prepare Vimitem data
+            if (oItemData?.results?.length > 0) {
+                oPayload.Vimitem = oItemData.results.map(item => ({
+                    Ebeln: oHeadData.Ebeln,
+                    Vbeln: oHeadData.vbeln,
+                    Ebelp: item.Ebelp,
+                    Txz01: item.txz01,
+                    Ebtyp: item.Ebtyp,
+                    Eindt: this.formatDate(item.Eindt),
+                    Lpein: item.Lpein,
+                    // Uzeit: item.Uzeit,
+                    Erdat: this.formatDate(item.Erdat),
+                    // Ezeit: item.Ezeit,
+                    Menge: item.menge,
+                    AsnQty: parseFloat(item.Asnqty),
+                    ASNitAmount: parseFloat(item.ASNitamount),
+                    GRNitAmount: parseFloat(item.GRNitamount),
+                    Taxper: parseFloat(item.Taxper),
+                    Taxval: parseFloat(item.Taxval),
+                    Total: parseFloat(item.Total),
+                    Meins: item.meins,
+                    Waers: item.waers,
+                    Estkz: item.Estkz,
+                    Loekz: item.Loekz,
+                    Xblnr: item.Xblnr,
+                    Vbelp: item.Vbelp,
+                    Mprof: item.Mprof,
+                    Ematn: item.Ematn,
+                    Mahnz: item.Mahnz,
+                    Charg: item.Charg,
+                    Uecha: item.Uecha
+                }));
+            }
+
+            // Prepare Attachment data
+            if (aAttachments?.length > 0) {
+                oPayload.Attachment = aAttachments.map(att => ({
+                    VendorCode: att.VendorCode || oHeadData.Lifnr,
+                    DESCRIPTION: att.DESCRIPTION || "Vendor Registration Document",
+                    IMAGEURL: att.IMAGEURL,
+                    IMAGE_FILE_NAME: att.IMAGE_FILE_NAME
+                }));
+            }
+
+            return oPayload;
+        },
+
         handleClose: function () {
             this.getOwnerComponent().getRouter().navTo("RouteInvoiceCreation");
         },
-
-        formatDate: function (sDate) {
-            if (!sDate) return "";
-            const oDate = new Date(sDate);
-            const year = oDate.getFullYear();
-            const month = String(oDate.getMonth() + 1).padStart(2, "0");
-            const day = String(oDate.getDate()).padStart(2, "0");
-            return `${year}-${month}-${day}`;
-        }
     });
 });
