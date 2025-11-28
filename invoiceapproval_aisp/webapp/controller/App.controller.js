@@ -2,12 +2,12 @@ sap.ui.define([
   "sap/ui/core/mvc/Controller",
   "sap/ui/model/json/JSONModel"
 
-], (BaseController,JSONModel) => {
+], (BaseController, JSONModel) => {
   "use strict";
 
   return BaseController.extend("com.invoiceapproval.invoiceapprovalaisp.controller.App", {
-      onInit() {
-        var oViewModel,
+    onInit() {
+      var oViewModel,
 
         oViewModel = new JSONModel({
           busy: true,
@@ -21,6 +21,6 @@ sap.ui.define([
           }
         });
       this.getOwnerComponent().setModel(oViewModel, "appView");
-      }
+    }
   });
 });

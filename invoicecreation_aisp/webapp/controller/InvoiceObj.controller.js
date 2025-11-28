@@ -309,6 +309,156 @@ sap.ui.define([
             return `${year}-${month}-${day}`;
         },
 
+        // onInvoiceCreation: function () {
+        //     var that = this;
+
+        //     const oValidation = this.validateForm();
+
+        //     if (!oValidation.isValid) {
+        //         // Show all validation errors in a message box
+        //         const sErrorMessages = oValidation.errors.join("\n");
+        //         MessageBox.error("Please fix the following errors:\n\n" + sErrorMessages, {
+        //             title: "Validation Errors",
+        //             width: "600px"
+        //         });
+        //         return;
+        //     }
+
+        //     MessageBox.confirm("Are you sure you want to Submit?", {
+        //         title: "Confirm Submission",
+        //         actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+        //         onClose: function (oAction) {
+        //             if (oAction === MessageBox.Action.OK) {
+        //                 that.getView().setBusy(true);
+        //                 var oModel = that.getView().getModel();
+        //                 var oHeadModel = that.getView().getModel("headData");
+        //                 var oItemModel = that.getView().getModel("tableModel");
+        //                 var invoiveNum = that.byId("idInvoiceNum").getValue();
+        //                 var invoiceDateObj = that.byId("idInvoiceDate").getDateValue();
+        //                 const formattedInvoiceDate = this.formatDate(invoiceDateObj);
+
+        //                 var oHeadData = oHeadModel.getData();
+        //                 var oItemData = oItemModel.getData();
+        //                 const oAttachmentsModel = that.getView().getModel("attachmentsModel");
+        //                 var aAttachments = (oAttachmentsModel && oAttachmentsModel.getData().attachments) || [];
+
+        //                 var oPayload = {
+        //                     action: "CREATE",
+        //                     Vimhead: [{
+        //                         COMPANY_CODE: oHeadData.Bukrs,
+        //                         TotalAmount: parseFloat(oAttachmentsModel.getProperty('/total')),
+        //                         Ebeln: oHeadData.Ebeln,
+        //                         Vbeln: oHeadData.vbeln,
+        //                         Xblnr: oHeadData.xblnr,
+        //                         Mblnr: oHeadData.mblnr,
+        //                         Bukrs: oHeadData.Bukrs,
+        //                         Bedat: this.formatDate(oHeadData.Bedat),
+        //                         Aedat: this.formatDate(oHeadData.Aedat),
+        //                         Ernam: oHeadData.Ernam,
+        //                         Lifnr: oHeadData.Lifnr,
+        //                         ASNamount: parseFloat(oHeadData.ASNamount),
+        //                         AsnDate: this.formatDate(oHeadData.asndate || oHeadData.Bedat),
+        //                         Name1: oHeadData.name1,
+        //                         VendorAddress: oHeadData.Vendoraddress,
+        //                         BankKey: oHeadData.Bankkey,
+        //                         BankAccount: oHeadData.Bankacc,
+        //                         BankName: oHeadData.Bankname,
+        //                         Ekorg: oHeadData.Ekorg,
+        //                         Invoicerefno: invoiveNum,
+        //                         Invoicedate: formattedInvoiceDate,
+        //                         Weakt: (oHeadData.Weakt || oHeadData.Weakt === true) ? "Y" : "N",
+        //                         SOURCE_TYPE: '02-Portal'
+        //                     }],
+        //                     Vimitem: [],
+        //                     Attachment: []
+        //                 };
+
+        //                 if (oItemData?.results?.length > 0) {
+        //                     oPayload.Vimitem = oItemData.results.map(item => ({
+        //                         Ebeln: oHeadData.Ebeln,
+        //                         Vbeln: oHeadData.vbeln,
+        //                         Ebelp: item.Ebelp,
+        //                         Txz01: item.txz01,
+        //                         Ebtyp: item.Ebtyp,
+        //                         Eindt: this.formatDate(item.Eindt),
+        //                         Lpein: item.Lpein,
+        //                         Uzeit: item.Uzeit,
+        //                         Erdat: this.formatDate(item.Erdat),
+        //                         Ezeit: item.Ezeit,
+        //                         Menge: item.menge,
+        //                         AsnQty: parseFloat(item.Asnqty),
+        //                         ASNitAmount: parseFloat(item.ASNitamount),
+        //                         GRNitAmount: parseFloat(item.GRNitamount),
+        //                         Taxper: parseFloat(item.Taxper),
+        //                         Taxval: parseFloat(item.Taxval),
+        //                         Total: parseFloat(item.Total),
+        //                         Meins: item.meins,
+        //                         Waers: item.waers,
+        //                         Estkz: item.Estkz,
+        //                         Loekz: item.Loekz,
+        //                         Xblnr: item.Xblnr,
+        //                         Vbelp: item.Vbelp,
+        //                         Mprof: item.Mprof,
+        //                         Ematn: item.Ematn,
+        //                         Mahnz: item.Mahnz,
+        //                         Charg: item.Charg,
+        //                         Uecha: item.Uecha
+        //                     }));
+        //                 }
+
+        //                 if (aAttachments?.length > 0) {
+        //                     oPayload.Attachment = aAttachments.map(att => ({
+        //                         VendorCode: att.VendorCode || oHeadData.Lifnr,
+        //                         DESCRIPTION: att.DESCRIPTION || "Vendor Registration Document",
+        //                         IMAGEURL: att.IMAGEURL,
+        //                         IMAGE_FILE_NAME: att.IMAGE_FILE_NAME
+        //                     }));
+        //                 }
+
+        //                 console.log("Invoice Creation Payload:", oPayload);
+
+        //                 oModel.create("/PostVimData", oPayload, {
+        //                     success: function (oData, response) {
+        //                         that.getView().setBusy(false);
+        //                         let successMsg = oData?.PostVimData || "Invoice creation successful!"
+        //                         MessageBox.success(successMsg, {
+        //                             onClose: function (sAction) {
+        //                                 if (sAction === MessageBox.Action.OK) {
+        //                                     that.getOwnerComponent().getRouter().navTo("RouteInvoiceCreation");
+        //                                 }
+        //                             }
+        //                         });
+        //                     },
+        //                     error: function (oError) {
+        //                         that.getView().setBusy(false);
+
+        //                         // Extract the real error message from OData response
+        //                         let sErrorMessage = "Invoice creation failed.";
+
+        //                         try {
+        //                             if (oError.responseText) {
+        //                                 const oResponse = JSON.parse(oError.responseText);
+        //                                 sErrorMessage = oResponse.error?.message?.value
+        //                                     || oResponse.error?.innererror?.errordetails?.[0]?.message?.value
+        //                                     || sErrorMessage;
+        //                             }
+        //                         } catch (e) {
+        //                         }
+        //                         MessageBox.error(sErrorMessage, {
+        //                             title: "Submission Failed"
+        //                         });
+
+        //                         console.error("Full Error:", oError);
+        //                     }
+        //                 });
+
+        //             } else {
+        //                 that.getView().setBusy(false);
+        //             }
+        //         }.bind(that)
+        //     });
+        // },
+
         onInvoiceCreation: function () {
             var that = this;
 
@@ -352,7 +502,7 @@ sap.ui.define([
                             error: function (oError) {
                                 that.getView().setBusy(false);
 
-                                // Extract the real error message f
+                                // Extract the real error message from OData response
             // try {
             //   const oItemModel = oView.getModel("tableModel").getData();
             //   const aItems = oItemModel?.results || [];
@@ -440,155 +590,7 @@ sap.ui.define([
             // }
 
 
-onInvoiceCreation: function () {
-            var that = this;
 
-            const oValidation = this.validateForm();
-
-            if (!oValidation.isValid) {
-                // Show all validation errors in a message box
-                const sErrorMessages = oValidation.errors.join("\n");
-                MessageBox.error("Please fix the following errors:\n\n" + sErrorMessages, {
-                    title: "Validation Errors",
-                    width: "600px"
-                });
-                return;
-            }
-
-            MessageBox.confirm("Are you sure you want to Submit?", {
-                title: "Confirm Submission",
-                actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
-                onClose: function (oAction) {
-                    if (oAction === MessageBox.Action.OK) {
-                        that.getView().setBusy(true);
-                        var oModel = that.getView().getModel();
-                        var oHeadModel = that.getView().getModel("headData");
-                        var oItemModel = that.getView().getModel("tableModel");
-                        var invoiveNum = that.byId("idInvoiceNum").getValue();
-                        var invoiceDateObj = that.byId("idInvoiceDate").getDateValue();
-                        const formattedInvoiceDate = this.formatDate(invoiceDateObj);
-
-                        var oHeadData = oHeadModel.getData();
-                        var oItemData = oItemModel.getData();
-                        const oAttachmentsModel = that.getView().getModel("attachmentsModel");
-                        var aAttachments = (oAttachmentsModel && oAttachmentsModel.getData().attachments) || [];
-
-                        var oPayload = {
-                            action: "CREATE",
-                            Vimhead: [{
-                                COMPANY_CODE: oHeadData.Bukrs,
-                                TotalAmount: parseFloat(oAttachmentsModel.getProperty('/total')),
-                                Ebeln: oHeadData.Ebeln,
-                                Vbeln: oHeadData.vbeln,
-                                Xblnr: oHeadData.xblnr,
-                                Mblnr: oHeadData.mblnr,
-                                Bukrs: oHeadData.Bukrs,
-                                Bedat: this.formatDate(oHeadData.Bedat),
-                                Aedat: this.formatDate(oHeadData.Aedat),
-                                Ernam: oHeadData.Ernam,
-                                Lifnr: oHeadData.Lifnr,
-                                ASNamount: parseFloat(oHeadData.ASNamount),
-                                AsnDate: this.formatDate(oHeadData.asndate || oHeadData.Bedat),
-                                Name1: oHeadData.name1,
-                                VendorAddress: oHeadData.Vendoraddress,
-                                BankKey: oHeadData.Bankkey,
-                                BankAccount: oHeadData.Bankacc,
-                                BankName: oHeadData.Bankname,
-                                Ekorg: oHeadData.Ekorg,
-                                Invoicerefno: invoiveNum,
-                                Invoicedate: formattedInvoiceDate,
-                                Weakt: (oHeadData.Weakt || oHeadData.Weakt === true) ? "Y" : "N",
-                                SOURCE_TYPE: '02-Portal'
-                            }],
-                            Vimitem: [],
-                            Attachment: []
-                        };
-
-                        if (oItemData?.results?.length > 0) {
-                            oPayload.Vimitem = oItemData.results.map(item => ({
-                                Ebeln: oHeadData.Ebeln,
-                                Vbeln: oHeadData.vbeln,
-                                Ebelp: item.Ebelp,
-                                Txz01: item.txz01,
-                                Ebtyp: item.Ebtyp,
-                                Eindt: this.formatDate(item.Eindt),
-                                Lpein: item.Lpein,
-                                Uzeit: item.Uzeit,
-                                Erdat: this.formatDate(item.Erdat),
-                                Ezeit: item.Ezeit,
-                                Menge: item.menge,
-                                AsnQty: parseFloat(item.Asnqty),
-                                ASNitAmount: parseFloat(item.ASNitamount),
-                                GRNitAmount: parseFloat(item.GRNitamount),
-                                Taxper: parseFloat(item.Taxper),
-                                Taxval: parseFloat(item.Taxval),
-                                Total: parseFloat(item.Total),
-                                Meins: item.meins,
-                                Waers: item.waers,
-                                Estkz: item.Estkz,
-                                Loekz: item.Loekz,
-                                Xblnr: item.Xblnr,
-                                Vbelp: item.Vbelp,
-                                Mprof: item.Mprof,
-                                Ematn: item.Ematn,
-                                Mahnz: item.Mahnz,
-                                Charg: item.Charg,
-                                Uecha: item.Uecha
-                            }));
-                        }
-
-                        if (aAttachments?.length > 0) {
-                            oPayload.Attachment = aAttachments.map(att => ({
-                                VendorCode: att.VendorCode || oHeadData.Lifnr,
-                                DESCRIPTION: att.DESCRIPTION || "Vendor Registration Document",
-                                IMAGEURL: att.IMAGEURL,
-                                IMAGE_FILE_NAME: att.IMAGE_FILE_NAME
-                            }));
-                        }
-
-                        console.log("Invoice Creation Payload:", oPayload);
-
-                        oModel.create("/PostVimData", oPayload, {
-                            success: function (oData, response) {
-                                that.getView().setBusy(false);
-                                let successMsg = oData?.PostVimData || "Invoice creation successful!"
-                                MessageBox.success(successMsg, {
-                                    onClose: function (sAction) {
-                                        if (sAction === MessageBox.Action.OK) {
-                                            that.getOwnerComponent().getRouter().navTo("RouteInvoiceCreation");
-                                        }
-                                    }
-                                });
-                            },
-                            error: function (oError) {
-                                that.getView().setBusy(false);
-
-                                // Extract the real error message from OData response
-                                let sErrorMessage = "Invoice creation failed.";
-
-                                try {
-                                    if (oError.responseText) {
-                                        const oResponse = JSON.parse(oError.responseText);
-                                        sErrorMessage = oResponse.error?.message?.value
-                                            || oResponse.error?.innererror?.errordetails?.[0]?.message?.value
-                                            || sErrorMessage;
-                                    }
-                                } catch (e) {
-                                }
-                                MessageBox.error(sErrorMessage, {
-                                    title: "Submission Failed"
-                                });
-
-                                console.error("Full Error:", oError);
-                            }
-                        });
-
-                    } else {
-                        that.getView().setBusy(false);
-                    }
-                }.bind(that)
-            });
-        },rom OData response
                                 let sErrorMessage = "Invoice creation failed.";
 
                                 try {

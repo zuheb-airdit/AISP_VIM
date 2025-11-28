@@ -8,7 +8,7 @@
     xmlns:u="sap.ui.unified"
     xmlns="sap.uxap">
     
-    <ObjectPageLayout id="ObjectPageLayout" 
+ <ObjectPageLayout id="ObjectPageLayout" 
         showTitleInHeaderContent="true" 
         alwaysShowContentHeader="false" 
         preserveHeaderStateOnScroll="false" 
